@@ -632,8 +632,10 @@ class Patch(object):
 
     PATCH_PATH_ = '/tmp/' + os.sep + PATCH_PATH + os.sep
     if not os.path.exists(PATCH_PATH):
-      PATCH_PATH_ = '/n/regal/pfister_lab/haehn' + os.sep + PATCH_PATH + os.sep    
-    if not os.path.exists(PATCH_PATH):
+      PATCH_PATH_ = '/n/regal/pfister_lab/haehn' + os.sep + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = os.path.expanduser('~/patches_local/') + os.sep + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
       PATCH_PATH_ = os.path.expanduser('~/patches/') + os.sep + PATCH_PATH + os.sep
 
     PATCH_PATH = PATCH_PATH_
