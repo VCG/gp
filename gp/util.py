@@ -143,7 +143,8 @@ class Util(object):
     image = patch[0]
     prob = patch[1]
     binary = patch[2]
-    border = patch[3]
+    if patch.shape[0] > 3:
+      border = patch[3]
 
     ax1.axis('off')
     ax1.imshow(image, cmap='gray')
@@ -153,9 +154,10 @@ class Util(object):
 
     ax3.axis('off')
     ax3.imshow(binary, cmap='gray')
-
-    ax4.axis('off')
-    ax4.imshow(border, cmap='gray')    
+    
+    if patch.shape[0] > 3:
+      ax4.axis('off')
+      ax4.imshow(border, cmap='gray')    
 
   @staticmethod
   def view_labels(array, labels, crop=True, large=True, return_it=False):
