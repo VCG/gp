@@ -31,7 +31,7 @@ source /n/home05/haehn/nolearncox/bin/activate
 
 # we are working in TEMP
 cd /tmp/
-API_KEY='94dc9107aa68bc7c9307257df82928c6' aetros start haehn/digit-convolution
+API_KEY='94dc9107aa68bc7c9307257df82928c6' aetros start haehn/digit-convolution --gpu
 
 # end of program
 exit 0;
