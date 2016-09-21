@@ -3,7 +3,7 @@ import os; import sys; sys.path.append('..')
 import gp
 import gp.nets as nets
 
-PATCH_PATH = ('cylinder2_rgb')
+PATCH_PATH = ('ipm')
 
 X_train, y_train, X_test, y_test = gp.Patch.load_rgb(PATCH_PATH)
 
@@ -18,5 +18,5 @@ print test_accuracy
 
 # store CNN
 sys.setrecursionlimit(1000000000)
-with open(os.path.expanduser('~/Projects/gp/nets/RGBPlus_FULL.p'), 'wb') as f:
+with open(os.path.expanduser('~/Projects/gp/nets/IPM_FULL.p'), 'wb') as f:
   pickle.dump(cnn, f, -1)
