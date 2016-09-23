@@ -1,3 +1,4 @@
+from rgnetplus import RGNetPlus
 from rgbnet import RGBNet
 from rgbnetplus import RGBNetPlus
 from rgbnetplusplus import RGBNetPlusPlus

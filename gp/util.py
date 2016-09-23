@@ -142,7 +142,8 @@ class Util(object):
 
     image = patch[0]
     prob = patch[1]
-    binary = patch[2]
+    if patch.shape[0] > 2:
+      binary = patch[2]
     if patch.shape[0] > 3:
       border = patch[3]
 
@@ -152,9 +153,10 @@ class Util(object):
     ax2.axis('off')
     ax2.imshow(prob, cmap='gray')
 
-    ax3.axis('off')
-    ax3.imshow(binary, cmap='gray')
-    
+    if patch.shape[0] > 2:
+      ax3.axis('off')
+      ax3.imshow(binary, cmap='gray')
+      
     if patch.shape[0] > 3:
       ax4.axis('off')
       ax4.imshow(border, cmap='gray')    
