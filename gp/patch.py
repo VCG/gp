@@ -44,6 +44,7 @@ class Patch(object):
     patch_grouper = {}
     for p in patches:
         # create key
+
         minlabel = min(p['l'], p['n'])
         maxlabel = max(p['l'], p['n'])
         key = str(minlabel)+'-'+str(maxlabel)
@@ -86,10 +87,10 @@ class Patch(object):
 
           # pred = cnn.test_patch(p)
 
-          if cnn.uuid.startswith('RGBA'):
+          if cnn.uuid.endswith('B'):
 
             border_prefix = ''
-            if cnn.uuid.find('large') != -1:
+            if cnn.uuid.find('LB') != -1:
               border_prefix = 'larger_'
 
             rgba_patch = np.zeros((1,4,75,75), dtype=np.float32)
@@ -100,7 +101,7 @@ class Patch(object):
 
             inputs = rgba_patch
 
-          elif cnn.uuid.startswith('RGB'):
+          elif cnn.uuid.startswith('IPM'):
 
             rgb_patch = np.zeros((1,3,75,75), dtype=np.float32)
             rgb_patch[0][0] = p['image'].astype(np.float32)
@@ -344,9 +345,12 @@ class Patch(object):
       if len(border_yx) < 2:
         # somehow border detection did not work
         return patches
-
+      # print image.shape
+      # plt.imshow(image)
+      # print border_yx, l, n
       # always sample the middle point
       border_center = (border_yx[len(border_yx)/(2)][0], border_yx[len(border_yx)/(2)][1])
+      # print 'a'
       patch_centers.append(border_center)
 
 
@@ -561,14 +565,14 @@ class Patch(object):
           # output['dyn_obj'] = dyn_obj.astype(np.bool)
           # output['dyn_bnd'] = dyn_bnd.astype(np.bool)
           # output['dyn_bnd_dyn_obj'] = dyn_bnd_dyn_obj.astype(np.bool)
-          # output['bbox'] = bbox
-          # output['border'] = border_yx
-          # output['border_center'] = new_border_center
+          output['bbox'] = bbox
+          output['border'] = border_yx
+          output['border_center'] = new_border_center
           output['border_overlap'] = isolated_border.astype(np.bool)
           # output['overlap'] = overlap.astype(np.bool)
           output['larger_border_overlap'] = larger_isolated_border.astype(np.bool)
-          # output['l'] = l
-          # output['n'] = n
+          output['l'] = l
+          output['n'] = n
           # output['overlap'] = overlap[bbox[0]:bbox[1] + 1, bbox[2]:bbox[3] + 1].astype(np.bool)
 
           # output['borders_labeled'] = borders_labeled[border_bbox[0]:border_bbox[1], border_bbox[2]:border_bbox[3]]
@@ -657,28 +661,57 @@ class Patch(object):
     if verbose:
       print 'Loaded', PATCH_PATH, 'in', time.time()-t0, 'seconds.'
 
-    return training['rgba'], training_targets['targets'].astype(np.uint8), test['rgba'], test_targets['targets'].astype(np.uint8)
+    return training['rgb'], training_targets['targets'].astype(np.uint8), test['rgb'], test_targets['targets'].astype(np.uint8)
 
 
 
   @staticmethod
-  def load_rgba_test_only(PATCH_PATH, border_prefix='border', patch_size=(75,75), verbose=True):
+  def load_rgba_test_only(PATCH_PATH, verbose=True):
 
     PATCH_PATH_ = '/tmp/' + os.sep + PATCH_PATH + os.sep
-    if not os.path.exists(PATCH_PATH):
-      PATCH_PATH_ = '/n/regal/pfister_lab/haehn' + os.sep + PATCH_PATH + os.sep    
-    if not os.path.exists(PATCH_PATH):
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = '/n/pfister_lab/haehn/patches/' + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = '/n/regal/pfister_lab/haehn' + os.sep + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = os.path.expanduser('~/patches_local/') + os.sep + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
       PATCH_PATH_ = os.path.expanduser('~/patches/') + os.sep + PATCH_PATH + os.sep
 
     PATCH_PATH = PATCH_PATH_
 
     t0 = time.time()
 
-    test = np.load(PATCH_PATH+'test_'+border_prefix+'.npz', mmap_mode='r')
-    test_targets = np.load(PATCH_PATH+'test_'+border_prefix+'_targets.npz')
+    test = np.load(PATCH_PATH+'test.npz', mmap_mode='r')
+    test_targets = np.load(PATCH_PATH+'test_targets.npz')
 
     if verbose:
       print 'Loaded', PATCH_PATH, 'in', time.time()-t0, 'seconds.'
-    
-    return test['rgba'], test_targets['rgba'].astype(np.uint8)
 
+    return test['rgba'], test_targets['targets'].astype(np.uint8)
+
+
+  @staticmethod
+  def load_rgb_test_only(PATCH_PATH, verbose=True):
+
+    PATCH_PATH_ = '/tmp/' + os.sep + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = '/n/pfister_lab/haehn/patches/' + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = '/n/regal/pfister_lab/haehn' + os.sep + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = os.path.expanduser('~/patches_local/') + os.sep + PATCH_PATH + os.sep
+    if not os.path.exists(PATCH_PATH_):
+      PATCH_PATH_ = os.path.expanduser('~/patches/') + os.sep + PATCH_PATH + os.sep
+
+    PATCH_PATH = PATCH_PATH_
+
+    t0 = time.time()
+
+    test = np.load(PATCH_PATH+'test.npz', mmap_mode='r')
+    test_targets = np.load(PATCH_PATH+'test_targets.npz')
+
+    if verbose:
+      print 'Loaded', PATCH_PATH, 'in', time.time()-t0, 'seconds.'
+
+    return test['rgb'], test_targets['targets'].astype(np.uint8)

@@ -1,11 +1,14 @@
 from backport_collections import Counter
+import imread
 import numpy as np
 import mahotas as mh
 import random
 from scipy.optimize import curve_fit
 from scipy.spatial import distance
 import skimage.measure
+import tifffile as tif
 import time
+
 
 from matplotlib.pyplot import imshow
 import matplotlib.pyplot as plt    
@@ -24,13 +27,21 @@ class Legacy(object):
     input_prob = np.zeros((10,1024,1024))
     path_prefix = '/Users/d/Projects/'
     path_prefix = '/home/d/dojo_xp/data/' # for beast only
-    input_rhoana = mh.imread(path_prefix+'dojo_data_vis2014/labels_after_automatic_segmentation_multi.tif')
-    input_gold = mh.imread(path_prefix+'dojo_data_vis2014/groundtruth_multi.tif')
+    input_rhoana_ = imread.imread_multi(path_prefix+'dojo_data_vis2014/labels_after_automatic_segmentation_multi.tif')
+    for i,r in enumerate(input_rhoana_):
+      input_rhoana[i] = r
+    input_gold_ = imread.imread_multi(path_prefix+'dojo_data_vis2014/groundtruth_multi.tif')
+    for i,g in enumerate(input_gold_):
+      input_gold[i] = g 
     for i in range(10):
-        input_prob[i] = mh.imread(path_prefix+'dojo_data_vis2014/prob/'+str(i)+'_syn.tif')
+        # input_prob[i] = mh.imread(path_prefix+'dojo_data_vis2014/prob/'+str(i)+'_syn.tif')
+        input_prob[i] = tif.imread(path_prefix+'dojo_data_vis2014/prob_unet_fixed/'+str(50+i).zfill(4)+'.tif')
+        # return prob
+        # input_prob[i] = np.rot90(np.pad(prob, 92, 'constant'),2) # we are rotating the image
         input_image[i] = mh.imread(path_prefix+'dojo_data_vis2014/images/'+str(i)+'.tif')
         
     bbox = mh.bbox(input_image[0])
+
     bbox_larger = [bbox[0]-37, bbox[1]+37, bbox[2]-37, bbox[3]+37]
 
     prob_new = np.zeros(input_image.shape, dtype=np.uint8)
@@ -40,7 +51,8 @@ class Legacy(object):
     input_gold = input_gold[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
     # input_prob = input_prob[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
     
-    prob_new[:,bbox[0]:bbox[1], bbox[2]:bbox[3]] = input_prob[:,bbox[0]:bbox[1], bbox[2]:bbox[3]]
+    #inverting right here
+    prob_new[:,bbox[0]:bbox[1], bbox[2]:bbox[3]] = 255-input_prob[:,bbox[0]:bbox[1], bbox[2]:bbox[3]]
     prob_new = prob_new[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
 
 
@@ -153,7 +165,7 @@ class Legacy(object):
     else:
       speed_image = Legacy.gradient(cropped_image)
 
-    Util.view(speed_image, large=False, color=False)
+    # Util.view(speed_image, large=False, color=False)
 
 
     dilated_binary = np.array(cropped_binary, dtype=np.bool)
@@ -161,7 +173,7 @@ class Legacy(object):
       for i in range(20):
           dilated_binary = mh.dilate(dilated_binary)      
 
-    Util.view(dilated_binary, large=False, color=False)
+    # Util.view(dilated_binary, large=False, color=False)
 
     borders = np.zeros(cropped_binary.shape)
 
@@ -769,6 +781,8 @@ class Legacy(object):
 
       rollback_slice_with_max_value = np.array(slice_with_max_value)
 
+      # print slice_with_max_value.dtype, groundtruth.dtype
+
       last_vi = Util.vi(slice_with_max_value, groundtruth)
 
       # now we merge
@@ -1228,12 +1242,21 @@ class Legacy(object):
   @staticmethod
   def plot_roc(roc_vals, filename=None, title=None):
 
-    plt.figure(figsize=(22,22))
+    if filename:
+      plt.figure(figsize=(22,22))
+      font = {'family' : 'normal',
+              'size'   : 26}
+
+      plt.rc('font', **font)      
+      linewidth = 4
+    else:
+      plt.figure(figsize=(5,5))
+      linewidth = 1
     for v in roc_vals:
         fpr = roc_vals[v][0]
         tpr = roc_vals[v][1]    
         roc_auc = roc_vals[v][2]
-        plt.plot(fpr, tpr, label=v+' (area = %0.2f)' % roc_auc, linewidth=4)
+        plt.plot(fpr, tpr, label=v+' (area = %0.2f)' % roc_auc, linewidth=linewidth)
     plt.plot([0, 1], [0, 1], 'k--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.0])
@@ -1242,10 +1265,7 @@ class Legacy(object):
     if title:
       plt.title(title)
     ax = plt.gca()
-    font = {'family' : 'normal',
-            'size'   : 26}
 
-    plt.rc('font', **font)
 
     handles, labels = ax.get_legend_handles_labels()
     ax.tick_params(axis='both', which='major', pad=15)

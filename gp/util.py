@@ -7,6 +7,7 @@ import partition_comparison
 import os
 from scipy import ndimage as nd
 import skimage.measure
+import tifffile as tif
 
 
 
@@ -29,7 +30,7 @@ class Util(object):
     mask = mh.imread(mask[0]).astype(np.bool)
     gold = mh.imread(gold[0])
     rhoana = mh.imread(rhoana[0])
-    prob = mh.imread(prob[0])
+    prob = tif.imread(prob[0])
 
     #convert ids from rgb to single channel
     rhoana_single = np.zeros((rhoana.shape[0], rhoana.shape[1]), dtype=np.uint64)
