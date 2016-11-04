@@ -1056,6 +1056,41 @@ class Legacy(object):
     return bigM, out_volume, fixes, vi_s_30mins
 
   @staticmethod
+  def plot_arand(data,filename=None):
+
+    median_input_vi = np.median(data.values()[0])
+    median_input_vi_count = len(data.values())+3
+
+    fig, ax = plt.subplots(figsize=(22,22))
+    ax.plot(range(median_input_vi_count), [median_input_vi]*median_input_vi_count, 'k:' , color='gray', linewidth=2, label='Avg. input VI')
+
+    objects = data.keys()
+
+    y_pos = range(1,len(objects)+1)
+
+    # setp(r['whiskers'], color='black', lw=2) 
+    plt.ylabel('Adapted Rand Error', labelpad=20)
+
+    # plt.setp(plt.xticks()[1], rotation=45)
+    ax.tick_params(axis='both', which='major', pad=15)
+    plt.ylim([0.0,0.7])
+    font = {'family' : 'sans-serif',
+            'weight' : 'bold',
+            'size'   : 48}
+
+    plt.rc('font', **font)
+    
+    bp = plt.boxplot(data.values(), 0, 'gD', whis=1.5)
+    plt.setp(bp['boxes'], linewidth=4)
+    plt.setp(bp['medians'], linewidth=4)        
+    plt.xticks(y_pos, objects)
+
+    if filename:
+      plt.savefig(filename)
+
+    plt.show()
+
+  @staticmethod
   def plot_vis(data,filename=None):
 
     median_input_vi = np.median(data.values()[0])
@@ -1155,8 +1190,21 @@ class Legacy(object):
 
     plt.show()    
 
+
+
   @staticmethod
   def plot_vi_combined_no_interpolation(automatic, simuser, filename=None):
+
+    tableau20 = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),    
+                 (44, 160, 44), (152, 223, 138), (214, 39, 40), (255, 152, 150),    
+                 (148, 103, 189), (197, 176, 213), (140, 86, 75), (196, 156, 148),    
+                 (227, 119, 194), (247, 182, 210), (127, 127, 127), (199, 199, 199),    
+                 (188, 189, 34), (219, 219, 141), (23, 190, 207), (158, 218, 229)]  
+    for i in range(len(tableau20)):    
+        r, g, b = tableau20[i]    
+        tableau20[i] = (r / 255., g / 255., b / 255.)  
+
+
 
     def green_func(x, a, b, c):
         return a*np.exp(-b*x)+c
@@ -1174,11 +1222,11 @@ class Legacy(object):
     # y_simuser = green_func(xx_simuser, *popt)
 
 
-    ax.plot(xx_simuser, simuser, 'green', linewidth=4, label='Guided (Simulated)')
-    ax.plot(xx_automatic, automatic, 'red', linewidth=4, label='Automatic Corrections')
-    ax.axvline(x=4429, ymin=0, ymax=.61, color='b', linestyle='dashed', linewidth=2)
+    ax.plot(xx_simuser, simuser, color=tableau20[4], linewidth=4, label='GP* (sim.)')
+    ax.plot(xx_automatic, automatic, color=tableau20[6], linewidth=4, label='GP* (autom.)')
+    ax.axvline(x=1972, ymin=0, ymax=.507, color=tableau20[0], linestyle='dashed', linewidth=2)
     ax.tick_params(axis='both', which='major', pad=15)
-    plt.ylabel('Variation of Information', labelpad=20)
+    plt.ylabel('Adapted Rand Error', labelpad=20)
 
     plt.xlabel('Corrections', labelpad=20)
     plt.xlim([0,len(simuser)])
@@ -1187,8 +1235,8 @@ class Legacy(object):
 
     legend = ax.legend(loc='upper right')
 
-    font = {'family' : 'normal',
-            'size'   : 26}
+    font = {'family' : 'sans-serif',
+            'size'   : 48}
 
     plt.rc('font', **font)
 
@@ -1230,7 +1278,7 @@ class Legacy(object):
     legend = ax.legend(loc='upper right')
 
     font = {'family' : 'normal',
-            'size'   : 26}
+            'size'   : 30}
 
     plt.rc('font', **font)
 
@@ -1242,21 +1290,32 @@ class Legacy(object):
   @staticmethod
   def plot_roc(roc_vals, filename=None, title=None):
 
+    tableau20 = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),    
+                 (44, 160, 44), (152, 223, 138), (214, 39, 40), (255, 152, 150),    
+                 (148, 103, 189), (197, 176, 213), (140, 86, 75), (196, 156, 148),    
+                 (227, 119, 194), (247, 182, 210), (127, 127, 127), (199, 199, 199),    
+                 (188, 189, 34), (219, 219, 141), (23, 190, 207), (158, 218, 229)]  
+    for i in range(len(tableau20)):    
+        r, g, b = tableau20[i]    
+        tableau20[i] = (r / 255., g / 255., b / 255.)  
+
+
+
     if filename:
       plt.figure(figsize=(22,22))
-      font = {'family' : 'normal',
-              'size'   : 26}
+      font = {'family' : 'sans-serif',
+              'size'   : 36}
 
       plt.rc('font', **font)      
       linewidth = 4
     else:
       plt.figure(figsize=(5,5))
       linewidth = 1
-    for v in roc_vals:
+    for j,v in enumerate(roc_vals):
         fpr = roc_vals[v][0]
         tpr = roc_vals[v][1]    
         roc_auc = roc_vals[v][2]
-        plt.plot(fpr, tpr, label=v+' (area = %0.2f)' % roc_auc, linewidth=linewidth)
+        plt.plot(fpr, tpr, label=v+' [area = %0.2f]' % roc_auc, linewidth=linewidth, color=tableau20[j*2])
     plt.plot([0, 1], [0, 1], 'k--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.0])
