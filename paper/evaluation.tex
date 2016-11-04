@@ -1,0 +1,46 @@
+\begin{figure*}[t]
+\begin{center}
+\includegraphics[width=\linewidth]{gfx/results_mouse.png}
+\end{center}
+  \vspace{-4mm}
+   \caption{Performance evaluation of the classifiers on two mouse brain datasets measured as adapted Rand error (lower scores are better). We compare guided proofreading (GP), guided proofreading with active label suggestion (GP*) and focused proofreading. Proofreading is performed automatically (autom., with probability threshold $p_t=.95$), simulated as a perfect user (sim.), or by novice and expert users as indicated. The first row of images shows the results of a user study and includes comparisons to the interactive proofreading software Dojo by Haehn \etal \cite{haehn_dojo_2014}. GP* is able to correct the segmentation further than other methods. The second row shows the results of the simulated user compared to automatic GP* and FP performance. The bottom right graph compares automatic GP* and simulated GP* per individual correction. The blue dashed line here indicates the moment the probability threshold $p_t$ is reached. The simulated user is able to correct the initial segmentation beyond this threshold while automatic GP* then introduces errors.}
+\label{fig:results_mouse}
+\end{figure*}
+
+\section{Evaluation}
+\label{sec:evaluation}
+
+We evaluate guided proofreading (GP) on multiple real-world connectomics datasets of different species. In particular, we evaluate GP on two datasets of mouse brain and three datasets of fruitfly brain (drosophila). For comparison, we choose the fully interactive proofreading software \textit{Dojo} by Haehn \etal~\cite{haehn_dojo_2014} as well as the aided proofreading framework \textit{focused proofreading} (FP) by Plaza~\cite{focused_proofreading}. We first describe the evalation on mouse brain data and then the evaluation on drosophila brain.
+
+\subsection{Mouse Brain}
+
+Mouse brain is a common target for connectomics research because the structural proportions are similar to human brains~\cite{jeff_science}. For our first experiment we recruited novice and expert participants as part of a quantitative user study. Our second experiment is performed on a larger dataset and we evaluate a simulated user.
+\\~\\
+\textbf{User study.} Recently, Haehn \etal evaluated the interactive proofreading tools Raveler, Mojo, and Dojo as part of an experiment with novice users~\cite{haehn_dojo_2014}. The participants corrected an automatic segmentation with merge and split errors. The dataset was the most representative sub-volume (based on object size histograms) of a larger connectomics dataset and $400x400x10$ voxels in size. The participants were given a fixed time frame of 30 minutes to perform the correction interactively. While participants clearly struggled with the proofreading task, the best performing tool in their evaluation was Dojo. The dataset including manually labeled ground truth and the results of Haehn \etal are publicly available. This means we are able to use their findings as a baseline for comparison of GP for novices. In particular, we use the best performing user of Dojo who was truly an outlier as reported by Haehn \etal.
+
+Since interactive proofreading most likely yields lower performance than aided proofreading, we also compare against FP by Plaza~\cite{focused_proofreading} which is integrated in Raveler and freely available. For FP we consulted an expert to obtain the best possible parameters as shown in table \ref{tab:parameters}. Besides performance by novices, we are also interested in expert proofreading performance. Therefore, we design between-subjects experiments for 20 novice users and separately, for 6 expert users using the exact same conditions as Haehn \etal. The recruiting, consent and debriefing process is further described in the supplementary material. We randomly assign 10 novices to GP with active label suggestion (GP*) and 10 novices to FP. For the expert experiment, we assign accordingly.
+In addition to human performance, we also evaluate automatic GP, automatic GP with active label suggestion (GP*) and automatic FP. Due to the automatic nature, we do not enforce the 30 minute time limit but we stop once our probability threshold of $p_t=.95$ is reached. This value was observed as stable in previous experiments using automatic GP (see supplementary material). To measure proofreading performance in comparison to ground truth, we use the adapted Rand error (aRE) metric~\cite{RAND}. aRE is a measure of dissimilarity, related to introduced errors, meaning lower scores are better. 
+
+The results of our comparisons are shown in the first row of Fig.~\ref{fig:results_mouse}. In all cases, GP* is able to correct the segmentation further than other methods (aRE measures: automatic GP XX, GP* XX, FP XX, novice Dojo XX, GP* XX, FP XX, expert Dojo XX, GP* XX, FP XX). This is not surprising since guided proofreading works for both merge and split errors while FP does not and in interactive Dojo the majority of time is spent finding errors which is minimized for aided proofreading solutions. In fact, the average correction time for novices is for GP* 3.6 (expert X), for FP Y (expert YY), and for Dojo 30 (expert ZZ) seconds.
+\\~\\
+\textbf{Simulated experiment.} For our second experiment with mouse brain data, we proofread the last 50 slices of the blue 3-cylinder mouse cortex volume of Kasthuri \etal~\cite{kasthuri2015saturated} which we also used for testing in section~\ref{sec:methods}. The data was not seen by the network before and includes $2048x2048x50$ voxels with a total number of 17,560 labeled objects. Since an interactive evaluation of such a large dataset would consume a significant amount of time, we restrict our experiment to a simulated (perfect) user and to automatic corrections, both with GP, GP* and FP. Similar to our comparison study, the simulated user assess a stream of errors by comparing the adapted Rand error measure before and after each performed correction. The simulated user is designed to be perfect and only accepts corrections if the measure is reduced. This time, we do not enforce a time limit to see the lower bound of possible corrections. For automatic GP and GP*, we use our defined probability threshold $p_t=.95$.
+
+The results of this experiment are shown in the second row of Fig.~\ref{fig:results_mouse}. GP* is again able to correct the segmentation further than other methods (aRE measures: automatic GP XX, GP* XX, FP XX, simulated GP* XX, FP XX). Again, the results are not surprising since GP* can correct merge and split errors.
+
+\subsection{Drosophila Brain}
+
+The drosophila brain is analyzed by connectomics researchers because of its small size and hence, a reasonable target to obtain a complete wiring diagram. Despite the size, fruit flies exhibit complex behaviors and are in general well studied. We evaluate the performance of our guided proofreading classifiers on three different datasets of adult fly brain. The datasets are publicly available as part of the MICCAI 2016 challenge on circuit reconstruction from electron microscopy images (CREMI)\footnote{The MICCAI CREMI challenge data is available at  http://www.cremi.org}. Each dataset consists of $1250x1250x125$ voxels of training data (A,B,C) as well as testing data (A+,B+,C+) of the same dimensions. Manually labeled ground truth is also available for A,B, and C but not for the testing data.
+
+Since drosophila brain exhibits different cell structures than mouse brain, we retrain the guided proofreading classifiers (and our automatic segmentation pipeline) as well as focused proofreading combined on the three training datasets. We use 300 slices of the A,B,C samples for training and validation, and 75 slices for testing. This results in YYY correct and ZZZ split error patches (respectively, XXX and YYY for testing). The architecture and all parameters of our classifiers stay the same. The trained GP classifier exhibits a reasonable performance on the testing data as seen in Fig.~\ref{fig:roc}.
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=\linewidth]{gfx/results_fruitfly.png}
+\end{center}
+  \vspace{-4mm}
+   \caption{Results of guided proofreading with active label suggestion (GP*) and focused proofreading performed automatically on three drosophila datasets. The datasets are part of the MICCAI 2016 CREMI challenge and publicly available. We measure performance as adapted Rand error (the lower, the better). GP* is able to correct the initial segmentation further than FP. Our GP* scores places us XXnd on the CREMI leaderboard.}
+\label{fig:results_fruitfly}
+\end{figure}
+
+We then use the trained GP* and FP classifiers to evaluate proofreading automatically. Since ground truth labeling is not available, the evaluation is performed by submitting our results to the CREMI leaderboard. Again, we use adapted Rand error to quantify the performance. Fig.~\ref{fig:results_fruitfly} shows the results for each of the A+,B+, and C+ datasets. The performance of GP* is significantly better than FP and places us XXnd on the CREMI leaderboard.
+

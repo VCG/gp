@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: guidedproofreading_review.aux
+The style file: ieee.bst
+Database file #1: connectomics.bib
+Warning--to sort, need author or key in isbi_challenge
+Warning--to sort, need author or key in neuroproof2013
+Warning--there's a number but no volume in mojo2
+Warning--empty journal in RAND
+You've used 33 entries,
+            2120 wiz_defined-function locations,
+            697 strings with 10864 characters,
+and the built_in function-call counts, 13112 in all, are:
+= -- 1195
+> -- 877
+< -- 4
++ -- 353
+- -- 314
+* -- 1066
+:= -- 2225
+add.period$ -- 101
+call.type$ -- 33
+change.case$ -- 255
+chr.to.int$ -- 0
+cite$ -- 37
+duplicate$ -- 400
+empty$ -- 873
+format.name$ -- 314
+if$ -- 2642
+int.to.chr$ -- 0
+int.to.str$ -- 33
+missing$ -- 29
+newline$ -- 170
+num.names$ -- 62
+pop$ -- 262
+preamble$ -- 1
+purify$ -- 222
+quote$ -- 0
+skip$ -- 286
+stack$ -- 0
+substring$ -- 654
+swap$ -- 77
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 132
+warning$ -- 4
+while$ -- 94
+width$ -- 35
+write$ -- 358
+(There were 4 warnings)
