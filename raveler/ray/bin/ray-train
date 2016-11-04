@@ -1,0 +1,264 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# ensure imported package is local to this executable
+
+import os
+import sys
+
+this_dir = os.path.realpath(sys.argv[0])
+pkg_dir = os.path.realpath(os.path.join(this_dir, '..'))
+sys.path.insert(0, pkg_dir)
+
+# Python standard library
+import argparse
+import subprocess as sp
+import logging
+import functools
+import json
+
+# external libraries
+import numpy as np
+try:
+    from skimage import morphology as skmorph
+except ImportError:
+    logging.warning('Could not import skimage.')
+from scipy.ndimage import label
+
+try:
+    import syngeo
+except ImportError:
+    logging.warning('Could not import syngeo. ' +
+                                        'Synapse-aware mode not available.')
+
+# local modules
+from ray import imio, agglo, morpho, classify, features, evaluate
+
+import pdb
+
+try:
+    from ray import stack_np
+except ImportError:
+    pass
+
+
+if __name__ == '__main__':
+
+
+    parser = argparse.ArgumentParser(
+        description='Train a classifier for agglomerative segmentation.')
+    parser.add_argument('fin', nargs=2,
+        help='The boundary probability map and gold standard segmentation ' +\
+        'files. Supported formats are png/tiff/jpeg stacks, .h5 files ' +\
+        'group "stack" is assumed), _boundpred.h5 Ilastik batch prediction '+\
+        'files (group "/volume/prediction" is assumed), and Raveler export '+\
+        'directories.')
+    parser.add_argument('-s', '--single-channel', action='store_true',
+        default=False,
+        help='Use only one channel from the boundary prediction map.')
+    parser.add_argument('-C', '--no-channel-data', action='store_true',
+        default=False,
+        help='The probability map has no separate dimension for channels.')
+    parser.add_argument('-I', '--remove-inclusions', action='store_true',
+        default=False, 
+        help='Remove inclusions before training and before output.')
+    parser.add_argument('--use-neuroproof', action='store_true',
+        default=False, 
+        help='Use NeuroProof.')
+    parser.add_argument('-L', '--learning-mode', metavar='MODE', 
+        default='strict',
+        help='Set the learning mode (strict or loose).')
+    parser.add_argument('-l', '--labeling-mode', metavar='MODE', 
+        default='assignment',
+        help='Set the labeling mode (assignment, voi-sign, or rand-sign).')
+    parser.add_argument('-p', '--priority-mode', default='active',
+        metavar='MODE',
+        help='Set the priority mode during learning (default: %(default)s).')
+    parser.add_argument('-m', '--no-memory', action='store_false', default=True,
+        help='Don\'t remember all training epochs.', dest="memory")
+    parser.add_argument('-u', '--no-unique', action='store_false', default=True,
+        help='Allow use of repeated training examples.', dest="unique")
+    parser.add_argument('-f', '--no-learn-flat', action='store_false',
+        default=True,
+        help='Don\'t perform a flat region adjacency graph learning to begin.',
+        dest="learn_flat" )
+    parser.add_argument('-e', '--num-epochs', type=int, metavar='UINT',
+        default=5, help='Set the min number of epochs of training to run ' +\
+        '(default: %(default)s).')
+    parser.add_argument('-E', '--max-num-epochs', type=int, metavar='UINT',
+        default=20, help='Set the maximum number of epochs of training to ' +\
+        'run (default: %(default)s).')
+    parser.add_argument('-n', '--min-num-examples', type=int, metavar='UINT',
+        default=1, help='Set the minimum number of training examples.')
+    parser.add_argument('-N', '--num-examples', type=int, metavar='UINT',
+        default=None, help='Set the sampled number of training examples.')
+    parser.add_argument('-V', '--active-vi', action='store_true',
+        help='Use expected VI change for active learning.')
+    parser.add_argument('-B', '--active-vi-beta', type=float, default=1.0,
+        help='Relative penalty for false merges in weighted expected VI.')
+    parser.add_argument('-F', '--feature-manager', metavar='EVAL_STR',
+        default='features.base.Composite(children=' +\
+            '[features.moments.Manager(), ' +\
+            'features.histogram.Manager(25, 0, 1, [0.1, 0.5, 0.9])]' +\
+            ')',
+        help='Specify the feature manager you would like to use.')
+    parser.add_argument('-t', '--training-data-extension', metavar='EXT',
+        default='.trdat.h5',
+        help='The filename extension for the training data.')
+    parser.add_argument('-c', '--classifier-extension', metavar='EXT',
+        default='.classifier.h5',
+        help='The filename extension for the saved classifier.')
+    parser.add_argument('-P', '--show-progress', action='store_true', 
+        default=False, help='Show a progress bar.')
+    parser.add_argument('-v', '--verbose', action='store_true', default=False,
+        help='Print runtime information about execution.')
+    parser.add_argument('-Z', '--nozeros', action='store_false', 
+        default=True, help='Disable nozeros mode.')
+    parser.add_argument('-w', '--watershed-file', type=str,
+        help='Use a pre-computed watershed segmentation.')
+    parser.add_argument('-S', '--synapse-file', type=str, metavar='FN',
+        help='Use a synapse annotation json file to help segmentation.')
+    parser.add_argument('-d', '--synapse-dilation', type=int, metavar='INT',
+        help='Dilate synapse points by this amount.', default=1)
+    parser.add_argument('-o', '--output-dir', type=str, default='./',
+        metavar='DIR', help='Directory for all output')
+    parser.add_argument('-x', '--experiment-name', type=str,
+        metavar='EXPT_NAME',
+        help='Name of the experiment -- will be used as the base name for ' +\
+            'all outputs', required=True)
+    parser.add_argument('--seed-cc-threshold', type=int, default=0,
+        help='Connected component threshold in seed creation')
+    args = parser.parse_args()
+
+    if args.use_neuroproof:
+        try:
+            from ray import stack_np
+        except ImportError:
+            logging.warning("NeuroProof could not be imported")
+            sys.exit(1)
+            
+
+    experiment_prefix = os.path.join(args.output_dir, args.experiment_name)
+
+    MasterLogger = logging.getLogger('pipeline')
+    MasterLogger.propagate = False
+    MasterLogger.setLevel(logging.DEBUG)
+    console = logging.StreamHandler(sys.stdout)
+    console.setLevel(logging.INFO)
+    
+    formatter = logging.Formatter('%(levelname)-8s %(message)s')
+    console.setFormatter(formatter)
+    MasterLogger.addHandler(console)
+
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+
+    if args.experiment_name.find('/') != -1:
+        MasterLogger.error("Experiment name cannot be a path")
+        sys.exit(1)
+
+    prim = logging.FileHandler(experiment_prefix + ".ray-train.log", 'a')
+    prim.setLevel(logging.DEBUG)
+    prim.setFormatter(logging.Formatter(
+        fmt='%(asctime)s %(levelname)-8s %(message)s', 
+        datefmt='%m-%d-%y %H:%M'))
+    MasterLogger.addHandler(prim)
+
+    MasterLogger.info("Script called: " + ' '.join(sys.argv))
+    MasterLogger.info("Script run from: " + os.path.realpath('.'))
+
+    p = imio.read_image_stack(args.fin[0], single_channel=False)
+    p0 = p if args.no_channel_data else p[..., 0]
+    if args.single_channel: p = p0
+    gs = evaluate.relabel_from_one(imio.read_image_stack(args.fin[1]))[0]
+    MasterLogger.info("Performing watershed")
+    if args.watershed_file is None:
+        seeds = label(p0==0)[0]
+        if args.seed_cc_threshold > 0:
+            seeds = morpho.remove_small_connected_components(seeds,
+                                                    args.seed_cc_threshold)
+        ws = skmorph.watershed(p0, seeds)
+    else:
+        ws = imio.read_image_stack(args.watershed_file)
+    pdb.set_trace()
+
+    if args.use_neuroproof:
+        fm = features.base.Composite(children=[
+            features.inclusion.Manager(),
+            features.moments.Manager(),
+            features.histogram.Manager(
+                25, 0, 1, [0.1, 0.3, 0.5, 0.7, 0.9], use_neuroproof=True)])
+    else :
+        fm = eval(args.feature_manager, {}, {'features': features})
+
+    # synapses
+    synapse_aware = args.synapse_file is not None
+    if synapse_aware:
+        MasterLogger.info("Processing synapses")
+        pre_post_pairs = syngeo.io.raveler_synapse_annotations_to_coords(
+            args.synapse_file)
+        synapse_volume = syngeo.io.volume_synapse_view(pre_post_pairs, p0.shape)
+        ws = morpho.split_exclusions(p0, ws, synapse_volume, 
+                                                        args.synapse_dilation)
+        MasterLogger.info("Finished processing synapses")
+    else:
+        synapse_volume = np.zeros(p0.shape, np.uint8)
+
+
+    MasterLogger.info("Building RAG")
+    g = agglo.Rag(ws, p, feature_manager=fm, show_progress=args.show_progress,
+            nozeros=args.nozeros, exclusions=synapse_volume)
+    MasterLogger.info("Starting inclusion removal with %i nodes"
+                                                        % g.number_of_nodes())
+    g.remove_inclusions()
+    MasterLogger.info("Finished inclusion removal with %i nodes"
+                                                        % g.number_of_nodes())
+    MasterLogger.info("Learning epochs")
+    if args.active_vi:
+        active_function = functools.partial(agglo.expected_change_vi,
+                                            beta=args.active_vi_beta)
+    else:
+        active_function = agglo.classifier_probability
+
+    d, epochs = g.learn_agglomerate(gs, fm, args.min_num_examples, 
+        learn_flat=args.learn_flat, learning_mode=args.learning_mode,
+        labeling_mode=args.labeling_mode, priority_mode=args.priority_mode,
+        memory=args.memory, unique=args.unique, min_num_epochs=args.num_epochs,
+        max_num_epochs=args.max_num_epochs, 
+        max_num_samples=args.num_examples, active_function=active_function)
+    current_directory = os.path.realpath('.')
+    #os.chdir(this_dir)
+    #try:
+        #git_commit = sp.check_output(['git', 'log', '-n', '1']).split('\n')[0]\
+                    #.split()[1]
+        #git_stamp = 'commit ' + git_commit if \
+            #sp.check_output(['git', 'status']).split('\n').count(
+            #'nothing to commit (working directory clean)') == 1 else \
+            #'uncommitted changes from ' + git_commit
+    #except OSError, sp.CalledProcessError:
+        #git_stamp = 'git commit unknown'
+    #MasterLogger.debug(git_stamp)
+    #os.chdir(current_directory)
+    info_string = '\n' #.join(args.fin + [args.feature_manager, git_stamp])
+    MasterLogger.info("Saving training data to disk")
+    classify.save_training_data_to_disk(d, 
+        experiment_prefix + args.training_data_extension, info=info_string)
+    for i, epoch in enumerate(epochs):
+        classify.save_training_data_to_disk(epoch, 
+            experiment_prefix + args.training_data_extension + '.' + str(i),
+            info=info_string)
+    MasterLogger.info("Training classifier")
+    feat, lab = classify.sample_training_data(
+                                    d[0], d[1][:, 0], args.num_examples)
+    pdb.set_trace()  	
+    rf=classify.VigraRandomForest()
+    rf.fit(feat, lab) 	
+#    rf = classify.get_classifier().fit(feat, lab)
+    MasterLogger.info("Saving classifier to disk")
+    
+    # grab features json
+    fm_description = fm.write_fm()
+    fm_description["neuroproof_features"] = args.use_neuroproof
+    rf.feature_description = json.dumps(fm_description)
+    rf.save_to_disk(experiment_prefix + args.classifier_extension) 		
+    #classify.save_classifier(rf, experiment_prefix + args.classifier_extension)
