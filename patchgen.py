@@ -1,5 +1,6 @@
 import gp
 import mahotas as mh
+import numpy as np
 import time
 
 def read_section(path, z, verbose=True, withNP=True):

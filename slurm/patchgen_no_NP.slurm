@@ -19,7 +19,7 @@ module load gcc/4.9.0-fasrc01
 
 module load cuda/7.5-fasrc01
 module load cudnn/7.0-fasrc01
-
+module load jpeg
 module load opencv/3.0.0-fasrc04
 
 # custom HDF5 lib
