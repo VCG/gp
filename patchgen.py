@@ -141,6 +141,6 @@ def run(PATCH_PATH, start_slice, end_slice, filename, withNP):
     print 'Done!'
 
 
-run('/n/regal/pfister_lab/haehn/FINAL/IPMLB', 10, 20, 'train', True)
+run('/n/regal/pfister_lab/haehn/FINAL/IPMLB/', 0, 250, 'train', True)
 
 #run('/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP', 10, 20, 'train', False)
