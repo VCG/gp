@@ -27,9 +27,11 @@ class Legacy(object):
     input_prob = np.zeros((10,1024,1024))
     path_prefix = '/Users/d/Projects/'
     path_prefix = '/home/d/dojo_xp/data/' # for beast only
-    input_rhoana_ = imread.imread_multi(path_prefix+'dojo_data_vis2014/labels_after_automatic_segmentation_multi.tif')
-    for i,r in enumerate(input_rhoana_):
-      input_rhoana[i] = r
+    # input_rhoana_ = imread.imread_multi(path_prefix+'dojo_data_vis2014/labels_after_automatic_segmentation_multi.tif')
+    input_rhoana = tif.imread(path_prefix+'dojo_data_vis2014/labels_after_automatic_segmentation_multi.tif')
+    # for i,r in enumerate(input_rhoana_):
+    #   input_rhoana[i] = r
+    print 'a'
     input_gold_ = imread.imread_multi(path_prefix+'dojo_data_vis2014/groundtruth_multi.tif')
     for i,g in enumerate(input_gold_):
       input_gold[i] = g 
@@ -57,12 +59,12 @@ class Legacy(object):
 
 
 
-    for i in range(0,10):
-      zeros_gold = Util.threshold(input_gold[i], 0)
-      input_gold[i] = Util.relabel(input_gold[i])
-      # restore zeros
-      input_gold[i][zeros_gold==1] = 0
-      input_rhoana[i] = Util.relabel(input_rhoana[i])
+    # for i in range(0,10):
+    #   zeros_gold = Util.threshold(input_gold[i], 0)
+    #   input_gold[i] = Util.relabel(input_gold[i])
+    #   # restore zeros
+    #   input_gold[i][zeros_gold==1] = 0
+    #   input_rhoana[i] = Util.relabel(input_rhoana[i])
 
     return input_image.astype(np.uint8), prob_new.astype(np.uint8), input_gold.astype(np.uint32), input_rhoana.astype(np.uint32), bbox_larger
 
@@ -457,7 +459,7 @@ class Legacy(object):
 
     binary_relabeled = Util.relabel(binary)
 
-    Util.view(binary_relabeled, color=True, large=True)
+    # Util.view(binary_relabeled, color=True, large=True)
 
     binary_no_border = np.array(binary_relabeled, dtype=np.uint64)
     binary_no_border[border==1] = 0

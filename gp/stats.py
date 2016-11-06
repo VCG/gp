@@ -30,7 +30,7 @@ class Stats(object):
     original_mean_VI, original_median_VI, original_VI_s = gp.Legacy.VI(input_gold, input_rhoana)
 
     # output folder for anything to store
-    output_folder = '/home/d/netstats/'+cnn.uuid+'/'
+    output_folder = '/home/d/netstatsLATEST2/'+cnn.uuid+'/'
     if not os.path.exists(output_folder):
       os.makedirs(output_folder)
 
@@ -95,35 +95,35 @@ class Stats(object):
 
 
 
-    print
-    dojo_vi_99_file = output_folder + '/dojo_vi_99.p'
-    if os.path.exists(dojo_vi_99_file):
-      print 'Loading merge errors p < .01 and split errors p > .99 from file..'
-      with open(dojo_vi_99_file, 'rb') as f:
-        dojo_vi_99 = pickle.load(f)
-    else:      
-      #
-      # perform merge correction with p < .01
-      #
-      print 'Correcting merge errors with p < .01'
-      bigM_dojo_01, corrected_rhoana_01 = gp.Legacy.perform_auto_merge_correction(cnn, bigM_dojo, input_image, input_prob, input_rhoana, merge_errors, .01)
+    # print
+    # dojo_vi_99_file = output_folder + '/dojo_vi_99.p'
+    # if os.path.exists(dojo_vi_99_file):
+    #   print 'Loading merge errors p < .01 and split errors p > .99 from file..'
+    #   with open(dojo_vi_99_file, 'rb') as f:
+    #     dojo_vi_99 = pickle.load(f)
+    # else:      
+    #   #
+    #   # perform merge correction with p < .01
+    #   #
+    #   print 'Correcting merge errors with p < .01'
+    #   bigM_dojo_01, corrected_rhoana_01 = gp.Legacy.perform_auto_merge_correction(cnn, bigM_dojo, input_image, input_prob, input_rhoana, merge_errors, .01)
 
-      print '   Mean VI improvement', original_mean_VI-gp.Legacy.VI(input_gold, corrected_rhoana_01)[0]
-      print '   Median VI improvement', original_median_VI-gp.Legacy.VI(input_gold, corrected_rhoana_01)[1]
+    #   print '   Mean VI improvement', original_mean_VI-gp.Legacy.VI(input_gold, corrected_rhoana_01)[0]
+    #   print '   Median VI improvement', original_median_VI-gp.Legacy.VI(input_gold, corrected_rhoana_01)[1]
 
-      #
-      # perform split correction with p > .99
-      #
-      print 'Correcting split errors with p > .99'
-      bigM_dojo_after_99, out_dojo_volume_after_auto_99, dojo_auto_fixes_99, dojo_auto_vi_s_99 = gp.Legacy.splits_global_from_M_automatic(cnn, bigM_dojo_01, input_image, input_prob, corrected_rhoana_01, input_gold, sureness_threshold=.99)
+    #   #
+    #   # perform split correction with p > .99
+    #   #
+    #   print 'Correcting split errors with p > .99'
+    #   bigM_dojo_after_99, out_dojo_volume_after_auto_99, dojo_auto_fixes_99, dojo_auto_vi_s_99 = gp.Legacy.splits_global_from_M_automatic(cnn, bigM_dojo_01, input_image, input_prob, corrected_rhoana_01, input_gold, sureness_threshold=.99)
 
-      dojo_vi_99 = gp.Legacy.VI(input_gold, out_dojo_volume_after_auto_99)
+    #   dojo_vi_99 = gp.Legacy.VI(input_gold, out_dojo_volume_after_auto_99)
 
-      with open(dojo_vi_99_file, 'wb') as f:
-        pickle.dump(dojo_vi_99, f)
+    #   with open(dojo_vi_99_file, 'wb') as f:
+    #     pickle.dump(dojo_vi_99, f)
 
-    print '   Mean VI improvement', original_mean_VI-dojo_vi_99[0]
-    print '   Median VI improvement', original_median_VI-dojo_vi_99[1]
+    # print '   Mean VI improvement', original_mean_VI-dojo_vi_99[0]
+    # print '   Median VI improvement', original_median_VI-dojo_vi_99[1]
 
 
 
@@ -159,28 +159,28 @@ class Stats(object):
     print '   Median VI improvement', original_median_VI-dojo_vi_simuser[1]
 
     
-    print
-    dojo_vi_simuser_er_file = output_folder + '/dojo_vi_simuser_er.p'
-    if os.path.exists(dojo_vi_simuser_er_file):
-      print 'Loading merge errors and split errors (simulated user) with error rates from file..'
-      with open(dojo_vi_simuser_er_file, 'rb') as f:
-        dojo_vi_simuser_er = pickle.load(f)
-    else:
-      #
-      # Simulated user split correction with error rate
-      #
-      print '   Re-running simulated user with er=0 .. 0.2'
-      dojo_vi_simuser_er = collections.OrderedDict()
-      for error_rate in range(0,21):
-        error_rate /= 100.
-        # print '---',error_rate
-        bigM_dojo_after, out_dojo_volume_after_sim_user, dojo_sim_user_fixes, dojo_sim_user_vi_s = gp.Legacy.splits_global_from_M(cnn, bigM_dojo, input_image, input_prob, input_rhoana, input_gold, hours=.5, error_rate=error_rate)
+    # print
+    # dojo_vi_simuser_er_file = output_folder + '/dojo_vi_simuser_er.p'
+    # if os.path.exists(dojo_vi_simuser_er_file):
+    #   print 'Loading merge errors and split errors (simulated user) with error rates from file..'
+    #   with open(dojo_vi_simuser_er_file, 'rb') as f:
+    #     dojo_vi_simuser_er = pickle.load(f)
+    # else:
+    #   #
+    #   # Simulated user split correction with error rate
+    #   #
+    #   print '   Re-running simulated user with er=0 .. 0.2'
+    #   dojo_vi_simuser_er = collections.OrderedDict()
+    #   for error_rate in range(0,21):
+    #     error_rate /= 100.
+    #     # print '---',error_rate
+    #     bigM_dojo_after, out_dojo_volume_after_sim_user, dojo_sim_user_fixes, dojo_sim_user_vi_s = gp.Legacy.splits_global_from_M(cnn, bigM_dojo, input_image, input_prob, input_rhoana, input_gold, hours=.5, error_rate=error_rate)
 
-        # append the mean VI
-        dojo_vi_simuser_er[str(error_rate)] = gp.Legacy.VI(input_gold, out_dojo_volume_after_sim_user)[1]
+    #     # append the mean VI
+    #     dojo_vi_simuser_er[str(error_rate)] = gp.Legacy.VI(input_gold, out_dojo_volume_after_sim_user)[1]
 
-      with open(dojo_vi_simuser_er_file, 'wb') as f:
-        pickle.dump(dojo_vi_simuser_er, f)
+    #   with open(dojo_vi_simuser_er_file, 'wb') as f:
+    #     pickle.dump(dojo_vi_simuser_er, f)
 
 
 
