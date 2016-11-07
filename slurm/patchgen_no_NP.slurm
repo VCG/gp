@@ -2,12 +2,11 @@
 #
 # add all other SBATCH directives here...
 #
-#SBATCH -p cox
+#SBATCH -p serial_requeue
 #SBATCH -n 1 # Number of cores
 #SBATCH -N 1 # Ensure that all cores are on one machine
-#SBATCH --gres=gpu
-#SBATCH --mem=100000
-#SBATCH -t 10-12:00
+#SBATCH --mem=160000
+#SBATCH -t 1-12:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=haehn@seas.harvard.edu
 #SBATCH -o /n/home05/haehn/SLURM/gp/out-patchgen.txt
