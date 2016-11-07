@@ -59,12 +59,12 @@ class Legacy(object):
 
 
 
-    # for i in range(0,10):
-    #   zeros_gold = Util.threshold(input_gold[i], 0)
-    #   input_gold[i] = Util.relabel(input_gold[i])
-    #   # restore zeros
-    #   input_gold[i][zeros_gold==1] = 0
-    #   input_rhoana[i] = Util.relabel(input_rhoana[i])
+    for i in range(0,10):
+      zeros_gold = Util.threshold(input_gold[i], 0)
+      input_gold[i] = Util.relabel(input_gold[i])
+      # restore zeros
+      input_gold[i][zeros_gold==1] = 0
+      input_rhoana[i] = Util.relabel(input_rhoana[i])
 
     return input_image.astype(np.uint8), prob_new.astype(np.uint8), input_gold.astype(np.uint32), input_rhoana.astype(np.uint32), bbox_larger
 
@@ -395,6 +395,8 @@ class Legacy(object):
     cropped_combined_border = Util.crop_by_bbox(b, binary_bbox)
     cropped_border_only = Util.crop_by_bbox(border, binary_bbox)
 
+    
+
     corrected_binary = Legacy.correct_merge(input_rhoana, label, border)
     corrected_binary_original = np.array(corrected_binary)
     result = np.array(input_rhoana)
@@ -420,11 +422,88 @@ class Legacy(object):
 
     return cropped_image, cropped_binary_border, cropped_combined_border, cropped_border_only, cropped_result, result, sliceoverview, cropped_binary, cropped_fusion
 
+
+  @staticmethod
+  def get_split_error_image(input_image, input_rhoana, labels):
+
+    if not isinstance(labels, list):
+      labels = [labels]
+
+    b = np.zeros((input_image.shape[0],input_image.shape[1],4), dtype=np.uint8)
+    b[:,:,0] = input_image[:]
+    b[:,:,1] = input_image[:]
+    b[:,:,2] = input_image[:]
+    b[:,:,3] = 255
+
+    c = np.zeros((input_image.shape[0],input_image.shape[1],4), dtype=np.uint8)
+    c[:,:,0] = input_image[:]
+    c[:,:,1] = input_image[:]
+    c[:,:,2] = input_image[:]
+    c[:,:,3] = 255    
+
+    d = np.zeros((input_image.shape[0],input_image.shape[1],4), dtype=np.uint8)
+    d[:,:,0] = input_image[:]
+    d[:,:,1] = input_image[:]
+    d[:,:,2] = input_image[:]
+    d[:,:,3] = 255    
+
+    e = np.zeros((input_image.shape[0],input_image.shape[1],4), dtype=np.uint8)
+    e[:,:,0] = input_image[:]
+    e[:,:,1] = input_image[:]
+    e[:,:,2] = input_image[:]
+    e[:,:,3] = 255    
+
+    f = np.zeros((input_image.shape[0],input_image.shape[1],4), dtype=np.uint8)
+    f[:,:,0] = input_image[:]
+    f[:,:,1] = input_image[:]
+    f[:,:,2] = input_image[:]
+    f[:,:,3] = 255    
+    f[input_rhoana == labels[0]] = (255,0,0,255)
+    f[input_rhoana == labels[1]] = (255,0,0,255)
+
+
+    thresholded_rhoana = Util.view_labels(input_rhoana, labels, crop=False, return_it=True)
+    
+    cropped_rhoana_dilated = mh.dilate(thresholded_rhoana.astype(np.uint64))
+    for dilate in range(30):
+      cropped_rhoana_dilated = mh.dilate(cropped_rhoana_dilated)
+
+    cropped_rhoana_bbox = mh.bbox(cropped_rhoana_dilated)
+    binary_border = mh.labeled.borders(thresholded_rhoana.astype(np.bool))
+
+    b[input_rhoana == labels[0]] = (255,0,0,255)
+    c[mh.labeled.borders(Util.threshold(input_rhoana, labels[0])) == 1] = (255,0,0,255)
+    d[binary_border == 1] = (255,0,0,255)
+    if len(labels) > 1:
+      b[input_rhoana == labels[1]] = (0,255,0,255)
+      c[mh.labeled.borders(Util.threshold(input_rhoana, labels[1])) == 1] = (0,255,0,255)
+
+    cropped_image = Util.crop_by_bbox(input_image, cropped_rhoana_bbox)
+    cropped_labels = Util.crop_by_bbox(b, cropped_rhoana_bbox)
+    cropped_borders = Util.crop_by_bbox(c, cropped_rhoana_bbox)
+    cropped_binary_border = Util.crop_by_bbox(d, cropped_rhoana_bbox)
+
+    e[cropped_rhoana_bbox[0]:cropped_rhoana_bbox[1], cropped_rhoana_bbox[2]] = (255,255,0,255)
+    e[cropped_rhoana_bbox[0]:cropped_rhoana_bbox[1], cropped_rhoana_bbox[3]] = (255,255,0,255)
+    e[cropped_rhoana_bbox[0], cropped_rhoana_bbox[2]:cropped_rhoana_bbox[3]] = (255,255,0,255)
+    e[cropped_rhoana_bbox[1], cropped_rhoana_bbox[2]:cropped_rhoana_bbox[3]] = (255,255,0,255)
+
+    slice_overview = e
+
+    cropped_binary_labels = Util.crop_by_bbox(f, cropped_rhoana_bbox)
+
+    return cropped_image, cropped_labels, cropped_borders, cropped_binary_border, cropped_binary_labels, slice_overview
+
+
+
+
   @staticmethod
   def remove_border_mess(e):
     '''
     '''
+    
     label_sizes = Util.get_histogram(e)
+
     # we only want to keep the two largest labels
     largest1 = np.argmax(label_sizes[1:])+1
     label_sizes[largest1] = 0

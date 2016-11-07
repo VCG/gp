@@ -162,7 +162,24 @@ class Patch(object):
 
     return prediction
 
+  @staticmethod
+  def grab_group_test_and_unify_for_active_label(cnn, image, prob, segmentation, l, n, sample_rate=10, oversampling=False):
+    '''
+    '''
+    patches = []
+    patches_l, patches_n = Patch.grab(image, prob, segmentation, l, n, oversampling=oversampling)
+    patches += patches_l
+    patches += patches_n
 
+    grouped_patches = Patch.group(patches)
+
+    if len(grouped_patches.keys()) != 1:
+      # out of bound condition due to probability map
+      return -1
+
+    prediction = Patch.test_and_unify(grouped_patches.items()[0][1], cnn)
+
+    return feature_map
 
   @staticmethod
   def patchify(image, prob, segmentation, sample_rate=10, min_pixels=100, max=1000, oversampling=False, ignore_zero_neighbor=True):
