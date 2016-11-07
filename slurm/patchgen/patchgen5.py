@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../../')
 import gp
 import glob
 import mahotas as mh
