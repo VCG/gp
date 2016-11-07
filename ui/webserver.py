@@ -103,8 +103,8 @@ class WebServer:
 
       self._image_function_cache = []
       for i in range(correction_count):
-        border_before, border_after, labels_before, labels_after, slice_overview = image_function(error, i)
-        self._image_function_cache.append([border_before, border_after, labels_before, labels_after, slice_overview])
+        border_before, border_after, labels_before, labels_after, slice_overview, cropped_slice_overview = image_function(error, i)
+        self._image_function_cache.append([border_before, border_after, labels_before, labels_after, slice_overview, cropped_slice_overview])
     
       content = json.dumps({'correction_count': correction_count})
       content_type = 'text/html'
@@ -131,7 +131,7 @@ class WebServer:
 
       image = np.zeros((1,1))
       number = int(splitted_request[3])
-      border_before, border_after, labels_before, labels_after, slice_overview = self._image_function_cache[number]
+      border_before, border_after, labels_before, labels_after, slice_overview, cropped_slice_overview = self._image_function_cache[number]
 
       if splitted_request[2] == 'slice_overview':
 
@@ -152,6 +152,10 @@ class WebServer:
       elif splitted_request[2] == 'correction_labels':
         
         image = labels_after
+
+      elif splitted_request[2] == 'cropped_slice_overview':
+
+        image = cropped_slice_overview
 
       if image.shape[0]!=1:
 

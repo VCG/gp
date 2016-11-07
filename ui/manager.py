@@ -19,19 +19,13 @@ class Manager(object):
 
     self._corrections = []
     self._correction_times = []
+    self._correction_vis = []
 
     self._mode = 'GP'
 
   def start( self, mode ):
     '''
     '''
-    # load data
-    input_image, input_prob, input_gold, input_rhoana, dojo_bbox = gp.Legacy.read_dojo_data() 
-    self._input_image = input_image
-    self._input_prob = input_prob
-    self._input_gold = input_gold
-    self._input_rhoana = input_rhoana
-    self._dojo_bbox = dojo_bbox
 
     self._cnn = UITools.load_cnn()
 
@@ -63,9 +57,30 @@ class Manager(object):
 
         self._bigM = self.load_split_errors(filename='bigM_fp.p')
 
+    elif self._mode == 'TEST':
+        print 'Test mode using FP'
+        self._merge_errors = []
+
+        self._bigM = self.load_split_errors(filename='bigM_fp_test.p')
+
+
     else:
         print 'WRONG MODE, should be GP, GP* or FP'
         sys.exit(2)
+
+    # load data
+    if self._mode == 'TEST':
+        print 'We are using dummy data for testing'
+        input_image, input_prob, input_gold, input_rhoana, dojo_bbox = gp.Legacy.read_dojo_test_data() 
+        self._mode = 'FP'
+    else:
+        input_image, input_prob, input_gold, input_rhoana, dojo_bbox = gp.Legacy.read_dojo_data() 
+
+    self._input_image = input_image
+    self._input_prob = input_prob
+    self._input_gold = input_gold
+    self._input_rhoana = input_rhoana
+    self._dojo_bbox = dojo_bbox
 
     print 'VI at start:', UITools.VI(self._input_gold, self._input_rhoana)[1]
     print 'aRE at start:', UITools.adaptedRandError(self._input_rhoana, self._input_gold)[1]
@@ -213,15 +228,16 @@ class Manager(object):
     input_rhoana = self._input_rhoana
 
 
-    a,b,c,d,e,f,g,h,i = gp.Legacy.get_merge_error_image(input_image[z], input_rhoana[z], label, border)
+    a,b,c,d,e,f,g,h,i,j = gp.Legacy.get_merge_error_image(input_image[z], input_rhoana[z], label, border)
 
     border_before = b
     labels_before = h
     border_after = c
     labels_after = i
     slice_overview = g
+    cropped_slice_overview = j
 
-    return border_before, border_after, labels_before, labels_after, slice_overview
+    return border_before, border_after, labels_before, labels_after, slice_overview, cropped_slice_overview
     
   def get_split_error_image(self, split_error, number=1):
 
@@ -232,15 +248,16 @@ class Manager(object):
     input_prob = self._input_prob
     input_rhoana = self._input_rhoana
 
-    a,b,c,d,e,f = gp.Legacy.get_split_error_image(input_image[z], input_rhoana[z], labels)
+    a,b,c,d,e,f,g = gp.Legacy.get_split_error_image(input_image[z], input_rhoana[z], labels)
 
     labels_before = b
     borders_before = c
     borders_after = d
     labels_after = e
     slice_overview = f
+    cropped_slice_overview = g
 
-    return borders_before, borders_after, labels_before, labels_after, slice_overview
+    return borders_before, borders_after, labels_before, labels_after, slice_overview, cropped_slice_overview
 
   def correct_merge(self, clicked_correction):
 
@@ -260,7 +277,7 @@ class Manager(object):
         z = merge_error[0]
         label = merge_error[1]
 
-        a,b,c,d,e,f,g,h,i = gp.Legacy.get_merge_error_image(input_image[z], input_rhoana[z], label, border)
+        a,b,c,d,e,f,g,h,i,j = gp.Legacy.get_merge_error_image(input_image[z], input_rhoana[z], label, border)
 
         new_rhoana = f
 
@@ -319,9 +336,16 @@ class Manager(object):
     else:
         # we correct this split
         # print 'fixing slice',z,'labels', labels
+        # vi = gp.Util.vi(self._input_gold[z], self._input_rhoana[z])
+        # print 'bef vi', vi
         new_m, new_rhoana = UITools.correct_split(self._cnn, m, self._mode, input_image[z], input_prob[z], input_rhoana[z], labels[0], labels[1], oversampling=False)
         self._bigM[z] = new_m
         self._input_rhoana[z] = new_rhoana
+        # vi = gp.Util.vi(self._input_gold[z], self._input_rhoana[z])
+        # print 'New VI', vi
+        vi = UITools.VI(self._input_gold, self._input_rhoana)
+        # print 'New global VI', vi[1]
+        self._correction_vis.append(vi[2])
 
         # self.finish()
         
@@ -349,6 +373,9 @@ class Manager(object):
     # store the corrections
     with open(os.path.join(self._output_path, 'corrections.p'), 'wb') as f:
         pickle.dump(self._corrections, f)
+
+    with open(os.path.join(self._output_path, 'correction_vis.p'), 'wb') as f:
+        pickle.dump(self._correction_vis, f)
 
     print 'All stored.'
 

@@ -21,16 +21,23 @@ body {
   /*transform-origin: 0 0;*/
   border: solid thin white;
   z-index: 2;
+  display: none;
 }
 
 #slice_overview:hover {
   transform: scale(1,1);
 }
 
+#cropped_slice_overview {
+  float: left;
+  margin-top: 30px;
+  padding: 10px;
+}
+
 #centered {
   position: absolute;
   top: 0px;
-  left:600px;
+  left:100px;
   /*width: 100%;*/
   /*text-align: center;*/
   height: 700px;

@@ -69,6 +69,72 @@ class Legacy(object):
     return input_image.astype(np.uint8), prob_new.astype(np.uint8), input_gold.astype(np.uint32), input_rhoana.astype(np.uint32), bbox_larger
 
   @staticmethod
+  def read_dojo_test_data():
+    input_image = np.zeros((10,1024,1024))
+    input_rhoana = np.zeros((10,1024,1024))
+    input_gold = np.zeros((10,1024,1024))
+    input_prob = np.zeros((10,1024,1024))
+    path_prefix = '/Users/d/Projects/'
+    path_prefix = '/home/d/dojo_xp/data/' # for beast only
+    # input_rhoana_ = imread.imread_multi(path_prefix+'dojo_data_vis2014/labels_after_automatic_segmentation_multi.tif')
+    input_rhoana = tif.imread(path_prefix+'dojo_data_vis2014_test/cut-train-segs.tif')
+    # for i,r in enumerate(input_rhoana_):
+    #   input_rhoana[i] = r
+    print 'test data'
+    input_gold_ = imread.imread_multi(path_prefix+'dojo_data_vis2014_test/cut-train-labels.tif')
+    for i,g in enumerate(input_gold_):
+      input_gold[i] = g 
+    for i in range(10):
+        # input_prob[i] = mh.imread(path_prefix+'dojo_data_vis2014/prob/'+str(i)+'_syn.tif')
+        #
+        # WE USE THE OTHER UNET PROBS, WE DO NOT NEED THEM HERE
+        #
+        input_prob[i] = tif.imread(path_prefix+'dojo_data_vis2014/prob_unet_fixed/'+str(50+i).zfill(4)+'.tif')
+        # return prob
+        # input_prob[i] = np.rot90(np.pad(prob, 92, 'constant'),2) # we are rotating the image
+        input_image[i] = mh.imread(path_prefix+'dojo_data_vis2014_test/images/'+str(i)+'.tif')
+        
+    bbox = mh.bbox(input_image[0])
+
+    bbox_larger = [bbox[0], bbox[1], bbox[2], bbox[3]]
+
+    prob_new = np.zeros(input_image.shape, dtype=np.uint8)
+    
+    input_image = input_image[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
+    input_rhoana = input_rhoana[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
+    input_gold = input_gold[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
+    # input_prob = input_prob[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
+    
+    #inverting right here
+    prob_new[:,bbox[0]:bbox[1], bbox[2]:bbox[3]] = 255-input_prob[:,bbox[0]:bbox[1], bbox[2]:bbox[3]]
+    prob_new = prob_new[:, bbox_larger[0]:bbox_larger[1], bbox_larger[2]:bbox_larger[3]]
+
+
+
+    for i in range(0,10):
+      zeros_gold = Util.threshold(input_gold[i], 0)
+      input_gold[i] = Util.relabel(input_gold[i])
+      # restore zeros
+      input_gold[i][zeros_gold==1] = 0
+      input_rhoana[i] = Util.relabel(input_rhoana[i])
+
+    # right now we have a 400x400 but we need 474x474
+    input_image = np.pad(input_image, 37, mode='constant', constant_values=0)[37:-37]
+    prob_new = np.pad(prob_new, 37, mode='constant', constant_values=0)[37:-37]
+    input_gold = np.pad(input_gold, 37, mode='constant', constant_values=0)[37:-37]
+    input_rhoana = np.pad(input_rhoana, 37, mode='constant', constant_values=0)[37:-37]
+
+
+
+
+
+
+
+
+    return input_image.astype(np.uint8), prob_new.astype(np.uint8), input_gold.astype(np.uint32), input_rhoana.astype(np.uint32), bbox_larger
+
+
+  @staticmethod
   def invert(array, smooth=False, sigma=2.5):
     
     grad = mh.gaussian_filter(array, sigma)
@@ -411,16 +477,19 @@ class Legacy(object):
     g[corrected_binary_original==1] = (0,255,0,255)
     cropped_fusion = Util.crop_by_bbox(g, binary_bbox)
 
+
+
+    cropped_binary = Util.crop_by_bbox(f, binary_bbox)
+    cropped_slice_overview = Util.crop_by_bbox(e, binary_bbox).copy()
+
     e[binary_bbox[0]:binary_bbox[1], binary_bbox[2]] = (255,255,0,255)
     e[binary_bbox[0]:binary_bbox[1], binary_bbox[3]] = (255,255,0,255)
     e[binary_bbox[0], binary_bbox[2]:binary_bbox[3]] = (255,255,0,255)
     e[binary_bbox[1], binary_bbox[2]:binary_bbox[3]] = (255,255,0,255)  
 
-    sliceoverview = e
+    sliceoverview = e    
 
-    cropped_binary = Util.crop_by_bbox(f, binary_bbox)
-
-    return cropped_image, cropped_binary_border, cropped_combined_border, cropped_border_only, cropped_result, result, sliceoverview, cropped_binary, cropped_fusion
+    return cropped_image, cropped_binary_border, cropped_combined_border, cropped_border_only, cropped_result, result, sliceoverview, cropped_binary, cropped_fusion, cropped_slice_overview
 
 
   @staticmethod
@@ -483,16 +552,20 @@ class Legacy(object):
     cropped_borders = Util.crop_by_bbox(c, cropped_rhoana_bbox)
     cropped_binary_border = Util.crop_by_bbox(d, cropped_rhoana_bbox)
 
+
+
+    cropped_binary_labels = Util.crop_by_bbox(f, cropped_rhoana_bbox)
+
+    cropped_slice_overview = Util.crop_by_bbox(e, cropped_rhoana_bbox).copy()
+
     e[cropped_rhoana_bbox[0]:cropped_rhoana_bbox[1], cropped_rhoana_bbox[2]] = (255,255,0,255)
     e[cropped_rhoana_bbox[0]:cropped_rhoana_bbox[1], cropped_rhoana_bbox[3]] = (255,255,0,255)
     e[cropped_rhoana_bbox[0], cropped_rhoana_bbox[2]:cropped_rhoana_bbox[3]] = (255,255,0,255)
     e[cropped_rhoana_bbox[1], cropped_rhoana_bbox[2]:cropped_rhoana_bbox[3]] = (255,255,0,255)
 
-    slice_overview = e
+    slice_overview = e    
 
-    cropped_binary_labels = Util.crop_by_bbox(f, cropped_rhoana_bbox)
-
-    return cropped_image, cropped_labels, cropped_borders, cropped_binary_border, cropped_binary_labels, slice_overview
+    return cropped_image, cropped_labels, cropped_borders, cropped_binary_border, cropped_binary_labels, slice_overview, cropped_slice_overview
 
 
 
@@ -583,7 +656,7 @@ class Legacy(object):
             z = me[0]
             label = me[1]
             border = me[3][0][1]
-            a,b,c,d,e,f,g,h,i = Legacy.get_merge_error_image(input_image[z], rhoana_after_merge_correction[z], label, border)        
+            a,b,c,d,e,f,g,h,i,j = Legacy.get_merge_error_image(input_image[z], rhoana_after_merge_correction[z], label, border)        
     
 
             new_rhoana = f
@@ -630,7 +703,7 @@ class Legacy(object):
           z = me[0]
           label = me[1]
           border = me[3][0][1]
-          a,b,c,d,e,f,g,h,i = Legacy.get_merge_error_image(input_image[z], rhoana_after_merge_correction[z], label, border)
+          a,b,c,d,e,f,g,h,i,j = Legacy.get_merge_error_image(input_image[z], rhoana_after_merge_correction[z], label, border)
 
 
           new_rhoana = f

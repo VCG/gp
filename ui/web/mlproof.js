@@ -10,7 +10,7 @@ MLProof.start = function() {
     MLProof.CORRECTIONS = [];
 
     MLProof.EXPERIMENT_START_TIME = 0;
-    MLProof.EXPERIMENT_END_TIME = 2*60*1000;
+    MLProof.EXPERIMENT_END_TIME = 1*60*1000;
 
     // onclick handler for corrections
     $('.correction').on('click', MLProof.apply_correction);
@@ -68,7 +68,15 @@ MLProof.get_error = function() {
 
             // propagate slice overview
             $('#slice_overview img').attr('src', MLProof.MODE+'/slice_overview/0/'+Math.random());
+            $('#cropped_slice_overview img').attr('src', MLProof.MODE+'/cropped_slice_overview/0/'+Math.random());
             $('.correction').hide();
+
+            // swap options randomly around
+            if (Math.random() > .5) {
+                $("#current").before($("#correction1"));
+            } else {
+                $("#correction1").before($("#current"));
+            }
 
             // propagate current
             $('#current .borders').attr('src', MLProof.MODE+'/current/0/'+Math.random());
