@@ -13,6 +13,7 @@
 #SBATCH -e /n/home05/haehn/SLURM/gp/err-patchgen.txt
 
 source new-modules.sh
+module load python
 module load Anaconda/2.5.0-fasrc01
 module load gcc/4.9.0-fasrc01
 
