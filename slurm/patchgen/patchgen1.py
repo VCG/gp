@@ -138,11 +138,11 @@ def run(PATCH_PATH, start_slice, end_slice, filename, withNP):
                                         )
     
     print 'saving..'
-    np.savez(PATCH_PATH+filename+'.npz', rgba=shuffled[0])
-    np.savez(PATCH_PATH+filename+'_targets.npz', targets=shuffled[1])
+    np.save(PATCH_PATH+filename+'.npz', shuffled[0])
+    np.save(PATCH_PATH+filename+'_targets.npz', shuffled[1])
     print 'Done!'
 
 
 # run('/n/regal/pfister_lab/haehn/FINAL/IPMLB', 10, 20, 'train', True)
 
-run('/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP/', 0, 50, 'train1', False)
+run('/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP/', 0, 50, 'train1b', False)

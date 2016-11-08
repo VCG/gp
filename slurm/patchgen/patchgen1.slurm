@@ -10,8 +10,8 @@
 #SBATCH -t 10-12:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=haehn@seas.harvard.edu
-#SBATCH -o /n/home05/haehn/SLURM/gp/out-patchgen1.txt
-#SBATCH -e /n/home05/haehn/SLURM/gp/err-patchgen1.txt
+#SBATCH -o /n/home05/haehn/SLURM/gp/out-patchgen1b.txt
+#SBATCH -e /n/home05/haehn/SLURM/gp/err-patchgen1b.txt
 
 source new-modules.sh
 module load Anaconda/2.5.0-fasrc01
