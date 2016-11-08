@@ -5,7 +5,7 @@
 #SBATCH -p serial_requeue
 #SBATCH -n 1 # Number of cores
 #SBATCH -N 1 # Ensure that all cores are on one machine
-#SBATCH --mem=200000
+#SBATCH --mem=220000
 #SBATCH -t 1-12:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=haehn@seas.harvard.edu
