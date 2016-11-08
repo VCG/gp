@@ -680,6 +680,25 @@ class Patch(object):
 
     return training['rgb'], training_targets['targets'].astype(np.uint8), test['rgb'], test_targets['targets'].astype(np.uint8)
 
+  @staticmethod
+  def load_big(patch_size=(75,75), verbose=True):
+
+
+    PATCH_PATH = '/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP/'
+
+    t0 = time.time()
+
+    training = np.load(PATCH_PATH+'train.npz', mmap_mode='r')
+    training_targets = np.load(PATCH_PATH+'train_targets.npz')
+
+    test = np.load(PATCH_PATH+'test.npz', mmap_mode='r')
+    test_targets = np.load(PATCH_PATH+'test_targets.npz')
+
+    if verbose:
+      print 'Loaded', PATCH_PATH, 'in', time.time()-t0, 'seconds.'
+
+    return training, training_targets.astype(np.uint8), test['rgba'], test_targets['targets'].astype(np.uint8)
+
 
 
   @staticmethod
