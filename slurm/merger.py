@@ -8,14 +8,14 @@ basedir = '/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP/'
 
 train1 = basedir + 'train1.npz'
 train1_targets = basedir + 'train1_targets.npz'
-train2 = basedir + 'train2b.npz'
-train2_targets = basedir + 'train2b_targets.npz'
-train3 = basedir + 'train3b.npz'
-train3_targets = basedir + 'train3b_targets.npz'
+train2 = basedir + 'train2b.npz.npy'
+train2_targets = basedir + 'train2b_targets.npz.npy'
+train3 = basedir + 'train3b.npz.npy'
+train3_targets = basedir + 'train3b_targets.npz.npy'
 train4 = basedir + 'train4.npz'
 train4_targets = basedir + 'train4_targets.npz'
-train5 = basedir + 'train5b.npz'
-train5_targets = basedir + 'train5b_targets.npz'
+train5 = basedir + 'train5b.npz.npy'
+train5_targets = basedir + 'train5b_targets.npz.npy'
 
 counter = 0
 
@@ -52,7 +52,7 @@ p_rgba[train3_count:train3_count+train4_count] = train4['rgba']
 p_rgba[train4_count:train4_count+train5_count] = train5
 
 # now store this bad boy
-np.save(basedir+'train.npz', p_rgba)
+np.save(basedir+'train.npy', p_rgba)
 
 print 'STORED BIG BOY!'
 train1 = None
@@ -80,6 +80,6 @@ p_target[train3_count:train3_count+train4_count] = train4_targets['targets']
 p_target[train4_count:train4_count+train5_count] = train5_targets
 
 # now store this lady boy
-np.save(basedir+'train_targets.npz', p_target)
+np.save(basedir+'train_targets.npy', p_target)
 
 print 'ALL DONE!'

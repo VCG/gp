@@ -688,8 +688,8 @@ class Patch(object):
 
     t0 = time.time()
 
-    training = np.load(PATCH_PATH+'train.npz', mmap_mode='r')
-    training_targets = np.load(PATCH_PATH+'train_targets.npz')
+    training = np.load(PATCH_PATH+'train.npy', mmap_mode='r')
+    training_targets = np.load(PATCH_PATH+'train_targets.npy')
 
     test = np.load(PATCH_PATH+'test.npz', mmap_mode='r')
     test_targets = np.load(PATCH_PATH+'test_targets.npz')
