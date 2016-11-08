@@ -20,7 +20,7 @@ train5_targets = basedir + 'train5b_targets.npz'
 counter = 0
 
 train1 = np.load(train1, mmap_mode='r')
-train1_count = train1.shape[0]
+train1_count = train1['rgba'].shape[0]
 
 train2 = np.load(train2, mmap_mode='r')
 train2_count = train2.shape[0]
@@ -29,7 +29,7 @@ train3 = np.load(train3, mmap_mode='r')
 train3_count = train3.shape[0]
 
 train4 = np.load(train4, mmap_mode='r')
-train4_count = train4.shape[0]
+train4_count = train4['rgba'].shape[0]
 
 train5 = np.load(train5, mmap_mode='r')
 train5_count = train5.shape[0]
