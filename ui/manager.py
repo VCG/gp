@@ -222,6 +222,7 @@ class Manager(object):
 
     z = merge_error[0]
     label = merge_error[1]
+    prob = merge_error[2]
 
     input_image = self._input_image
     input_prob = self._input_prob
@@ -281,7 +282,11 @@ class Manager(object):
 
         new_rhoana = f
 
-        input_rhoana[z] = new_rhoana
+        self._input_rhoana[z] = new_rhoana
+
+        vi = UITools.VI(self._input_gold, input_rhoana)
+        # print 'New global VI', vi[1]
+        self._correction_vis.append(vi[2])        
 
         #
         # and remove the original label from our bigM matrix
@@ -342,9 +347,9 @@ class Manager(object):
         self._bigM[z] = new_m
         self._input_rhoana[z] = new_rhoana
         # vi = gp.Util.vi(self._input_gold[z], self._input_rhoana[z])
-        # print 'New VI', vi
+        # print 'New VI', vi[0]
         vi = UITools.VI(self._input_gold, self._input_rhoana)
-        # print 'New global VI', vi[1]
+        print 'New global VI', vi[0]
         self._correction_vis.append(vi[2])
 
         # self.finish()

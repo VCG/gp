@@ -354,7 +354,7 @@ class Legacy(object):
 
     merge_errors = []
 
-    for i in range(10):
+    for i in range(input_image.shape[0]):
         if verbose:
           print 'working on slice', i
         
@@ -639,6 +639,8 @@ class Legacy(object):
   @staticmethod
   def perform_auto_merge_correction(cnn, big_M, input_image, input_prob, input_rhoana, merge_errors, p):
     
+    rhoanas = []
+
     # explicit copy
     bigM = [None]*len(big_M)
     for z in range(len(big_M)):
@@ -652,7 +654,7 @@ class Legacy(object):
     for me in merge_errors:
         pred = me[2]
         if pred < p:
-            # print 'fixing', pred
+            print 'fixing', pred
             z = me[0]
             label = me[1]
             border = me[3][0][1]
@@ -661,6 +663,10 @@ class Legacy(object):
 
             new_rhoana = f
             rhoana_after_merge_correction[z] = new_rhoana
+
+            # vi = UITools.VI(self._input_gold, rhoana_after_merge_correction)
+            # print 'New global VI', vi[1]
+            rhoanas.append(rhoana_after_merge_correction.copy())      
 
             #
             # and remove the original label from our bigM matrix
@@ -683,7 +689,7 @@ class Legacy(object):
             # re-propapage new_m to bigM
             bigM[z] = new_m
 
-    return bigM, rhoana_after_merge_correction
+    return bigM, rhoana_after_merge_correction, rhoanas
 
   @staticmethod
   def perform_sim_user_merge_correction(cnn, big_M, input_image, input_prob, input_rhoana, input_gold, merge_errors):

@@ -51,13 +51,40 @@ class UITools(object):
 
     rhoana_copy[rhoana_copy == label2] = label1
 
+    if mode == 'FP':
+      print 'skip neighbors'
+
+
+      # grab old neighbors of label 2 which are now neighbors of label1
+      label2_neighbors = gp.Util.grab_neighbors(input_rhoana, label2)
+      for l_neighbor in label2_neighbors:
+
+        if l_neighbor == 0:
+          continue
+
+        if label1 == l_neighbor:
+          continue
+
+        # get old score
+        old_score = new_m[label2, l_neighbor]
+
+        label1_neighbor_score = new_m[label1, l_neighbor]
+
+        # and now choose the max of these two
+        new_m[label1, l_neighbor] = max(label1_neighbor_score, old_score)
+        new_m[l_neighbor, label1] = max(label1_neighbor_score, old_score)
+
+
+      # label2 does not exist anymore
+      new_m[:,label2] = -2
+      new_m[label2, :] = -2      
+
+      return new_m, rhoana_copy
+
+
     # label2 does not exist anymore
     new_m[:,label2] = -2
     new_m[label2, :] = -2
-
-    if mode == 'FP':
-      print 'skip neighbors'
-      return new_m, rhoana_copy
 
     label1_neighbors = gp.Util.grab_neighbors(rhoana_copy, label1)
 
