@@ -21,5 +21,5 @@ image, prob, mask, gold, rhoana = gp.Util.read_section('/n/home05/haehn/data/cyl
 
 merge_errors = gp.Legacy.get_top5_merge_errors(cnn, [image], [prob], [rhoana], True)
 
-with open(OUTPUT + str(Z) + '.p') as f:
+with open(OUTPUT + str(Z) + '.p', 'w') as f:
   pickle.dump(merge_errors, f)
