@@ -354,7 +354,9 @@ class Legacy(object):
 
     merge_errors = []
 
-    for i in range(input_image.shape[0]):
+
+
+    for i in range(len(input_image)):
         if verbose:
           print 'working on slice', i
         
@@ -461,7 +463,6 @@ class Legacy(object):
     cropped_combined_border = Util.crop_by_bbox(b, binary_bbox)
     cropped_border_only = Util.crop_by_bbox(border, binary_bbox)
 
-    
 
     corrected_binary = Legacy.correct_merge(input_rhoana, label, border)
     corrected_binary_original = np.array(corrected_binary)
@@ -1049,10 +1050,11 @@ class Legacy(object):
     corrections_time_limit = int(hours * 60 * 12)
     time_counter = 0
     # print 'limit',corrections_time_limit
-    for i in range(corrections_time_limit):
-    # while True: # no time limit
-      # print 'Correction', i
-
+    # for i in range(corrections_time_limit):
+    i = 0
+    while True: # no time limit
+      print 'Correction', i
+      i+=1
       if (j>0 and j % 30 == 0):
         # compute VI every 30 minutes
         vi_after_30_min = []
