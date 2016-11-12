@@ -226,7 +226,7 @@ class Patch(object):
 
   @staticmethod
   def patchify_maxoverlap(image, prob, mask, segmentation, gold, sample_rate=3, min_pixels=10, oversampling=True,
-                      ignore_zero_neighbor=True, patch_size=(75,75)):
+                      ignore_zero_neighbor=True, patch_size=(75,75), clamp_result=True):
     '''
     '''
     # grab the mask border
@@ -260,7 +260,7 @@ class Patch(object):
 
 
     batch_count = 0
-    
+    # return segmentation_borders, bad_borders
 
     for l in labels:
 
@@ -319,7 +319,13 @@ class Patch(object):
 
         #   return patches[0:max]    
 
-    patches = patches[0:len(error_patches)]
+    # print 'Found', len(patches), len(error_patches)
+
+    if clamp_result:
+      # print 'clamping'
+      patches = patches[0:len(error_patches)]
+
+
 
 
     # we will always have less error patches

@@ -695,6 +695,19 @@ class Legacy(object):
   @staticmethod
   def perform_sim_user_merge_correction(cnn, big_M, input_image, input_prob, input_rhoana, input_gold, merge_errors):
 
+      def dojoVI(gt, seg):
+        # total_vi = 0
+        slice_vi = []    
+        for i in range(10):
+            current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
+            # total_vi += current_vi
+            slice_vi.append(current_vi)
+        # total_vi /= 10
+        return np.mean(slice_vi), np.median(slice_vi), slice_vi
+
+
+      rhoanas = []
+
       # explicit copy
       bigM = [None]*len(big_M)
       for z in range(len(big_M)):
@@ -720,9 +733,17 @@ class Legacy(object):
           # check VI for this slice
           vi_before = Util.vi(input_gold[z], input_rhoana[z])
           vi_after = Util.vi(input_gold[z], f)
+
+          # global vi
+
+
           if (vi_after < vi_before):
+
+            
             # this is a good fix
             rhoana_after_merge_correction[z] = new_rhoana
+
+            rhoanas.append(dojoVI(input_gold, rhoana_after_merge_correction))
 
             #
             # and remove the original label from our bigM matrix
@@ -748,11 +769,13 @@ class Legacy(object):
 
             fixes.append('Good')
           else:
+
+            rhoanas.append(dojoVI(input_gold, rhoana_after_merge_correction))
             # skipping this one
             fixes.append('Bad')
             continue            
 
-      return bigM, rhoana_after_merge_correction, fixes
+      return bigM, rhoana_after_merge_correction, fixes, rhoanas
 
 
 
@@ -1022,6 +1045,18 @@ class Legacy(object):
   @staticmethod
   def splits_global_from_M(cnn, big_M, volume, volume_prob, volume_segmentation, volume_groundtruth=np.zeros((1,1)), hours=.5, randomize=False, error_rate=0, oversampling=False, verbose=False):
 
+    rhoanas = []
+    def dojoVI(gt, seg):
+      # total_vi = 0
+      slice_vi = []    
+      for i in range(10):
+          current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
+          # total_vi += current_vi
+          slice_vi.append(current_vi)
+      # total_vi /= 10
+      return np.mean(slice_vi), np.median(slice_vi), slice_vi
+
+
     # explicit copy
     bigM = [None]*len(big_M)
     for z in range(len(big_M)):
@@ -1215,7 +1250,9 @@ class Legacy(object):
 
       out_volume[superSlice] = slice_with_max_value
 
-    return bigM, out_volume, fixes, vi_s_30mins
+      rhoanas.append(dojoVI(volume_groundtruth, out_volume))
+
+    return bigM, out_volume, fixes, vi_s_30mins, rhoanas
 
   @staticmethod
   def plot_arand(data,filename=None):

@@ -15,10 +15,151 @@ from sklearn.metrics import classification_report, accuracy_score, roc_curve, au
 import matplotlib.pyplot as plt    
 
 import gp
-
+from util import Util
 
 
 class Stats(object):
+
+
+  @staticmethod
+  def analyze_users(FP_USERS, gold, rhoana):
+
+    def VI(gt, seg):
+      # total_vi = 0
+      slice_vi = []    
+      for i in range(10):
+          current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
+          # total_vi += current_vi
+          slice_vi.append(current_vi)
+      # total_vi /= 10
+      return np.mean(slice_vi), np.median(slice_vi), slice_vi
+
+    init_mean_vi = VI(gold, rhoana)[0]
+    init_median_vi = VI(gold, rhoana)[1]
+    init_vi_per_slice = VI(gold, rhoana)[2]
+
+    print 'No. users', len(FP_USERS)
+
+    DATADIR = '/home/d/GPSTUDY/'
+
+    newrhoana = 'ui_results.p'
+    times = 'times.p'
+    corrections = 'corrections.p'
+    correction_vis = 'correction_vis.p'
+
+    fp_outputs = []
+    fp_times = []
+    fp_corrections = []
+    fp_vis =[]
+
+    for i,f in enumerate(FP_USERS):
+        with open(DATADIR+FP_USERS[i]+'/'+newrhoana, 'rb') as f:
+            fp_newrhoana = pickle.load(f)
+            fp_outputs.append(fp_newrhoana)
+        with open(DATADIR+FP_USERS[i]+'/'+times, 'rb') as f:
+            fp_time = pickle.load(f)
+            fp_time = [int(v) for v in fp_time]
+            fp_times.append(fp_time)
+        with open(DATADIR+FP_USERS[i]+'/'+corrections, 'rb') as f:
+            fp_correction = pickle.load(f)       
+            fp_corrections.append(fp_correction)
+        with open(DATADIR+FP_USERS[i]+'/'+correction_vis, 'rb') as f:
+            fp_correction_vis = pickle.load(f) 
+            fp_vis.append(fp_correction_vis)
+
+    fp_times_mean = []
+    for t in fp_times:
+        fp_times_mean.append(np.mean(t))
+    print 'Avg. time',np.mean(fp_times_mean)
+
+    fp_corrections_mean = []
+    fp_accepted_corrections = []
+
+    for c in fp_corrections:
+        fp_corrections_mean.append(len(c))
+        a_counter = 0
+        for d in c:
+            if d[1] == '1':
+                # user accepted
+                a_counter +=1
+        fp_accepted_corrections.append(a_counter)
+        
+    print 'Avg. corrections',np.mean(fp_corrections_mean)
+    print 'Avg. accepted', np.mean(fp_accepted_corrections)
+
+    fp_vi_per_c_per_user = []
+    merge_vi_per_c_per_user = []
+    split_vi_per_c_per_user = []
+    first_split_vis = []
+    last_split_vis = []
+    for k,v in enumerate(fp_corrections):
+        vis = [init_median_vi]
+        merge_vis = [init_mean_vi]
+        split_vis = [init_mean_vi]
+        correctionindex = 0
+        stored_first_split_vi = False
+        for j,c in enumerate(v):
+            # if c[0] == 'merge':
+            #     vi = fp_vis[k][correctionindex]
+            #     merge_vis.append(np.median(vi))
+            # elif c[0] == 'split':
+            #     vi = fp_vis[k][correctionindex]
+            #     merge_vis.append(np.median(vi))
+
+            if not stored_first_split_vi and c[0] == 'split' and c[1] == '1':
+              # store the VI for the first split
+              vi = fp_vis[k][correctionindex]
+              first_split_vis.append(vi)
+
+              stored_first_split_vi = True
+
+            if c[1] == '1':
+                # user accepted correction, now look up the vi
+                vi = fp_vis[k][correctionindex]
+                correctionindex += 1
+                vis.append(np.median(vi))
+
+                if c[0] == 'merge':
+                  merge_vis.append(vi)
+                elif c[0] == 'split':
+                  split_vis.append(vi)
+            else:
+                vis.append(vis[-1])
+
+                if c[0] == 'merge':
+                  merge_vis.append(vis[-1])
+                elif c[0] == 'split':
+                  split_vis.append(vis[-1])
+
+    #         print fp_corrections[k][j]
+    #         if fp_corrections[k][j][1] == '1':
+    # #             print 'a'
+    #             vi_per_c = np.median(c)
+    #         else:
+    #             vi_per_c = vis[-1]
+    #         vis.append(vi_per_c)
+        #print len(vis)
+        
+        fp_vi_per_c_per_user.append(vis)
+        merge_vi_per_c_per_user.append(merge_vis)
+        split_vi_per_c_per_user.append(split_vis)
+
+    for u in fp_vi_per_c_per_user:
+        plt.plot(u)
+
+    fp_vi_per_slice_per_user = []
+    fp_vi_per_slice = [0,0,0,0,0,0,0,0,0,0]
+    for o in fp_outputs:
+        fp_vi_per_slice_per_user.append(VI(gold, o)[2])
+        last_split_vis.append(VI(gold, o)[2])
+    for u in fp_vi_per_slice_per_user:
+        for z,v in enumerate(u):
+            fp_vi_per_slice[z] += v
+    for z in range(10):
+        fp_vi_per_slice[z] /= len(fp_outputs)
+
+
+    return fp_vi_per_slice, first_split_vis, last_split_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
 
   @staticmethod
   def run_dojo_xp(cnn):
@@ -129,7 +270,11 @@ class Stats(object):
 
 
     print
-    dojo_vi_simuser_file = output_folder + '/dojo_vi_simuser_no_t.p'
+    dojo_vi_simuser_file = output_folder + '/dojo_vi_simuser_no_t3.p'
+
+    dojo_merge_vis = output_folder + '/dojo_merge_simuser_vis.p'
+    dojo_split_vis = output_folder + '/dojo_split_simuser_vis.p'
+
     if os.path.exists(dojo_vi_simuser_file):
       print 'Loading merge errors and split errors (simulated user) from file..'
       with open(dojo_vi_simuser_file, 'rb') as f:
@@ -139,21 +284,27 @@ class Stats(object):
       # perform merge correction with simulated user
       #
       print 'Correcting merge errors by simulated user (er=0)'
-      bigM_dojo_simuser, corrected_rhoana_sim_user, sim_user_fixes = gp.Legacy.perform_sim_user_merge_correction(cnn, bigM_dojo, input_image, input_prob, input_rhoana, input_gold, merge_errors)
+      bigM_dojo_simuser, corrected_rhoana_sim_user, sim_user_fixes, vi_s_per_step = gp.Legacy.perform_sim_user_merge_correction(cnn, bigM_dojo, input_image, input_prob, input_rhoana, input_gold, merge_errors)
       
       print '   Mean VI improvement', original_mean_VI-gp.Legacy.VI(input_gold, corrected_rhoana_sim_user)[0]    
       print '   Median VI improvement', original_median_VI-gp.Legacy.VI(input_gold, corrected_rhoana_sim_user)[1]
       
+      with open(dojo_merge_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step, f)
+
       #
       # perform split correction with simulated user
       #
       print 'Correcting split errors by simulated user (er=0)'
-      bigM_dojo_after, out_dojo_volume_after_sim_user, dojo_sim_user_fixes, dojo_sim_user_vi_s = gp.Legacy.splits_global_from_M(cnn, bigM_dojo_simuser, input_image, input_prob, corrected_rhoana_sim_user, input_gold, hours=.5)
+      bigM_dojo_after, out_dojo_volume_after_sim_user, dojo_sim_user_fixes, dojo_sim_user_vi_s, vi_s_per_step2 = gp.Legacy.splits_global_from_M(cnn, bigM_dojo_simuser, input_image, input_prob, corrected_rhoana_sim_user, input_gold, hours=.5)
 
       dojo_vi_simuser = gp.Legacy.VI(input_gold, out_dojo_volume_after_sim_user)
 
       with open(dojo_vi_simuser_file, 'wb') as f:
-        pickle.dump(dojo_vi_simuser, f)      
+        pickle.dump(dojo_vi_simuser, f) 
+
+      with open(dojo_split_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step2, f)
 
     print '   Mean VI improvement', original_mean_VI-dojo_vi_simuser[0]
     print '   Median VI improvement', original_median_VI-dojo_vi_simuser[1]
