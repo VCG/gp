@@ -22,7 +22,7 @@ class Stats(object):
 
 
   @staticmethod
-  def analyze_users(FP_USERS, gold, rhoana, filename=None:
+  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=True, filename=None):
 
     def VI(gt, seg):
       # total_vi = 0
@@ -146,12 +146,16 @@ class Stats(object):
         split_vi_per_c_per_user.append(split_vis)
 
     fig = plt.figure(figsize=(10,7))
+    # fig, ax = plt.subplots()
     plt.ylim([0.32, 0.55])
-    plt.xlim(0,500)
-    plt.axhline(y=0.4763612343909136, color='gray', linestyle='-.', linewidth=4)
-    plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=4)
+    if clampX:
+      plt.xlim(0,500)
+
+    plt.axhline(y=0.4763612343909136, color='gray', linestyle='-.', linewidth=3, label='Initial Segmentation')
+    plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=3, label='Best Possible')
     plt.xlabel('Correction')
     plt.ylabel('Variation of Information')
+    # legend = ax.legend(loc='upper right')
 
     font = {'family' : 'sans-serif',
             'weight' : 'normal',
@@ -160,12 +164,15 @@ class Stats(object):
     plt.rc('font', **font)
 
     for u in fp_vi_per_c_per_user:
-        plt.plot(u, linewidth=4)
+        plt.plot(u, linewidth=3)
+
+    if oracle:
+      plt.plot(oracle, linewidth=2, linestyle=':')
 
     if filename:
       plt.savefig(filename)
     plt.show()
-      
+
 
     fp_vi_per_slice_per_user = []
     fp_vi_per_slice = [0,0,0,0,0,0,0,0,0,0]
