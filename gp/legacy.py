@@ -579,6 +579,10 @@ class Legacy(object):
     
     label_sizes = Util.get_histogram(e)
 
+    if len(label_size) < 2:
+      print 'weird'
+      return e
+
     # we only want to keep the two largest labels
     largest1 = np.argmax(label_sizes[1:])+1
     label_sizes[largest1] = 0

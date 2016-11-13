@@ -22,7 +22,7 @@ class Stats(object):
 
 
   @staticmethod
-  def analyze_users(FP_USERS, gold, rhoana):
+  def analyze_users(FP_USERS, gold, rhoana, filename=None:
 
     def VI(gt, seg):
       # total_vi = 0
@@ -70,7 +70,7 @@ class Stats(object):
     fp_times_mean = []
     for t in fp_times:
         fp_times_mean.append(np.mean(t))
-    print 'Avg. time',np.mean(fp_times_mean)
+    print 'Avg. correction time',np.mean(fp_times_mean)
 
     fp_corrections_mean = []
     fp_accepted_corrections = []
@@ -147,11 +147,25 @@ class Stats(object):
 
     fig = plt.figure(figsize=(10,7))
     plt.ylim([0.32, 0.55])
-    # plt.xlim(0,500)
+    plt.xlim(0,500)
     plt.axhline(y=0.4763612343909136, color='gray', linestyle='-.', linewidth=4)
     plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=4)
+    plt.xlabel('Correction')
+    plt.ylabel('Variation of Information')
+
+    font = {'family' : 'sans-serif',
+            'weight' : 'normal',
+            'size'   : 22}
+
+    plt.rc('font', **font)
+
     for u in fp_vi_per_c_per_user:
         plt.plot(u, linewidth=4)
+
+    if filename:
+      plt.savefig(filename)
+    plt.show()
+      
 
     fp_vi_per_slice_per_user = []
     fp_vi_per_slice = [0,0,0,0,0,0,0,0,0,0]
