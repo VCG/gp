@@ -21,12 +21,12 @@ from util import Util
 class Stats(object):
 
   @staticmethod
-  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=500, filename=None):
+  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=500, filename=None, DATADIR = '/home/d/GPSTUDY/'):
 
     def VI(gt, seg):
       # total_vi = 0
       slice_vi = []    
-      for i in range(10):
+      for i in range(gt.shape[0]):
           current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
           # total_vi += current_vi
           slice_vi.append(current_vi)
@@ -39,7 +39,7 @@ class Stats(object):
 
     print 'No. users', len(FP_USERS)
 
-    DATADIR = '/home/d/GPSTUDY/'
+    
 
     newrhoana = 'ui_results.p'
     times = 'times.p'
@@ -150,8 +150,8 @@ class Stats(object):
     if clampX:
       plt.xlim(0,clampX)
 
-    plt.axhline(y=0.4763612343909136, color='gray', linestyle='-.', linewidth=3, label='Initial Segmentation')
-    plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=3, label='Best Possible')
+    plt.axhline(y=0.4763612343909136, color='gray', linestyle=':', linewidth=2, label='Initial Segmentation')
+    plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=2, label='Best Possible')
     plt.xlabel('Correction')
     plt.ylabel('Variation of Information')
     # legend = ax.legend(loc='upper right')
@@ -217,7 +217,7 @@ class Stats(object):
     print len(merge_errors), ' merge errors found.'
 
     # we need to create a bigM for the dojo volume
-    bigM_dojo_file = output_folder + '/bigM_dojo_test.p'
+    bigM_dojo_file = output_folder + '/bigM_dojo_test2.p'
     if os.path.exists(bigM_dojo_file):
       print 'Loading dojo bigM from file..'
       with open(bigM_dojo_file, 'rb') as f:
@@ -231,7 +231,7 @@ class Stats(object):
 
 
     print
-    dojo_vi_95_file = output_folder + '/dojo_vi_95_t5.p'
+    dojo_vi_95_file = output_folder + '/dojo_vi_95_t6.p'
 
     dojo_merge_vis = output_folder + '/dojo_merge_auto95_vis.p'
     dojo_split_vis = output_folder + '/dojo_split_auto95_vis.p'
@@ -293,7 +293,7 @@ class Stats(object):
 
 
     print
-    dojo_vi_95_file = output_folder + '/dojo_vi_till_end.p'
+    dojo_vi_95_file = output_folder + '/dojo_vi_till_end2.p'
 
     dojo_merge_vis = output_folder + '/dojo_merge_till_end_vis.p'
     dojo_split_vis = output_folder + '/dojo_split_till_end_vis.p'
@@ -386,7 +386,7 @@ class Stats(object):
 
 
     print
-    dojo_vi_simuser_file = output_folder + '/dojo_vi_simuser_final.p'
+    dojo_vi_simuser_file = output_folder + '/dojo_vi_simuser_final2.p'
 
     dojo_merge_vis = output_folder + '/dojo_merge_simuser_vis.p'
     dojo_split_vis = output_folder + '/dojo_split_simuser_vis.p'

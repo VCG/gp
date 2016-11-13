@@ -188,7 +188,7 @@ class Patch(object):
     patches = []
     hist = Util.get_histogram(segmentation.astype(np.uint64))
     labels = len(hist)
-
+    # print 'labels', labels
     batch_count = 0
     
 
@@ -198,6 +198,7 @@ class Patch(object):
         continue
 
       if hist[l] < min_pixels:
+
         continue
 
       neighbors = Util.grab_neighbors(segmentation, l)
@@ -210,8 +211,14 @@ class Patch(object):
         if hist[n] < min_pixels:
           continue
 
+        
+          
+
         # print 'grabbing', l, n
         p_l, p_n = Patch.grab(image, prob, segmentation, l, n, sample_rate, oversampling=oversampling)
+
+        # if l == 5 and n ==6:
+        #   print p_l, p_n
 
         patches += p_l
         patches += p_n
@@ -367,6 +374,7 @@ class Patch(object):
 
       if len(border_yx) < 2:
         # somehow border detection did not work
+        # print 'no border', l,n
         return patches
       # print image.shape
       # plt.imshow(image)
@@ -393,7 +401,7 @@ class Patch(object):
             
                     if distance.euclidean(patch_centers[-1],sample_point) < patch_size[0]:
                       # sample to close
-                      # print 'sample to close', patch_centers[-1], sample_point
+                      # print 'sample to close', l, n
                       continue
 
                   patch_centers.append(sample_point)
@@ -409,6 +417,9 @@ class Patch(object):
 
       # # if len(patch_centers) > 1:
       # #   print 'PC', patch_centers
+
+      # if l==5 and n==6:
+      #   print 'HERE'
           
       for i,c in enumerate(patch_centers):
 
@@ -443,18 +454,20 @@ class Patch(object):
 
           ### workaround to not sample white border of probability map
           # if skip_boundaries:
-          if bbox[0] <= 33:
-              # return None
-              continue
-          if bbox[1] >= border.shape[0]-33:
-              # return None
-              continue
-          if bbox[2] <= 33:
-              # return None
-              continue
-          if bbox[3] >= border.shape[1]-33:
-              # return None
-              continue
+          # if l==5 and n==6:
+          #   print 'HERE2', bbox
+          # if bbox[0] <= 33:
+          #     # return None
+          #     continue
+          # if bbox[1] >= border.shape[0]-33:
+          #     # return None
+          #     continue
+          # if bbox[2] <= 33:
+          #     # return None
+          #     continue
+          # if bbox[3] >= border.shape[1]-33:
+          #     # return None
+          #     continue
 
           
           relabeled_cutout_binary_mask = skimage.measure.label(binary_mask[bbox[0]:bbox[1] + 1,

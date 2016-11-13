@@ -827,6 +827,8 @@ class Legacy(object):
       if verbose:
         print len(patches), 'generated in', time.time()-t0, 'seconds.'
 
+      # return patches
+
       t0 = time.time()
       grouped_patches = Patch.group(patches)
       if verbose:
@@ -1121,7 +1123,7 @@ class Legacy(object):
     def dojoVI(gt, seg):
       # total_vi = 0
       slice_vi = []    
-      for i in range(10):
+      for i in range(gt.shape[0]):
           current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
           # total_vi += current_vi
           slice_vi.append(current_vi)
