@@ -638,8 +638,19 @@ class Legacy(object):
     return corrected_binary
 
   @staticmethod
-  def perform_auto_merge_correction(cnn, big_M, input_image, input_prob, input_rhoana, merge_errors, p):
+  def perform_auto_merge_correction(cnn, big_M, input_image, input_prob, input_rhoana, merge_errors, p, input_gold=None):
     
+    def dojoVI(gt, seg):
+      # total_vi = 0
+      slice_vi = []    
+      for i in range(10):
+          current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
+          # total_vi += current_vi
+          slice_vi.append(current_vi)
+      # total_vi /= 10
+      return np.mean(slice_vi), np.median(slice_vi), slice_vi
+
+
     rhoanas = []
 
     # explicit copy
@@ -652,9 +663,12 @@ class Legacy(object):
     old_labels = []
     new_labels = []
 
+    fixes = []
+
     for me in merge_errors:
         pred = me[2]
         if pred < p:
+            fixes.append('yes')
             print 'fixing', pred
             z = me[0]
             label = me[1]
@@ -667,7 +681,8 @@ class Legacy(object):
 
             # vi = UITools.VI(self._input_gold, rhoana_after_merge_correction)
             # print 'New global VI', vi[1]
-            rhoanas.append(rhoana_after_merge_correction.copy())      
+            # if input_gold:
+            rhoanas.append(dojoVI(input_gold, rhoana_after_merge_correction))    
 
             #
             # and remove the original label from our bigM matrix
@@ -689,8 +704,10 @@ class Legacy(object):
 
             # re-propapage new_m to bigM
             bigM[z] = new_m
+        else:
+          fixes.append('no')
 
-    return bigM, rhoana_after_merge_correction, rhoanas
+    return bigM, rhoana_after_merge_correction, fixes, rhoanas
 
   @staticmethod
   def perform_sim_user_merge_correction(cnn, big_M, input_image, input_prob, input_rhoana, input_gold, merge_errors):
@@ -770,7 +787,7 @@ class Legacy(object):
             fixes.append('Good')
           else:
 
-            rhoanas.append(dojoVI(input_gold, rhoana_after_merge_correction))
+            # rhoanas.append(dojoVI(input_gold, rhoana_after_merge_correction))
             # skipping this one
             fixes.append('Bad')
             continue            
@@ -782,7 +799,7 @@ class Legacy(object):
 
 
   @staticmethod
-  def create_bigM_without_mask(cnn, volume, volume_prob, volume_segmentation, oversampling=False, verbose=False, max=10000):
+  def create_bigM_without_mask(cnn, volume, volume_prob, volume_segmentation, oversampling=False, verbose=False, max=100000):
 
 
     bigM = []
@@ -801,7 +818,7 @@ class Legacy(object):
       segmentation = volume_segmentation[slice]
 
       
-      patches = Patch.patchify(image, prob, segmentation, oversampling=oversampling, max=max)
+      patches = Patch.patchify(image, prob, segmentation, oversampling=oversampling, max=max, min_pixels=1)
       if verbose:
         print len(patches), 'generated in', time.time()-t0, 'seconds.'
 
@@ -878,9 +895,21 @@ class Legacy(object):
     return m
 
   @staticmethod
-  def splits_global_from_M_automatic(cnn, big_M, volume, volume_prob, volume_segmentation, volume_groundtruth=np.zeros((1,1)), sureness_threshold=0.95, smallest_first=False, oversampling=False, verbose=True, max=10000):
+  def splits_global_from_M_automatic(cnn, big_M, volume, volume_prob, volume_segmentation, volume_groundtruth=np.zeros((1,1)), sureness_threshold=0.95, smallest_first=False, oversampling=False, verbose=True, maxi=10000, FP=False):
     '''
     '''
+
+    rhoanas = []
+    def dojoVI(gt, seg):
+      # total_vi = 0
+      slice_vi = []    
+      for i in range(10):
+          current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
+          # total_vi += current_vi
+          slice_vi.append(current_vi)
+      # total_vi /= 10
+      return np.mean(slice_vi), np.median(slice_vi), slice_vi
+
 
     # explicit copy
     bigM = [None]*len(big_M)
@@ -1007,43 +1036,81 @@ class Legacy(object):
         # print 'size first label:', pxlsize
         # print 'size second label:',pxlsize2
 
+      if FP:
+        # focused proofreading
 
+        new_m = bigM[superSlice].copy()
 
+        label1 = superL
+        label2 = superN
 
+        # grab old neighbors of label 2 which are now neighbors of label1
+        label2_neighbors = Util.grab_neighbors(out_volume[superSlice], superN)
+        for l_neighbor in label2_neighbors:
 
-      # reset all l,n entries
-      bigM[superSlice][superL,:] = -2
-      bigM[superSlice][:, superL] = -2
-      bigM[superSlice][superN,:] = -2
-      bigM[superSlice][:, superN] = -2
-
-      # re-calculate neighbors
-      # grab new neighbors of l
-      l_neighbors = Util.grab_neighbors(slice_with_max_value, superL)
-
-      for l_neighbor in l_neighbors:
-        # recalculate new neighbors of l
-
-        if l_neighbor == 0:
-            # ignore neighbor zero
+          if l_neighbor == 0:
             continue
 
-        prediction = Patch.grab_group_test_and_unify(cnn, image, prob, slice_with_max_value, superL, l_neighbor, oversampling=oversampling)
-        # print superL, l_neighbor
-        # print 'new pred', prediction
-        bigM[superSlice][superL,l_neighbor] = prediction
-        bigM[superSlice][l_neighbor,superL] = prediction
+          if superL == l_neighbor:
+            continue
+
+          # get old score
+          old_score = new_m[superN, l_neighbor]
+
+          label1_neighbor_score = new_m[superL, l_neighbor]
+          
+          # print old_score, label1_neighbor_score
+
+          # and now choose the max of these two
+          new_m[label1, l_neighbor] = max(label1_neighbor_score, old_score)
+          new_m[l_neighbor, label1] = max(label1_neighbor_score, old_score)
+
+
+        # label2 does not exist anymore
+        new_m[:,label2] = -2
+        new_m[label2, :] = -2     
+
+        bigM[superSlice] = new_m.copy() 
+
+
+
+      else:
+        # reset all l,n entries
+        bigM[superSlice][superL,:] = -2
+        bigM[superSlice][:, superL] = -2
+        bigM[superSlice][superN,:] = -2
+        bigM[superSlice][:, superN] = -2
+
+        # re-calculate neighbors
+        # grab new neighbors of l
+        l_neighbors = Util.grab_neighbors(slice_with_max_value, superL)
+
+        for l_neighbor in l_neighbors:
+          # recalculate new neighbors of l
+
+          if l_neighbor == 0:
+              # ignore neighbor zero
+              continue
+
+          prediction = Patch.grab_group_test_and_unify(cnn, image, prob, slice_with_max_value, superL, l_neighbor, oversampling=oversampling)
+          # print superL, l_neighbor
+          # print 'new pred', prediction
+          bigM[superSlice][superL,l_neighbor] = prediction
+          bigM[superSlice][l_neighbor,superL] = prediction
 
 
 
 
       out_volume[superSlice] = slice_with_max_value
 
-    return bigM, out_volume, fixes, vi_s_30mins
+      rhoanas.append(dojoVI(volume_groundtruth, out_volume))
+
+
+    return bigM, out_volume, fixes, vi_s_30mins, rhoanas
 
 
   @staticmethod
-  def splits_global_from_M(cnn, big_M, volume, volume_prob, volume_segmentation, volume_groundtruth=np.zeros((1,1)), hours=.5, randomize=False, error_rate=0, oversampling=False, verbose=False):
+  def splits_global_from_M(cnn, big_M, volume, volume_prob, volume_segmentation, volume_groundtruth=np.zeros((1,1)), hours=.5, randomize=False, error_rate=0, oversampling=False, verbose=False, FP=False):
 
     rhoanas = []
     def dojoVI(gt, seg):
@@ -1088,7 +1155,7 @@ class Legacy(object):
     # for i in range(corrections_time_limit):
     i = 0
     while True: # no time limit
-      print 'Correction', i
+      # print 'Correction', i
       i+=1
       if (j>0 and j % 30 == 0):
         # compute VI every 30 minutes
@@ -1212,46 +1279,128 @@ class Legacy(object):
       
 
 
+      if FP:
+        # focused proofreading
+        new_m = bigM[superSlice].copy()
+        bigM[superSlice][superL,superN] = -2
+        bigM[superSlice][superN,superL] = -2
+        
 
-      # reset all l,n entries
-      bigM[superSlice][superL,superN] = -2
-      bigM[superSlice][superN,superL] = -2
+        if good_fix:
 
-      if good_fix:
+          label1 = superL
+          label2 = superN
 
-        bigM[superSlice][superL,:] = -2
-        bigM[superSlice][:, superL] = -2
-        bigM[superSlice][superN,:] = -2
-        bigM[superSlice][:, superN] = -2
 
-        # re-calculate neighbors
-        # grab new neighbors of l
-        l_neighbors = Util.grab_neighbors(slice_with_max_value, superL)
+          # grab old neighbors of label 2 which are now neighbors of label1
+          label2_neighbors = Util.grab_neighbors(rollback_slice_with_max_value, superN)
+          for l_neighbor in label2_neighbors:
 
-        for l_neighbor in l_neighbors:
-          # recalculate new neighbors of l
-
-          if l_neighbor == 0:
-              # ignore neighbor zero
+            if l_neighbor == 0:
               continue
 
-          prediction = Patch.grab_group_test_and_unify(cnn, image, prob, slice_with_max_value, superL, l_neighbor, oversampling=oversampling)
-          # print superL, l_neighbor
-          # print 'new pred', prediction
-          bigM[superSlice][superL,l_neighbor] = prediction
-          bigM[superSlice][l_neighbor,superL] = prediction
+            if superL == l_neighbor:
+              continue
+
+            # get old score
+            old_score = new_m[superN, l_neighbor]
+
+            if old_score < 0:
+              continue
+
+            label1_neighbor_score = new_m[superL, l_neighbor]
+            
+            if label1_neighbor_score < 0:
+              continue
+
+            print old_score, label1_neighbor_score, max(label1_neighbor_score, old_score)
+
+            # and now choose the max of these two
+            new_m[label1, l_neighbor] = max(label1_neighbor_score, old_score)
+            new_m[l_neighbor, label1] = max(label1_neighbor_score, old_score)
+
+
+          # label2 does not exist anymore
+          new_m[:,label2] = -2
+          new_m[label2, :] = -2     
+
+          bigM[superSlice] = new_m.copy() 
+
+          rhoanas.append(dojoVI(volume_groundtruth, out_volume))
+
+
+        else:
+
+          slice_with_max_value = rollback_slice_with_max_value
+          # bigM[superSlice] = new_m.copy() 
+
+        
+
+
 
       else:
 
-        slice_with_max_value = rollback_slice_with_max_value
+        # reset all l,n entries
+        bigM[superSlice][superL,superN] = -2
+        bigM[superSlice][superN,superL] = -2
+
+        if good_fix:
+
+          bigM[superSlice][superL,:] = -2
+          bigM[superSlice][:, superL] = -2
+          bigM[superSlice][superN,:] = -2
+          bigM[superSlice][:, superN] = -2
+
+          # old_neighbors = Util.grab_neighbors(rollback_slice_with_max_value, superL)
+          # for n in old_neighbors:
+          #   neighbors = Util.grab_neighbors(slice_with_max_value, n)
+
+          #   for k in neighbors:
+
+          #     if bigM[superSlice][n,k] == -2:
+          #       continue
+
+          #     prediction = Patch.grab_group_test_and_unify(cnn, image, prob, slice_with_max_value, n, k, oversampling=oversampling)
+          #     # print superL, l_neighbor
+          #     # print 'new pred', prediction
+          #     bigM[superSlice][n,k] = prediction
+          #     bigM[superSlice][k,n] = prediction
+
+
+
+          # re-calculate neighbors
+          # grab new neighbors of l
+          l_neighbors = Util.grab_neighbors(slice_with_max_value, superL)
+
+          for l_neighbor in l_neighbors:
+            # recalculate new neighbors of l
+
+            if l_neighbor == 0:
+                # ignore neighbor zero
+                continue
+
+            prediction = Patch.grab_group_test_and_unify(cnn, image, prob, slice_with_max_value, superL, l_neighbor, oversampling=oversampling)
+            # print superL, l_neighbor
+            # print 'new pred', prediction
+            bigM[superSlice][superL,l_neighbor] = prediction
+            bigM[superSlice][l_neighbor,superL] = prediction
+
+          outvol2 = out_volume.copy()
+          outvol2[superSlice] = slice_with_max_value
+
+          rhoanas.append(dojoVI(volume_groundtruth, outvol2))
+
+        else:
+
+          slice_with_max_value = rollback_slice_with_max_value
 
 
 
 
       out_volume[superSlice] = slice_with_max_value
 
-      rhoanas.append(dojoVI(volume_groundtruth, out_volume))
-
+      
+    print 'done'
     return bigM, out_volume, fixes, vi_s_30mins, rhoanas
 
   @staticmethod

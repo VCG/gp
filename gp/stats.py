@@ -94,8 +94,8 @@ class Stats(object):
     last_split_vis = []
     for k,v in enumerate(fp_corrections):
         vis = [init_median_vi]
-        merge_vis = [init_mean_vi]
-        split_vis = [init_mean_vi]
+        merge_vis = [init_median_vi]
+        split_vis = [init_median_vi]
         correctionindex = 0
         stored_first_split_vi = False
         for j,c in enumerate(v):
@@ -116,7 +116,7 @@ class Stats(object):
             if c[1] == '1':
                 # user accepted correction, now look up the vi
                 vi = fp_vis[k][correctionindex]
-                correctionindex += 1
+                correctionindex += 1    
                 vis.append(np.median(vi))
 
                 if c[0] == 'merge':
@@ -141,11 +141,17 @@ class Stats(object):
         #print len(vis)
         
         fp_vi_per_c_per_user.append(vis)
+        # print vis[-1]
         merge_vi_per_c_per_user.append(merge_vis)
         split_vi_per_c_per_user.append(split_vis)
 
+    fig = plt.figure(figsize=(10,7))
+    plt.ylim([0.32, 0.55])
+    # plt.xlim(0,500)
+    plt.axhline(y=0.4763612343909136, color='gray', linestyle='-.', linewidth=4)
+    plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=4)
     for u in fp_vi_per_c_per_user:
-        plt.plot(u)
+        plt.plot(u, linewidth=4)
 
     fp_vi_per_slice_per_user = []
     fp_vi_per_slice = [0,0,0,0,0,0,0,0,0,0]
@@ -160,6 +166,7 @@ class Stats(object):
 
 
     return fp_vi_per_slice, first_split_vis, last_split_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
+
 
   @staticmethod
   def run_dojo_xp(cnn):
@@ -190,7 +197,7 @@ class Stats(object):
     print len(merge_errors), ' merge errors found.'
 
     # we need to create a bigM for the dojo volume
-    bigM_dojo_file = output_folder + '/bigM_dojo.p'
+    bigM_dojo_file = output_folder + '/bigM_dojo_test.p'
     if os.path.exists(bigM_dojo_file):
       print 'Loading dojo bigM from file..'
       with open(bigM_dojo_file, 'rb') as f:
@@ -204,7 +211,16 @@ class Stats(object):
 
 
     print
-    dojo_vi_95_file = output_folder + '/dojo_vi_95.p'
+    dojo_vi_95_file = output_folder + '/dojo_vi_95_t5.p'
+
+    dojo_merge_vis = output_folder + '/dojo_merge_auto95_vis.p'
+    dojo_split_vis = output_folder + '/dojo_split_auto95_vis.p'
+
+    dojo_merge_fixes = output_folder + '/dojo_merge_auto95_fixes.p'
+    dojo_split_fixes = output_folder + '/dojo_split_auto95_fixes.p'
+
+    dojo_output_95 = output_folder + '/dojo_auto95_output.p'
+
     if os.path.exists(dojo_vi_95_file):
       print 'Loading merge errors p < .05 and split errors p > .95 from file..'
       with open(dojo_vi_95_file, 'rb') as f:
@@ -214,21 +230,37 @@ class Stats(object):
       # perform merge correction with p < .05
       #
       print 'Correcting merge errors with p < .05'
-      bigM_dojo_05, corrected_rhoana_05, rhoanas = gp.Legacy.perform_auto_merge_correction(cnn, bigM_dojo, input_image, input_prob, input_rhoana, merge_errors, .05)
+      bigM_dojo_05, corrected_rhoana_05, dojo_auto_merge_fixes, vi_s_per_step = gp.Legacy.perform_auto_merge_correction(cnn, bigM_dojo, input_image, input_prob, input_rhoana, merge_errors, .05, input_gold=input_gold)
 
       print '   Mean VI improvement', original_mean_VI-gp.Legacy.VI(input_gold, corrected_rhoana_05)[0]
       print '   Median VI improvement', original_median_VI-gp.Legacy.VI(input_gold, corrected_rhoana_05)[1]
+
+      with open(dojo_merge_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step, f)
+
+
+      with open(dojo_merge_fixes, 'wb') as f:
+        pickle.dump(dojo_auto_merge_fixes, f) 
 
       #
       # perform split correction with p > .95
       #
       print 'Correcting split errors with p > .95'
-      bigM_dojo_after_95, out_dojo_volume_after_auto_95, dojo_auto_fixes_95, dojo_auto_vi_s_95 = gp.Legacy.splits_global_from_M_automatic(cnn, bigM_dojo_05, input_image, input_prob, corrected_rhoana_05, input_gold, sureness_threshold=.95)
+      bigM_dojo_after_95, out_dojo_volume_after_auto_95, dojo_auto_fixes_95, dojo_auto_vi_s_95, vi_s_per_step2 = gp.Legacy.splits_global_from_M_automatic(cnn, bigM_dojo_05, input_image, input_prob, corrected_rhoana_05, input_gold, sureness_threshold=.95)
 
       dojo_vi_95 = gp.Legacy.VI(input_gold, out_dojo_volume_after_auto_95)
 
       with open(dojo_vi_95_file, 'wb') as f:
         pickle.dump(dojo_vi_95, f)
+
+      with open(dojo_split_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step2, f)
+
+      with open(dojo_split_fixes, 'wb') as f:
+        pickle.dump(dojo_auto_fixes_95, f)       
+
+      with open(dojo_output_95, 'wb') as f:
+        pickle.dump(out_dojo_volume_after_auto_95, f) 
 
     print '   Mean VI improvement', original_mean_VI-dojo_vi_95[0]
     print '   Median VI improvement', original_median_VI-dojo_vi_95[1]
@@ -270,10 +302,15 @@ class Stats(object):
 
 
     print
-    dojo_vi_simuser_file = output_folder + '/dojo_vi_simuser_no_t3.p'
+    dojo_vi_simuser_file = output_folder + '/dojo_vi_simuser_final.p'
 
     dojo_merge_vis = output_folder + '/dojo_merge_simuser_vis.p'
     dojo_split_vis = output_folder + '/dojo_split_simuser_vis.p'
+
+    dojo_merge_fixes = output_folder + '/dojo_merge_simuser_fixes.p'
+    dojo_split_fixes = output_folder + '/dojo_split_simuser_fixes.p'
+
+    dojo_output_simuser = output_folder + '/dojo_simuser_output.p'
 
     if os.path.exists(dojo_vi_simuser_file):
       print 'Loading merge errors and split errors (simulated user) from file..'
@@ -292,6 +329,10 @@ class Stats(object):
       with open(dojo_merge_vis, 'wb') as f:
         pickle.dump(vi_s_per_step, f)
 
+
+      with open(dojo_merge_fixes, 'wb') as f:
+        pickle.dump(sim_user_fixes, f)
+
       #
       # perform split correction with simulated user
       #
@@ -305,6 +346,12 @@ class Stats(object):
 
       with open(dojo_split_vis, 'wb') as f:
         pickle.dump(vi_s_per_step2, f)
+
+      with open(dojo_split_fixes, 'wb') as f:
+        pickle.dump(dojo_sim_user_fixes, f)
+
+      with open(dojo_output_simuser, 'wb') as f:
+        pickle.dump(out_dojo_volume_after_sim_user, f)
 
     print '   Mean VI improvement', original_mean_VI-dojo_vi_simuser[0]
     print '   Median VI improvement', original_median_VI-dojo_vi_simuser[1]
@@ -524,26 +571,44 @@ class Stats(object):
 
 
     print
-    cylinder_vi_95_file = output_folder + '/cylinder_vi_95.p'
-    cylinder_vi_auto_95_fixes_file = output_folder + '/cylinder_vi_95_fixes.p'
-    cylinder_auto_vis_95_file = output_folder + '/cylinder_auto_vis_95.p'
+    cylinder_vi_95_file = output_folder + '/cylinder_vi_95_w_merge.p'
+    # cylinder_vi_auto_95_fixes_file = output_folder + '/cylinder_vi_95_fixes.p'
+    # cylinder_auto_vis_95_file = output_folder + '/cylinder_auto_vis_95.p'
+
+
+    dojo_merge_vis = output_folder + '/cylinder_merge_auto95_vis.p'
+    dojo_split_vis = output_folder + '/cylinder_split_auto95_vis.p'
+
+    dojo_merge_fixes = output_folder + '/cylinder_merge_auto95_fixes.p'
+    dojo_split_fixes = output_folder + '/cylinder_split_auto95_fixes.p'
+
+    dojo_output_95 = output_folder + '/cylinder_auto95_output.p'
+
     if os.path.exists(cylinder_vi_95_file):
       print 'Loading merge errors p < .05 and split errors p > .95 from file..'
       with open(cylinder_vi_95_file, 'rb') as f:
         cylinder_vi_95 = pickle.load(f)
-      with open(cylinder_auto_vis_95_file, 'rb') as f:
-        cylinder_auto_vi_s_95 = pickle.load(f)
-      with open(cylinder_vi_auto_95_fixes_file, 'rb') as f:
-        cylinder_auto_fixes_95 = pickle.load(f)
+      # with open(cylinder_auto_vis_95_file, 'rb') as f:
+      #   cylinder_auto_vi_s_95 = pickle.load(f)
+      # with open(cylinder_vi_auto_95_fixes_file, 'rb') as f:
+      #   cylinder_auto_fixes_95 = pickle.load(f)
     else:      
       #
       # perform merge correction with p < .05
       #
       print 'Correcting merge errors with p < .05'
-      bigM_cylinder_05, corrected_rhoana_05, rhoanas = gp.Legacy.perform_auto_merge_correction(cnn, bigM_cylinder, input_image, input_prob, input_rhoana, merge_errors, .05)
+      bigM_cylinder_05, corrected_rhoana_05, cylinder_auto_merge_fixes, vi_s_per_step = gp.Legacy.perform_auto_merge_correction(cnn, bigM_cylinder, input_image, input_prob, input_rhoana, merge_errors, .05, input_gold=input_gold)
 
       print '   Mean VI improvement', original_mean_VI-gp.Legacy.VI(input_gold, corrected_rhoana_05)[0]
       print '   Median VI improvement', original_median_VI-gp.Legacy.VI(input_gold, corrected_rhoana_05)[1]
+
+      with open(dojo_merge_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step, f)
+
+
+      with open(dojo_merge_fixes, 'wb') as f:
+        pickle.dump(cylinder_auto_merge_fixes, f) 
+
 
       #
       # perform split correction with p > .95
@@ -551,18 +616,28 @@ class Stats(object):
       print 'Correcting split errors with p > .95'
       # bigM_cylinder_05 = bigM_cylinder
       # corrected_rhoana_05 = input_rhoana
-      bigM_cylinder_after_95, out_cylinder_volume_after_auto_95, cylinder_auto_fixes_95, cylinder_auto_vi_s_95 = gp.Legacy.splits_global_from_M_automatic(cnn, bigM_cylinder_05, input_image, input_prob, corrected_rhoana_05, input_gold, sureness_threshold=.95)
+      bigM_cylinder_after_95, out_cylinder_volume_after_auto_95, cylinder_auto_fixes_95, cylinder_auto_vi_s_95, vi_s_per_step2 = gp.Legacy.splits_global_from_M_automatic(cnn, bigM_cylinder_05, input_image, input_prob, corrected_rhoana_05, input_gold, sureness_threshold=.95)
 
       cylinder_vi_95 = gp.Legacy.VI(input_gold, out_cylinder_volume_after_auto_95)
 
       with open(cylinder_vi_95_file, 'wb') as f:
         pickle.dump(cylinder_vi_95, f)
 
-      with open(cylinder_vi_auto_95_fixes_file, 'wb') as f:
-        pickle.dump(cylinder_auto_fixes_95, f)
+      # with open(cylinder_vi_auto_95_fixes_file, 'wb') as f:
+      #   pickle.dump(cylinder_auto_fixes_95, f)
 
-      with open(cylinder_auto_vis_95_file, 'wb') as f:
-        pickle.dump(cylinder_auto_vi_s_95, f)        
+      # with open(cylinder_auto_vis_95_file, 'wb') as f:
+      #   pickle.dump(cylinder_auto_vi_s_95, f)        
+
+      with open(dojo_split_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step2, f)
+
+      with open(dojo_split_fixes, 'wb') as f:
+        pickle.dump(cylinder_auto_fixes_95, f)       
+
+      with open(dojo_output_95, 'wb') as f:
+        pickle.dump(out_cylinder_volume_after_auto_95, f) 
+
 
     print '   Mean VI improvement', original_mean_VI-cylinder_vi_95[0]
     print '   Median VI improvement', original_median_VI-cylinder_vi_95[1]
@@ -622,17 +697,26 @@ class Stats(object):
 
 
     print
-    cylinder_vi_simuser_file = output_folder + '/cylinder_vi_simuser.p'
-    cylinder_fixes_simuser_file = output_folder + '/cylinder_fixes_simuser.p'
-    cylinder_vis_simuser_file = output_folder + '/cylinder_vi_s_simuser.p'
+    cylinder_vi_simuser_file = output_folder + '/cylinder_vi_simuser_final.p'
+    # cylinder_fixes_simuser_file = output_folder + '/cylinder_fixes_simuser.p'
+    # cylinder_vis_simuser_file = output_folder + '/cylinder_vi_s_simuser.p'
+
+
+    dojo_merge_vis = output_folder + '/cylinder_merge_simuser_vis.p'
+    dojo_split_vis = output_folder + '/cylinder_split_simuser_vis.p'
+
+    dojo_merge_fixes = output_folder + '/cylinder_merge_simuser_fixes.p'
+    dojo_split_fixes = output_folder + '/cylinder_split_simuser_fixes.p'
+
+    dojo_output_simuser = output_folder + '/cylinder_simuser_output.p'    
     if os.path.exists(cylinder_vi_simuser_file):
       print 'Loading merge errors and split errors (simulated user) from file..'
       with open(cylinder_vi_simuser_file, 'rb') as f:
         cylinder_vi_simuser = pickle.load(f)
-      with open(cylinder_fixes_simuser_file, 'rb') as f:
-        cylinder_sim_user_fixes = pickle.load(f)
-      with open(cylinder_vis_simuser_file, 'rb') as f:
-        cylinder_sim_user_vi_s = pickle.load(f)
+      # with open(cylinder_fixes_simuser_file, 'rb') as f:
+      #   cylinder_sim_user_fixes = pickle.load(f)
+      # with open(cylinder_vis_simuser_file, 'rb') as f:
+      #   cylinder_sim_user_vi_s = pickle.load(f)
 
 
     else:
@@ -640,29 +724,45 @@ class Stats(object):
       # # perform merge correction with simulated user
       # #
       print 'Correcting merge errors by simulated user (er=0)'
-      bigM_cylinder_simuser, corrected_rhoana_sim_user, sim_user_fixes = gp.Legacy.perform_sim_user_merge_correction(cnn, bigM_cylinder, input_image, input_prob, input_rhoana, input_gold, merge_errors)
+      bigM_cylinder_simuser, corrected_rhoana_sim_user, sim_user_fixes, vi_s_per_step = gp.Legacy.perform_sim_user_merge_correction(cnn, bigM_cylinder, input_image, input_prob, input_rhoana, input_gold, merge_errors)
       
       print '   Mean VI improvement', original_mean_VI-gp.Legacy.VI(input_gold, corrected_rhoana_sim_user)[0]    
       print '   Median VI improvement', original_median_VI-gp.Legacy.VI(input_gold, corrected_rhoana_sim_user)[1]
       
+      with open(dojo_merge_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step, f)
+
+
+      with open(dojo_merge_fixes, 'wb') as f:
+        pickle.dump(sim_user_fixes, f)
+
       #
       # perform split correction with simulated user
       #
       print 'Correcting split errors by simulated user (er=0)'
       # bigM_cylinder_simuser = bigM_cylinder
       # corrected_rhoana_sim_user = input_rhoana
-      bigM_cylinder_after, out_cylinder_volume_after_sim_user, cylinder_sim_user_fixes, cylinder_sim_user_vi_s = gp.Legacy.splits_global_from_M(cnn, bigM_cylinder_simuser, input_image, input_prob, corrected_rhoana_sim_user, input_gold, hours=-1)
+      bigM_cylinder_after, out_cylinder_volume_after_sim_user, cylinder_sim_user_fixes, cylinder_sim_user_vi_s, vi_s_per_step2 = gp.Legacy.splits_global_from_M(cnn, bigM_cylinder_simuser, input_image, input_prob, corrected_rhoana_sim_user, input_gold, hours=-1)
 
       cylinder_vi_simuser = gp.Legacy.VI(input_gold, out_cylinder_volume_after_sim_user)
 
       with open(cylinder_vi_simuser_file, 'wb') as f:
         pickle.dump(cylinder_vi_simuser, f)      
 
-      with open(cylinder_vis_simuser_file, 'wb') as f:
-        pickle.dump(cylinder_sim_user_vi_s, f)
+      # with open(cylinder_vis_simuser_file, 'wb') as f:
+      #   pickle.dump(cylinder_sim_user_vi_s, f)
 
-      with open(cylinder_fixes_simuser_file, 'wb') as f:
+      # with open(cylinder_fixes_simuser_file, 'wb') as f:
+      #   pickle.dump(cylinder_sim_user_fixes, f)
+      with open(dojo_split_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step2, f)
+
+      with open(dojo_split_fixes, 'wb') as f:
         pickle.dump(cylinder_sim_user_fixes, f)
+
+      with open(dojo_output_simuser, 'wb') as f:
+        pickle.dump(out_cylinder_volume_after_sim_user, f)
+
 
     print '   Mean VI improvement', original_mean_VI-cylinder_vi_simuser[0]
     print '   Median VI improvement', original_median_VI-cylinder_vi_simuser[1]
