@@ -30,6 +30,7 @@
 \citation{mojo2}
 \citation{haehn_dojo_2014}
 \citation{haehn_dojo_2014}
+\citation{proofreading_bottleneck}
 \@writefile{toc}{\contentsline {section}{\numberline {1}\hskip -1em.\nobreakspace  {}Introduction}{1}{section.1}}
 \@writefile{brf}{\backcite{jain2010,Liu2014,GALA2014,kaynig2015large}{{1}{1}{section.1}}}
 \@writefile{brf}{\backcite{isbi_challenge}{{1}{1}{section.1}}}
@@ -41,6 +42,7 @@
 \@writefile{brf}{\backcite{kasthuri2015saturated}{{1}{1}{section.1}}}
 \@writefile{brf}{\backcite{markus_proofreading,raveler,mojo2,haehn_dojo_2014}{{1}{1}{section.1}}}
 \@writefile{brf}{\backcite{haehn_dojo_2014}{{1}{1}{section.1}}}
+\@writefile{brf}{\backcite{proofreading_bottleneck}{{1}{1}{section.1}}}
 \citation{RAND}
 \citation{haehn_dojo_2014}
 \citation{focused_proofreading}
@@ -86,7 +88,6 @@
 \@writefile{brf}{\backcite{saalfeld09,anderson2011,Giuly2013DP2}{{2}{2}{section.2}}}
 \@writefile{brf}{\backcite{eyewire_nature}{{2}{2}{section.2}}}
 \@writefile{brf}{\backcite{haehn_dojo_2014,Neuroblocks}{{2}{2}{section.2}}}
-\@writefile{brf}{\backcite{haehn_dojo_2014}{{2}{2}{section.2}}}
 \citation{focused_proofreading}
 \citation{karimov_guided_volume_editing}
 \citation{uzunbas}
@@ -95,6 +96,7 @@
 \citation{BogovicHJ13}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces We build the guided proofreading classifiers using a traditional CNN architecture. The network is based on four convolutional layers, each followed by max pooling as well as dropout regularization. The 4-channel input patches are rated as either correct splits or as split errors.}}{3}{figure.2}}
 \newlabel{fig:architecture}{{2}{3}{We build the guided proofreading classifiers using a traditional CNN architecture. The network is based on four convolutional layers, each followed by max pooling as well as dropout regularization. The 4-channel input patches are rated as either correct splits or as split errors}{figure.2}{}}
+\@writefile{brf}{\backcite{haehn_dojo_2014}{{3}{2}{section.2}}}
 \@writefile{brf}{\backcite{proofreading_bottleneck,haehn_dojo_2014}{{3}{2}{section.2}}}
 \@writefile{brf}{\backcite{focused_proofreading}{{3}{2}{section.2}}}
 \@writefile{brf}{\backcite{karimov_guided_volume_editing}{{3}{2}{section.2}}}
@@ -115,9 +117,9 @@
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Training parameters, cost and results of our guided proofreading classifier versus focused proofreading by Plaza \cite  {focused_proofreading}. Both methods were trained on the same mouse brain dataset using the same hardware (Tesla K40 graphics card). While the training of our classifier is more expensive, testing accuracy is superior. }}{4}{table.1}}
 \@writefile{brf}{\backcite{focused_proofreading}{{4}{1}{table.1}}}
 \newlabel{tab:parameters}{{1}{4}{Training parameters, cost and results of our guided proofreading classifier versus focused proofreading by Plaza \cite {focused_proofreading}. Both methods were trained on the same mouse brain dataset using the same hardware (Tesla K40 graphics card). While the training of our classifier is more expensive, testing accuracy is superior}{table.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}\hskip -1em.\nobreakspace  {}Merge Error Detection}{4}{subsection.3.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces ROC performance of guided proofreading (GP) and focused proofreading (FP) trained separately on mouse and drosophila brain images. The area under the curve indicates better performance for GP.}}{5}{figure.4}}
 \newlabel{fig:roc}{{4}{5}{ROC performance of guided proofreading (GP) and focused proofreading (FP) trained separately on mouse and drosophila brain images. The area under the curve indicates better performance for GP}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}\hskip -1em.\nobreakspace  {}Merge Error Detection}{5}{subsection.3.2}}
 \@writefile{brf}{\backcite{karimov_guided_volume_editing}{{5}{3.2}{subsection.3.2}}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}\hskip -1em.\nobreakspace  {}Error Correction}{5}{subsection.3.3}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Merge errors are identified by generating randomly seeded watershed borders within a dilated label segment. These borders then are individually rated using the split error CNN by inverting the probability score. This way, a confident rating for a correct split most likely indicates the missing border of the merge error and can be used for correcting the labeling.}}{5}{figure.5}}
@@ -158,12 +160,13 @@
 \bibcite{ANON}{5}
 \bibcite{BogovicHJ13}{6}
 \bibcite{chklovskii2010}{7}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Results of guided proofreading with active label suggestion (GP*) and focused proofreading performed automatically on three drosophila datasets. The datasets are part of the MICCAI 2016 CREMI challenge and publicly available. We measure performance as adapted Rand error (the lower, the better). GP* is able to correct the initial segmentation further than FP. Our GP* scores places us XXnd on the CREMI leaderboard.}}{8}{figure.7}}
+\newlabel{fig:results_fruitfly}{{7}{8}{Results of guided proofreading with active label suggestion (GP*) and focused proofreading performed automatically on three drosophila datasets. The datasets are part of the MICCAI 2016 CREMI challenge and publicly available. We measure performance as adapted Rand error (the lower, the better). GP* is able to correct the initial segmentation further than FP. Our GP* scores places us XXnd on the CREMI leaderboard}{figure.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}\hskip -1em.\nobreakspace  {}Quantitative Results}{8}{section.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}\hskip -1em.\nobreakspace  {}Conclusions}{8}{section.6}}
 \bibcite{Ciresan:2012f}{8}
 \bibcite{Giuly2013DP2}{9}
 \bibcite{haehn_dojo_2014}{10}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Results of guided proofreading with active label suggestion (GP*) and focused proofreading performed automatically on three drosophila datasets. The datasets are part of the MICCAI 2016 CREMI challenge and publicly available. We measure performance as adapted Rand error (the lower, the better). GP* is able to correct the initial segmentation further than FP. Our GP* scores places us XXnd on the CREMI leaderboard.}}{8}{figure.7}}
-\newlabel{fig:results_fruitfly}{{7}{8}{Results of guided proofreading with active label suggestion (GP*) and focused proofreading performed automatically on three drosophila datasets. The datasets are part of the MICCAI 2016 CREMI challenge and publicly available. We measure performance as adapted Rand error (the lower, the better). GP* is able to correct the initial segmentation further than FP. Our GP* scores places us XXnd on the CREMI leaderboard}{figure.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}\hskip -1em.\nobreakspace  {}Conclusions}{8}{section.5}}
 \bibcite{resnet}{11}
 \bibcite{jain2010}{12}
 \bibcite{raveler}{13}

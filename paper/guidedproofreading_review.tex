@@ -24,7 +24,7 @@
 \begin{document}
 
 %%%%%%%%% TITLE
-\title{Guided Proofreading of Automatic Segmentations in Connectomics}
+\title{Guided Proofreading of Automatic Segmentations for Connectomics}
 
 \author{Daniel Haehn\\
 Institution1\\
@@ -48,7 +48,7 @@ First line of institution2 address\\
 %%%%%%%%% ABSTRACT
 \begin{abstract}
 Automatic cell image segmentation methods in connectomics produce merge and split errors, which require correction through proofreading. Previous research has identified the visual search for these errors as the bottleneck in interactive proofreading. To aid error correction, we develop two classifiers to recommend candidate merge and split errors and their corrections to the user. These classifiers are informed by training a convolutional neural network with known errors in automatic segmentations against expert-labeled ground truth. Our classifiers detect potentially-erroneous regions by considering a large context region around a segmentation boundary. Corrections can then be performed as yes/no decisions 
-resulting in faster correction times than previous methods. We evaluate our approach on connectomics datasets of different species and compare correction performance of novice and expert users against different existing systems. We report significant improvements on pure automatic and pure manual proofreading.
+resulting in faster correction times than previous methods. We evaluate our approach on connectomics datasets of different species and compare correction performance of novice and expert users against different existing systems. We report significant improvements compared to pure automatic and pure manual proofreading.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -59,6 +59,8 @@ resulting in faster correction times than previous methods. We evaluate our appr
 \input{method}
 
 \input{evaluation}
+
+\input{results}
 
 \input{conclusion}
 
