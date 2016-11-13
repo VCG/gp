@@ -579,7 +579,7 @@ class Legacy(object):
     
     label_sizes = Util.get_histogram(e)
 
-    if len(label_size) < 2:
+    if len(label_sizes) < 2:
       print 'weird'
       return e
 

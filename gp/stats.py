@@ -288,6 +288,70 @@ class Stats(object):
 
 
 
+#
+# now auto until the end
+#
+
+
+    print
+    dojo_vi_95_file = output_folder + '/dojo_vi_till_end.p'
+
+    dojo_merge_vis = output_folder + '/dojo_merge_till_end_vis.p'
+    dojo_split_vis = output_folder + '/dojo_split_till_end_vis.p'
+
+    dojo_merge_fixes = output_folder + '/dojo_merge_till_end_fixes.p'
+    dojo_split_fixes = output_folder + '/dojo_split_till_end_fixes.p'
+
+    dojo_output_95 = output_folder + '/dojo_till_end_output.p'
+
+    if os.path.exists(dojo_vi_95_file):
+      print 'Loading merge errors p < .05 and split errors p > .95 from file..'
+      with open(dojo_vi_95_file, 'rb') as f:
+        dojo_vi_95 = pickle.load(f)
+    else:      
+      #
+      # perform merge correction with p < .05
+      #
+      print 'Correcting merge errors with p < .05'
+      bigM_dojo_05, corrected_rhoana_05, dojo_auto_merge_fixes, vi_s_per_step = gp.Legacy.perform_auto_merge_correction(cnn, bigM_dojo, input_image, input_prob, input_rhoana, merge_errors, .05, input_gold=input_gold)
+
+      print '   Mean VI improvement', original_mean_VI-gp.Legacy.VI(input_gold, corrected_rhoana_05)[0]
+      print '   Median VI improvement', original_median_VI-gp.Legacy.VI(input_gold, corrected_rhoana_05)[1]
+
+      with open(dojo_merge_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step, f)
+
+
+      with open(dojo_merge_fixes, 'wb') as f:
+        pickle.dump(dojo_auto_merge_fixes, f) 
+
+      #
+      # perform split correction with p > .95
+      #
+      print 'Correcting split errors with p > .95'
+      bigM_dojo_after_95, out_dojo_volume_after_auto_95, dojo_auto_fixes_95, dojo_auto_vi_s_95, vi_s_per_step2 = gp.Legacy.splits_global_from_M_automatic(cnn, bigM_dojo_05, input_image, input_prob, corrected_rhoana_05, input_gold, sureness_threshold=.0)
+
+      dojo_vi_95 = gp.Legacy.VI(input_gold, out_dojo_volume_after_auto_95)
+
+      with open(dojo_vi_95_file, 'wb') as f:
+        pickle.dump(dojo_vi_95, f)
+
+      with open(dojo_split_vis, 'wb') as f:
+        pickle.dump(vi_s_per_step2, f)
+
+      with open(dojo_split_fixes, 'wb') as f:
+        pickle.dump(dojo_auto_fixes_95, f)       
+
+      with open(dojo_output_95, 'wb') as f:
+        pickle.dump(out_dojo_volume_after_auto_95, f) 
+
+    print '   Mean VI improvement', original_mean_VI-dojo_vi_95[0]
+    print '   Median VI improvement', original_median_VI-dojo_vi_95[1]
+
+
+
+
+
 
     # print
     # dojo_vi_99_file = output_folder + '/dojo_vi_99.p'
