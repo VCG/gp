@@ -33,6 +33,9 @@ for z in range(250, 300):
     input_rhoana.append(rhoana)
     input_gold.append(gold)
 
+original_mean_VI, original_median_VI, original_VI_s = gp.Legacy.VI(input_gold, input_rhoana)
+
+
 #
 # load merge errors
 #

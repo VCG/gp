@@ -471,7 +471,8 @@ class Legacy(object):
     corrected_binary[corrected_binary_original == 0] = 0
 
     result[corrected_binary != 0] = 0
-    result += corrected_binary.astype(np.uint64)
+    # result += corrected_binary.astype(np.uint64)
+    np.add(result, corrected_binary.astype(np.uint64), out=result, casting='unsafe')
     cropped_result = Util.crop_by_bbox(corrected_binary, binary_bbox)
 
     g[corrected_binary_original==2] = (255,0,0,255)
