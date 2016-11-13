@@ -1,6 +1,5 @@
 
 import gp
-from util import Util
 
 import cPickle as pickle
 import numpy as np
