@@ -31,7 +31,7 @@ class Legacy(object):
     input_rhoana = tif.imread(path_prefix+'dojo_data_vis2014/labels_after_automatic_segmentation_multi.tif')
     # for i,r in enumerate(input_rhoana_):
     #   input_rhoana[i] = r
-    print 'a'
+
     input_gold_ = imread.imread_multi(path_prefix+'dojo_data_vis2014/groundtruth_multi.tif')
     for i,g in enumerate(input_gold_):
       input_gold[i] = g 
@@ -484,10 +484,10 @@ class Legacy(object):
     cropped_binary = Util.crop_by_bbox(f, binary_bbox)
     cropped_slice_overview = Util.crop_by_bbox(e, binary_bbox).copy()
 
-    e[binary_bbox[0]:binary_bbox[1], binary_bbox[2]] = (255,255,0,255)
-    e[binary_bbox[0]:binary_bbox[1], binary_bbox[3]] = (255,255,0,255)
-    e[binary_bbox[0], binary_bbox[2]:binary_bbox[3]] = (255,255,0,255)
-    e[binary_bbox[1], binary_bbox[2]:binary_bbox[3]] = (255,255,0,255)  
+    # e[binary_bbox[0]:binary_bbox[1], binary_bbox[2]] = (255,255,0,255)
+    # e[binary_bbox[0]:binary_bbox[1], binary_bbox[3]] = (255,255,0,255)
+    # e[binary_bbox[0], binary_bbox[2]:binary_bbox[3]] = (255,255,0,255)
+    # e[binary_bbox[1], binary_bbox[2]:binary_bbox[3]] = (255,255,0,255)  
 
     sliceoverview = e    
 

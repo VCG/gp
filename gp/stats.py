@@ -20,9 +20,8 @@ from util import Util
 
 class Stats(object):
 
-
   @staticmethod
-  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=True, filename=None):
+  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=500, filename=None):
 
     def VI(gt, seg):
       # total_vi = 0
@@ -149,7 +148,7 @@ class Stats(object):
     # fig, ax = plt.subplots()
     plt.ylim([0.32, 0.55])
     if clampX:
-      plt.xlim(0,500)
+      plt.xlim(0,clampX)
 
     plt.axhline(y=0.4763612343909136, color='gray', linestyle='-.', linewidth=3, label='Initial Segmentation')
     plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=3, label='Best Possible')
