@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2013)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: guidedproofreading_review.aux
 The style file: ieee.bst
@@ -6,46 +6,46 @@ Database file #1: connectomics.bib
 Warning--to sort, need author or key in isbi_challenge
 Warning--to sort, need author or key in neuroproof2013
 Warning--there's a number but no volume in mojo2
-Warning--empty journal in RAND
-You've used 33 entries,
+Warning--can't use both volume and number fields in nesterov
+You've used 30 entries,
             2120 wiz_defined-function locations,
-            697 strings with 10864 characters,
-and the built_in function-call counts, 13112 in all, are:
-= -- 1195
-> -- 877
-< -- 4
-+ -- 353
-- -- 314
-* -- 1066
-:= -- 2225
-add.period$ -- 101
-call.type$ -- 33
-change.case$ -- 255
+            678 strings with 10301 characters,
+and the built_in function-call counts, 12242 in all, are:
+= -- 1118
+> -- 823
+< -- 5
++ -- 330
+- -- 296
+* -- 1012
+:= -- 2070
+add.period$ -- 92
+call.type$ -- 30
+change.case$ -- 237
 chr.to.int$ -- 0
-cite$ -- 37
-duplicate$ -- 400
-empty$ -- 873
-format.name$ -- 314
-if$ -- 2642
+cite$ -- 34
+duplicate$ -- 366
+empty$ -- 804
+format.name$ -- 296
+if$ -- 2468
 int.to.chr$ -- 0
-int.to.str$ -- 33
-missing$ -- 29
-newline$ -- 170
-num.names$ -- 62
-pop$ -- 262
+int.to.str$ -- 30
+missing$ -- 26
+newline$ -- 155
+num.names$ -- 56
+pop$ -- 235
 preamble$ -- 1
-purify$ -- 222
+purify$ -- 207
 quote$ -- 0
-skip$ -- 286
+skip$ -- 270
 stack$ -- 0
-substring$ -- 654
-swap$ -- 77
-text.length$ -- 4
+substring$ -- 626
+swap$ -- 78
+text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 132
+type$ -- 120
 warning$ -- 4
-while$ -- 94
-width$ -- 35
-write$ -- 358
+while$ -- 86
+width$ -- 32
+write$ -- 330
 (There were 4 warnings)
