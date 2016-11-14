@@ -14,6 +14,28 @@ import tifffile as tif
 class Util(object):
 
   @staticmethod
+  def read_cremi_section(DATADIR, z, verbose=True):
+    image = sorted(glob.glob(DATADIR+'image/*'))
+    probs = sorted(glob.glob(DATADIR+'prob/*'))
+    gold = sorted(glob.glob(DATADIR+'gold/*'))
+    rhoana = sorted(glob.glob(DATADIR+'rhoana/*'))
+
+    image = tif.imread(image[z])
+    prob = tif.imread(probs[z])
+    gold = tif.imread(gold[z])
+    rhoana = mh.imread(rhoana[z])
+
+    #convert ids from rgb to single channel
+    rhoana_single = np.zeros((rhoana.shape[0], rhoana.shape[1]), dtype=np.uint64)
+    rhoana_single[:, :] = rhoana[:,:,0]*256*256 + rhoana[:,:,1]*256 + rhoana[:,:,2]
+
+    # relabel the segmentations
+    gold = Util.relabel(gold)
+    rhoana_single = Util.relabel(rhoana_single)
+
+    return image, prob, gold, rhoana_single
+
+  @staticmethod
   def read_section(path, z, verbose=True):
     '''
     '''
