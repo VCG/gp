@@ -648,7 +648,7 @@ class Legacy(object):
     def dojoVI(gt, seg):
       # total_vi = 0
       slice_vi = []    
-      for i in range(10):
+      for i in range(len(gt)):
           current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
           # total_vi += current_vi
           slice_vi.append(current_vi)
@@ -720,7 +720,7 @@ class Legacy(object):
       def dojoVI(gt, seg):
         # total_vi = 0
         slice_vi = []    
-        for i in range(10):
+        for i in range(len(gt)):
             current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
             # total_vi += current_vi
             slice_vi.append(current_vi)
@@ -910,7 +910,7 @@ class Legacy(object):
     def dojoVI(gt, seg):
       # total_vi = 0
       slice_vi = []    
-      for i in range(10):
+      for i in range(len(gt)):
           current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
           # total_vi += current_vi
           slice_vi.append(current_vi)
@@ -1123,7 +1123,7 @@ class Legacy(object):
     def dojoVI(gt, seg):
       # total_vi = 0
       slice_vi = []    
-      for i in range(gt.shape[0]):
+      for i in range(len(gt)):
           current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
           # total_vi += current_vi
           slice_vi.append(current_vi)
