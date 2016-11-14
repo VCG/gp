@@ -10,17 +10,15 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We evaluate guided proofreading on multiple different real-world connectomics datasets of different species. We perform experiments for error correction based on a selection oracle, automatic selection with threshold, and the forced choice setting. The latter is designed as a between-subjects user study with novice and expert participants.
+We evaluate guided proofreading on multiple different real-world connectomics datasets of different species. All datasets were acquired using either via serial section electron microscopy (ssEM) or serial section transmission electron microscopy (ssTEM). We perform experiments for error correction based on a selection oracle, automatic selection with threshold, and the forced choice setting. The latter is designed as a between-subjects user study with novice and expert participants.
 
 \subsection{Datasets}
 
-The following serial section electron microscopy datasets are used for the evaluation of our method. 
+\textbf{L. Cylinder.} We use the left part of the 3-cylinder mouse cortex volume of Kasthuri \etal~\cite{kasthuri2015saturated} ($2048\times2048\times300$ voxels). The tissue is dense mammalian neuropil from layers 4 and 5 of the S1 primary somatosensory cortex of a healthy mouse and was acquired using ssEM. The resolution of our dataset is $3\times3\, \text{nm}^2$ per pixel, and the section thickness is $30\, \text{nm}$. The image data and a manually-labeled expert segmentation is publicly available as ground truth for the entire dataset\footnote{The Kasthuri 3-cylinder mouse cortex volume is available at  https://software.rc.fas.harvard.edu/lichtman/vast/.}.
 \\~\\
-\textbf{L. Cylinder.} We use the left part of the 3-cylinder mouse cortex volume of Kasthuri \etal~\cite{kasthuri2015saturated} ($2048\times2048\times300$ voxels). The tissue is dense mammalian neuropil from layers 4 and 5 of the S1 primary somatosensory cortex of a healthy mouse. The resolution of our dataset is $3\times3\, \text{nm}^2$ per pixel, and the section thickness is $30\, \text{nm}$. The image data and a manually-labeled expert segmentation is publicly available as ground truth for the entire dataset\footnote{The Kasthuri 3-cylinder mouse cortex volume is available at  https://software.rc.fas.harvard.edu/lichtman/vast/.}.
+\textbf{AC4 subvolume.} This dataset is part of a publicly available dataset of mouse cortex that was published for the ISBI 2013 challenge "SNEMI3D: 3D Segmentation of neurites in EM images". The resolution of this dataset is $6\times6\times30~\text{nm}^3\text{/voxel}$ and it was acquired using ssEM. Haehn~\etal found the most representative subvolume ($400\times400\times10$ voxels) of this dataset with respect to the distribution of object sizes~\cite{haehn_dojo_2014}. This subvolume was used for Haehn~\etal~experiment on interactive proofreading tools for connectomics. We use the data, labeled ground truth and findings of their study which are published online\footnote{The AC4 subvolume and results of the interactive proofreading experiment are available at http://rhoana.org/dojo/.}. 
 \\~\\
-\textbf{AC4 subvolume.} This dataset is part of a publicly available dataset of mouse cortex that was published for the ISBI 2013 challenge "SNEMI3D: 3D Segmentation of neurites in EM images". The resolution of this dataset is $6\times6\times30~\text{nm}^3\text{/voxel}$. Haehn~\etal cut the most representative subvolume ($400\times400\times10$ voxels) of this dataset with respect to the distribution of object sizes~\cite{haehn_dojo_2014}. This subvolume was used for Haehn~\etal~experiment on interactive proofreading tools for connectomics. The data, labeled ground truth and findings of their study are published online\footnote{The AC4 subvolume and results of the interactive proofreading experiment are available at http://rhoana.org/dojo/.}. 
-\\~\\
-\textbf{CREMI A/B/C.} As part of the MICCAI 2016 challenge on circuit reconstruction from electron microscopy images (CREMI) six datasets (each $1250\times1250\times125$ voxels) were made publicly available\footnote{The MICCAI CREMI challenge data is available at http://www.cremi.org.}. Since only three include manually labeled ground truth, we use these three volumes for our experiments. The volumes are part of adult fruit fly (Drosophila melanogaster) brain. The resolution of all three datasets is $4\times4\times40~\text{nm}^3\text{/voxel}$. 
+\textbf{CREMI A/B/C.} As part of the MICCAI 2016 challenge on circuit reconstruction from electron microscopy images (CREMI) six ssTEM datasets (each $1250\times1250\times125$ voxels) were made publicly available\footnote{The MICCAI CREMI challenge data is available at http://www.cremi.org.}. Since only three include manually labeled ground truth, we use these three volumes for our experiments. The volumes are part of adult fruit fly (Drosophila melanogaster) brain. The resolution of all three datasets is $4\times4\times40~\text{nm}^3\text{/voxel}$. 
 \\~\\
 \textbf{Automatic segmentation pipeline.}
 We use a state-of-the-art method to create a dense automatic segmentation of the data. Membrane probabilities are generated using a convolutional neural network based on the U-net architecture~\cite{RonnebergerFB15}. The probabilities are used to seed watershed and generate an oversegmentation using superpixels. Agglomeration is then performed by the GALA active learning classifier~\cite{nunez2014graph}.
@@ -29,8 +27,8 @@ We use a state-of-the-art method to create a dense automatic segmentation of the
 
 To train our split error classifier, we use the L. Cylinder dataset. We use the first 250 sections of the data for training and validation. For n-fold cross validation, we select one quarter of this data and re-select after each epoch. We minimize cross-entropy loss and update using stochastic gradient descent with Nesterov momentum \cite{nesterov}.
 To generate training data, we identify correct regions and split errors in the automatic segmentation by intersection with ground truth regions. This is required since extracellular space is not labeled in the ground truth but in our dense automatic segmentation. 
-From these regions, we sample 112,760 correct and 112,760 split error patches with 4-channels as described above. The patches are normalized and to further augment our training data, we rotate patches within each mini-batch by $k*90$ degrees with randomly chosen $k$. The training parameters such as filter size, number of filters, learning rate, and momentum are the result of intuition and experience, studying recent machine learning research as well as a brute force parameter search within a limited range (see supplementary material). 
-The final parameters are listed in the first row of table~\ref{tab:parameters}. Our CNN configuration results in approximately 170,000 learnable parameters. We assume that training has converged if the validation loss does not decrease for 50 epochs. We test the CNN by generating a balanced set of 8,780 correct and 8,780 error patches using unseen data of the left cylinder dataset and report testing results in the second row of table~\ref{tab:parameters}.
+From these regions, we sample 112,760 correct and 112,760 split error patches with 4-channels as described above. The patches are normalized and to further augment our training data, we rotate patches within each mini-batch by $k*90$ degrees with randomly chosen $k$. The training parameters such as filter size, number of filters, learning rate, and momentum are the result of intuition and experience, studying recent machine learning research, and a brute force parameter search within a limited range (see supplementary material). 
+The first row of table~\ref{tab:parameters} lists the final parameters. Our CNN configuration results in approximately 170,000 learnable parameters. We assume that training has converged if the validation loss does not decrease for 50 epochs. We test the CNN by generating a balanced set of 8,780 correct and 8,780 error patches using unseen data of the left cylinder dataset and report testing results in the second row of table~\ref{tab:parameters}.
 
 \begin{table}[h]
 %\resizebox{\textwidth}{!}{%
@@ -70,15 +68,15 @@ Threshold: 0.0\\
 \label{tab:parameters}
 \end{table}
 
-\subsection{Baseline comparison}
+\subsection{Baseline Comparisons}
 
-\textbf{Interactive proofreading.} According to the comparison of Haehn~\etal~, the best performing proofreading tool for novices is Dojo~\cite{haehn_dojo_2014}. We use the publicly available findings of their user study as a baseline comparison. More specifically, we use the data of the Dojo user with the reported best performance.
+\textbf{Interactive proofreading.} A comparison of interactive proofreading tools by Haehn~\etal~ concludes that novices perform best when using Dojo~\cite{haehn_dojo_2014}. We use the publicly available findings of their user study as a baseline comparison. More specifically, we use the data of the Dojo user with the reported best performance.
 
-\textbf{Computer-aided proofreading.} 
+\textbf{Computer-aided proofreading.} We compare against focused proofreading by Plaza~\cite{focused_proofreading}. Focused proofreading performs graph analysis on output from NeuroProof \cite{neuroproof2013}. For training, we therefore replace GALA in our automatic segmentation pipeline with NeuroProof but use exactly the same input data including membrane probabilities. We obtained the best possible parameters for NeuroProof by consulting the developers and report them in table \ref{tab:parameters}.
 
 \subsection{Experiments}
 
-\textbf{Selection oracle evaluation.}
+\textbf{Selection oracle evaluation.} 
 
 \textbf{Automatic method evaluation.}
 
