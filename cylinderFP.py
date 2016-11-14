@@ -53,7 +53,7 @@ with open(bigM_cylinder_file, 'rb') as f:
 #
 # run auto split correction
 #
-cylinder_vi_95_file = OUTDIR + '/cylinder_vi_95.p'
+cylinder_vi_95_file = OUTDIR + '/cylinder_vi_95_NEW.p'
 
 split_vis = OUTDIR + '/cylinder_split_auto95_vis.p'
 
@@ -99,7 +99,7 @@ print '   Median VI improvement', original_median_VI-cylinder_vi_95[1]
 #
 # run oracle split correction
 #
-cylinder_vi_95_file = OUTDIR + '/cylinder_vi_simuser.p'
+cylinder_vi_95_file = OUTDIR + '/cylinder_vi_simuser_NEW.p'
 
 split_vis = OUTDIR + '/cylinder_split_simuser_vis.p'
 

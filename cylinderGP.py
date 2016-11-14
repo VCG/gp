@@ -60,7 +60,7 @@ else:
 #
 # run auto merge correction
 #
-cylinder_vi_95_file = OUTDIR + '/cylinder_vi_95_w_merge.p'
+cylinder_vi_95_file = OUTDIR + '/cylinder_vi_95_w_merge_NEW.p'
 
 merge_vis = OUTDIR + '/cylinder_merge_auto95_vis.p'
 split_vis = OUTDIR + '/cylinder_split_auto95_vis.p'
@@ -125,7 +125,7 @@ print '   Median VI improvement', original_median_VI-cylinder_vi_95[1]
 #
 # run auto merge correction
 #
-cylinder_vi_95_file = OUTDIR + '/cylinder_vi_00_w_merge.p'
+cylinder_vi_95_file = OUTDIR + '/cylinder_vi_00_w_merge_NEW.p'
 
 merge_vis = OUTDIR + '/cylinder_merge_auto00_vis.p'
 split_vis = OUTDIR + '/cylinder_split_auto00_vis.p'
@@ -196,7 +196,7 @@ print '   Median VI improvement', original_median_VI-cylinder_vi_95[1]
 #
 # run oracle merge correction
 #
-cylinder_vi_95_file = OUTDIR + '/cylinder_vi_simuser_w_merge.p'
+cylinder_vi_95_file = OUTDIR + '/cylinder_vi_simuser_w_merge_NEW.p'
 
 merge_vis = OUTDIR + '/cylinder_merge_simuser_vis.p'
 split_vis = OUTDIR + '/cylinder_split_simuser_vis.p'
