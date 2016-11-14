@@ -1,6 +1,6 @@
 \begin{figure*}[t]
 \begin{center}
-\includegraphics[width=\linewidth]{gfx/architecture.png}
+\includegraphics[width=\linewidth]{gfx/architecture.pdf}
 \end{center}
   \vspace{-4mm}
    \caption{We build the guided proofreading classifiers using a traditional CNN architecture. The network is based on four convolutional layers, each followed by max pooling as well as dropout regularization. The 4-channel input patches are rated as either correct splits or as split errors.}
@@ -16,9 +16,7 @@ Many works tackle this problem. NeuroProof \cite{neuroproof2013} decreases error
 It is also possible to learn segmentation classification features directly from images with CNNs. Ronneberger \etal~\cite{RonnebergerFB15} use a contracting/expanding CNN path architecture to enable precise boundary localization with small amounts of training data. Lee \etal~\cite{lee2015recursive} recursively train very deep networks with 2D and 3D filters to detect boundaries.
 
 All these approaches make good progress; however, in general, proofreading is still required to correct errors.
-
-%Inspired by Bogovic \etal, we extend their features for our guided proofreading classifiers (Section \ref{sec:methods}). 
-
+\\~\\
 \textbf{Interactive Proofreading.} While proofreading is very time consuming, it is fairly easy for humans to perform corrections through splitting and merging segments. One expert tool is Raveler, introduced by Chklovskii~\etal~\cite{chklovskii2010, raveler}. Raveler is used today by professional proofreaders, and it offers many parameters for tweaking the process. Similar systems exist as products or plugins to visualization systems,~\eg V3D~\cite{proofreading_bottleneck} or AVIZO~\cite{markus_proofreading}. 
 
 Recent papers have attacked the problem of proofreading massive datasets through crowdsourcing with novices~\cite{saalfeld09,anderson2011,Giuly2013DP2}. One popular platform is EyeWire, by Kim \etal~\cite{eyewire_nature}, where participants earn virtual rewards for merging oversegmented labeling to reconstruct retina cells.
@@ -26,8 +24,7 @@ Recent papers have attacked the problem of proofreading massive datasets through
 Between expert systems and online games sit Mojo and \textit{Dojo}, by Haehn \etal~\cite{haehn_dojo_2014,Neuroblocks}, which use simple scribble interfaces for error correction. Dojo extends this to distributed proofreading via a minimalistic web-based user interface. The authors define requirements for general proofreading tools, and then evaluate the accuracy and speed of Raveler, Mojo, and Dojo through a quantitative user study (Sec. 3 and 4)~\cite{haehn_dojo_2014}. Dojo had the highest performance. In this paper, we use Dojo as a baseline for interactive proofreading, and so we extend the Haehn \etal experiment.
 
 All interactive proofreading solutions require the user to find potential errors manually, which takes the majority of the time~\cite{proofreading_bottleneck,haehn_dojo_2014}. Recent works propose computer-aided proofreading systems which help reduce the time spent in this visual search task.
-
-%Most relevant methods here use heuristics to analyze the image data to find potential errors. 
+\\~\\
 \textbf{Computer-aided Proofreading.} Uzunbas \etal showed that potential labeling errors can be found by considering the merge tree of an automatic segmentation method~\cite{uzunbas}. The authors track uncertainty throughout the automatic labeling by training a conditional random field. This segmentation technique produces uncertainty estimates, which can be used to present potential regions for proofreading to the user. While it works on isotropic volumes, more work is needed to apply it to anisotropic volumes, like most connectomics datasets.
 
 %Their method requires further work to overcome the requirement of isotropic volumes, a property not given for most connectomics datasets. Our approach, guided proofreading, works on isotropic as well as anisotropic data, and finds merge and split errors.

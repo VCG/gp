@@ -12,6 +12,47 @@
 
 We evaluate guided proofreading (GP) on multiple real-world connectomics datasets of different species. In particular, we evaluate GP on two datasets of mouse brain and three datasets of fruitfly brain (drosophila). For comparison, we choose the fully interactive proofreading software \textit{Dojo} by Haehn \etal~\cite{haehn_dojo_2014} as well as the aided proofreading framework \textit{focused proofreading} (FP) by Plaza~\cite{focused_proofreading}. We first describe the evalation on mouse brain data and then the evaluation on drosophila brain.
 
+
+\textbf{Training.} To initially train our network, we use the blue 3-cylinder mouse cortex volume of Kasthuri \etal~\cite{kasthuri2015saturated} ($2048\times2048\times300$ voxels). The tissue is dense mammalian neuropil from layers 4 and 5 of the S1 primary somatosensory cortex of a healthy mouse. The resolution of our dataset is $3\, nm$ per pixel, and the section thickness is $30\, nm$. The image data and a manually-labeled expert segmentation is publicly available as ground truth for the entire dataset\footnote{The Kasthuri 3-cylinder mouse cortex volume is available at  https://software.rc.fas.harvard.edu/lichtman/vast/}. We use the first 250 sections of the data for training and validation and the last 50 for testing. We use a state-of-the-art method to create a dense automatic segmentation of the data. To generate training data, we identify correct regions and split errors in the automatic segmentation by intersection with ground truth regions. This is required since extracellular space is not labeled in the ground truth but in our dense automatic segmentation. From these regions, we sample 120,000 correct and 120,000 split error patches with 4-channels as described above. The patches are normalized and to further augment our training data, we rotate patches within each mini-batch by $k*90$ degrees with randomly chosen $k$. The training parameters such as filter size, number of filters, learning rate, and momentum are the result of intuition and experience, studying recent machine learning research as well as a brute force parameter search within a limited range (see supplementary material). The final parameters and training results are listed in table~\ref{tab:parameters}. For baseline comparison, we also list the parameters and training results of focused proofreading in this table but elaborate on these further in section \ref{sec:evaluation}. Our CNN configuration results in approximately 170,000 learnable parameters. We assume that training has converged if the validation loss does not decrease for 50 epochs.
+
+\begin{table}[h]
+%\resizebox{\textwidth}{!}{%
+\tiny
+\begin{tabular}{@{}c|c|c|c|c|c|c@{}}
+& \textbf{cost [m]} & \textbf{Val. loss} & \textbf{Val. acc.} & \textbf{Test acc.} & \textbf{Prec./Recall} & \textbf{F1 Score} \\ 
+\hspace{1mm}
+\begin{tabular}{@{}l@{}}
+\textbf{Guided Proofreading} \\ Filter size: 3x3 \\ No. Filters 1: 64 \\ No. Filters 2-4: 48 \\ Dense units: 512 \\ Learning rate: 0.03-0.00001\\ Momentum: 0.9-0.999\\Mini-Batchsize: 128\\~\\
+ \end{tabular}
+ & 383  & 0.0845  & 0.969  & 0.94  & 0.94/0.94  & 0.94 \\ 
+\hline 
+\begin{tabular}{@{}l@{}}
+\\
+\textbf{Focused Proofreading} \\ 
+Iterations: 3 \\
+Learning strategy: 2\\
+Mito agglomeration: Off\\
+Threshold: 0.2
+ \end{tabular}
+ & 43  & ?  & ?  & 0.839  & ?/?  & ? \\ 
+\end{tabular} 
+\vspace{1mm}
+\caption{Training parameters, cost and results of our guided proofreading classifier versus focused proofreading by Plaza \cite{focused_proofreading}. Both methods were trained on the same mouse brain dataset using the same hardware (Tesla K40 graphics card). While the training of our classifier is more expensive, testing accuracy is superior. }
+\label{tab:parameters}
+\end{table}
+
+For performance comparison on data of a different species, in particular on fruitfly brain (drosophila), we retrain our network. The training procedure is according to our initial training and network architecture as well as parameters are not changed. We further elaborate on the drosophila datasets in section~\ref{sec:evaluation}. Fig.~\ref{fig:roc} displays receiver operating characteristics (ROC) for  guided proofreading trained on mouse and drosophila data, as well as our comparison baseline focused proofreading trained on these datasets respectively.
+
+\begin{figure}[h]
+  \vspace{-5mm}
+\begin{center}
+  \includegraphics[width=\linewidth]{gfx/roc.pdf}
+\end{center}
+  \vspace{-10mm}
+   \caption{ROC performance of guided proofreading (GP) and focused proofreading (FP) trained separately on mouse and drosophila brain images. The area under the curve indicates better performance for GP.}
+\label{fig:roc}
+\end{figure}
+
 \subsection{Mouse Brain}
 
 Mouse brain is a common target for connectomics research because the structural proportions are similar to human brains~\cite{jeff_science}. For our first experiment we recruited novice and expert participants as part of a quantitative user study. Our second experiment is performed on a larger dataset and we evaluate a simulated user.
