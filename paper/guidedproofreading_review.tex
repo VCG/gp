@@ -48,8 +48,23 @@ First line of institution2 address\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Automatic cell image segmentation methods in connectomics produce merge and split errors, which require correction through proofreading. Previous research has identified the visual search for these errors as the bottleneck in interactive proofreading. To aid error correction, we develop two classifiers to recommend candidate merge and split errors and their corrections to the user. These classifiers are informed by training a convolutional neural network with known errors in automatic segmentations against expert-labeled ground truth. Our classifiers detect potentially-erroneous regions by considering a large context region around a segmentation boundary. Corrections can then be performed as yes/no decisions 
-resulting in faster correction times than previous methods. We evaluate our approach on connectomics datasets of different species and compare correction performance of novice and expert users against different existing systems. We report significant improvements compared to pure automatic and pure manual proofreading.
+%
+Automatic cell image segmentation methods in connectomics produce merge and
+split errors, which require correction through proofreading. Previous research
+has identified the visual search for these errors as the bottleneck in
+interactive proofreading. To aid error correction, we develop two classifiers
+that automatically recommend candidate merge and splits to the user. These
+classifiers use a convolutional neural network (CNN) that has been trained with
+errors in automatic segmentations against expert-labeled ground truth. Our
+classifiers detect potentially-erroneous regions by considering a large context
+region around a segmentation boundary. Corrections can then be performed by a
+user with yes/no decisions  resulting in faster correction times than previous
+proofreading methods. We also present a fully-automatic mode that uses a
+threshold to make merge/split decisions. Extensive experiments using the
+automatic approach and comparing performance of novice and expert users
+demonstrate that our method performs favorably agains state-of-the-art
+proofreading methods on different connectomics datasets.
+%
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
