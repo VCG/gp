@@ -39,6 +39,7 @@ Dilation of the segment prior to watershed is motivated by our observation that 
 \end{figure}
 
 \subsection{Error Correction}
+\label{sec:errorcorrection}
 
 We use the proposed classifiers in combination to perform corrections of split and merge errors in automatic segmentations. For this, we first perform merge error detection for all existing segments in a dataset and store the inverted rankings $1-p$ as well as potential corrections. After that, we perform split error detection and store the ranking $p$ for all neighboring segments in the segmentation. We then sort the merge and split error rankings individually from highest to lowest. 
 For error correction, we first loop through the potential merge error regions and then through the potential split error regions. During this process, each error is now subject to a yes/no decision which can be provided in different ways: 

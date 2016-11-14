@@ -76,12 +76,13 @@ Threshold: 0.0\\
 
 \subsection{Experiments}
 
-\textbf{Selection oracle evaluation.} 
+\textbf{Selection oracle evaluation.} We use the selection oracle as described in section~\ref{sec:errorcorrection} for the decision whether to accept or reject a correction. The purpose of this experiment is to investigate how many corrections are required to reach the best possible outcome. This is a direct comparison of the guided proofreading and focused proofreading classifiers but can only be performed if ground truth data is available. We perform this experiment on all datasets listed above.
+\\~\\
+\textbf{Automatic method evaluation.} For this experiment we accept all suggested corrections if the rankings are above a configured threshold $p_t=.95$ (Sec.~\ref{sec:errorcorrection}. We observed this value as stable in previous experiments with the guided proofreading classifiers (see supplementary material). We compare against the focused proofreading classifier and perform this experiment on all reported datasets.
 
-\textbf{Automatic method evaluation.}
-
-\textbf{Forced choice user experiment.}
-
+\textbf{Forced choice user experiment.} We conduct a quantitative user study to evaluate the forced choice setting as described in section~\ref{sec:errorcorrection}. In particular, we evaluate how participants perform while correcting an automatic segmentation using the guided proofreading and focused proofreading tools. We designed a between-subjects experiment and asked the participants to proofread the AC4 subvolume in a fixed time frame of 30 minutes. 
+Because we wanted to first study how completely inexperienced users perform, we recruited participants with no experience in electron microscopy data or proofreading of such through flyers, mailing lists, and personal interaction. Based on sample size calculation theory, we estimated the study sample size as ten users per proofreading tool including four potential dropouts \cite{samplesize1, samplesize2}. Nevertheless, all twenty participants completed the study ($N=20$, 10 female; 19-65 years old, $M$=30). To enable comparison against the interactive proofreading study by~Haehn~\etal~, we use the same dataset and the same time limit. 
+Second, we wanted to study expert performance using guided proofreading and focused proofreading.
 
 
 
