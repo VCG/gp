@@ -20,7 +20,7 @@ The following serial section electron microscopy datasets are used for the evalu
 \\~\\
 \textbf{AC4 subvolume.} This dataset is part of a publicly available dataset of mouse cortex that was published for the ISBI 2013 challenge "SNEMI3D: 3D Segmentation of neurites in EM images". The resolution of this dataset is $6\times6\times30~\text{nm}^3\text{/voxel}$. Haehn~\etal cut the most representative subvolume ($400\times400\times10$ voxels) of this dataset with respect to the distribution of object sizes~\cite{haehn_dojo_2014}. This subvolume was used for Haehn~\etal~experiment on interactive proofreading tools for connectomics. The data, labeled ground truth and findings of their study are published online\footnote{The AC4 subvolume and results of the interactive proofreading experiment are available at http://rhoana.org/dojo/.}. 
 \\~\\
-\textbf{CREMI A/B/C.} As part of the MICCAI 2016 challenge on circuit reconstruction from electron microscopy images (CREMI) three datasets (each $1250\times1250\times125$ voxels) were made publicly available including manually labeled ground truth\footnote{The MICCAI CREMI challenge data is available at http://www.cremi.org.}. The volumes are part of adult fruit fly (Drosophila melanogaster) brain. The resolution of all three datasets is $4\times4\times40~\text{nm}^3\text{/voxel}$. 
+\textbf{CREMI A/B/C.} As part of the MICCAI 2016 challenge on circuit reconstruction from electron microscopy images (CREMI) six datasets (each $1250\times1250\times125$ voxels) were made publicly available\footnote{The MICCAI CREMI challenge data is available at http://www.cremi.org.}. Since only three include manually labeled ground truth, we use these three volumes for our experiments. The volumes are part of adult fruit fly (Drosophila melanogaster) brain. The resolution of all three datasets is $4\times4\times40~\text{nm}^3\text{/voxel}$. 
 \\~\\
 \textbf{Automatic segmentation pipeline.}
 We use a state-of-the-art method to create a dense automatic segmentation of the data. Membrane probabilities are generated using a convolutional neural network based on the U-net architecture~\cite{RonnebergerFB15}. The probabilities are used to seed watershed and generate an oversegmentation using superpixels. Agglomeration is then performed by the GALA active learning classifier~\cite{nunez2014graph}.
@@ -72,9 +72,9 @@ Threshold: 0.0\\
 
 \subsection{Baseline comparison}
 
-\textbf{Interactive proofreading.} According to the comparison of Haehn~\etal~, the best performing proofreading tool for novices is Dojo. We use the publicly available findings of their user study as a baseline comparison.
+\textbf{Interactive proofreading.} According to the comparison of Haehn~\etal~, the best performing proofreading tool for novices is Dojo~\cite{haehn_dojo_2014}. We use the publicly available findings of their user study as a baseline comparison. More specifically, we use the data of the Dojo user with the reported best performance.
 
-\textbf{Computer-aided proofreading.} FP
+\textbf{Computer-aided proofreading.} 
 
 \subsection{Experiments}
 
