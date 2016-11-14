@@ -728,23 +728,42 @@ class Patch(object):
 
 
   @staticmethod
-  def load_big(patch_size=(75,75), verbose=True):
+  def load_cremi(patch_size=(75,75), verbose=True):
 
 
-    PATCH_PATH = '/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP/'
+    PATCH_PATH = '/n/regal/pfister_lab/haehn/CREMITEST/'
 
     t0 = time.time()
 
     training = np.load(PATCH_PATH+'train.npy', mmap_mode='r')
     training_targets = np.load(PATCH_PATH+'train_targets.npy')
 
-    test = np.load(PATCH_PATH+'test.npz', mmap_mode='r')
-    test_targets = np.load(PATCH_PATH+'test_targets.npz')
+    test = np.load(PATCH_PATH+'test.npy', mmap_mode='r')
+    test_targets = np.load(PATCH_PATH+'test_targets.npy')
 
     if verbose:
       print 'Loaded', PATCH_PATH, 'in', time.time()-t0, 'seconds.'
 
-    return training, training_targets.astype(np.uint8), test['rgba'], test_targets['targets'].astype(np.uint8)
+    return training, training_targets.astype(np.uint8), test, test_targets.astype(np.uint8)
+
+  # @staticmethod
+  # def load_cremi(patch_size=(75,75), verbose=True):
+
+
+  #   PATCH_PATH = '/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP/'
+
+  #   t0 = time.time()
+
+  #   training = np.load(PATCH_PATH+'train.npy', mmap_mode='r')
+  #   training_targets = np.load(PATCH_PATH+'train_targets.npy')
+
+  #   test = np.load(PATCH_PATH+'test.npz', mmap_mode='r')
+  #   test_targets = np.load(PATCH_PATH+'test_targets.npz')
+
+  #   if verbose:
+  #     print 'Loaded', PATCH_PATH, 'in', time.time()-t0, 'seconds.'
+
+  #   return training, training_targets.astype(np.uint8), test['rgba'], test_targets['targets'].astype(np.uint8)
 
 
 
