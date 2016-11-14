@@ -5,47 +5,48 @@ The style file: ieee.bst
 Database file #1: connectomics.bib
 Warning--to sort, need author or key in isbi_challenge
 Warning--to sort, need author or key in neuroproof2013
+Warning--empty publisher in NASATLX
 Warning--there's a number but no volume in mojo2
 Warning--can't use both volume and number fields in nesterov
-You've used 30 entries,
+You've used 33 entries,
             2120 wiz_defined-function locations,
-            678 strings with 10301 characters,
-and the built_in function-call counts, 12242 in all, are:
-= -- 1118
-> -- 823
-< -- 5
-+ -- 330
-- -- 296
-* -- 1012
-:= -- 2070
-add.period$ -- 92
-call.type$ -- 30
-change.case$ -- 237
+            701 strings with 10821 characters,
+and the built_in function-call counts, 13377 in all, are:
+= -- 1236
+> -- 856
+< -- 7
++ -- 343
+- -- 306
+* -- 1096
+:= -- 2240
+add.period$ -- 102
+call.type$ -- 33
+change.case$ -- 251
 chr.to.int$ -- 0
-cite$ -- 34
-duplicate$ -- 366
-empty$ -- 804
-format.name$ -- 296
-if$ -- 2468
+cite$ -- 38
+duplicate$ -- 415
+empty$ -- 903
+format.name$ -- 306
+if$ -- 2720
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 26
-newline$ -- 155
-num.names$ -- 56
-pop$ -- 235
+int.to.str$ -- 33
+missing$ -- 29
+newline$ -- 170
+num.names$ -- 62
+pop$ -- 248
 preamble$ -- 1
-purify$ -- 207
+purify$ -- 218
 quote$ -- 0
-skip$ -- 270
+skip$ -- 307
 stack$ -- 0
-substring$ -- 626
-swap$ -- 78
-text.length$ -- 5
+substring$ -- 723
+swap$ -- 94
+text.length$ -- 7
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 120
-warning$ -- 4
-while$ -- 86
-width$ -- 32
-write$ -- 330
-(There were 4 warnings)
+type$ -- 132
+warning$ -- 5
+while$ -- 97
+width$ -- 35
+write$ -- 364
+(There were 5 warnings)

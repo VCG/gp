@@ -38,6 +38,13 @@ D.~B. Chklovskii, S.~Vitaladevuni, and L.~K. Scheffer.
 \newblock {\em Current Opinion in Neurobiology}, 20(5):667 -- 675, 2010.
 \newblock Neuronal and glial cell biology – New technologies.
 
+\bibitem{samplesize1}
+L.~Faulkner.
+\newblock Beyond the five-user assumption: Benefits of increased sample sizes
+  in usability testing.
+\newblock {\em Behavior Research Methods, Instruments, \& Computers},
+  35(3):379--383, 2003.
+
 \bibitem{Giuly2013DP2}
 R.~J. Giuly, K.-Y. Kim, and M.~H. Ellisman.
 \newblock {DP2: Distributed 3D image segmentation using micro-labor workforce}.
@@ -51,11 +58,23 @@ D.~Haehn, S.~Knowles-Barley, M.~Roberts, J.~Beyer, N.~Kasthuri, J.~Lichtman,
 \newblock {\em IEEE Transactions on Visualization and Computer Graphics (Proc.
   IEEE SciVis 2014)}, 20(12):2466--2475, 2014.
 
+\bibitem{NASATLX}
+S.~G. Hart and L.~E. Staveland.
+\newblock Development of {NASA-TLX (Task Load Index)}: Results of empirical and
+  theoretical research.
+\newblock In {\em Human Mental Workload}, volume~52 of {\em Advances in
+  Psychology}, pages 139 -- 183. 1988.
+
 \bibitem{resnet}
 K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \newblock Deep residual learning for image recognition.
 \newblock In {\em The IEEE Conference on Computer Vision and Pattern
   Recognition (CVPR)}, June 2016.
+
+\bibitem{samplesize2}
+W.~Hwang and G.~Salvendy.
+\newblock Number of people required for usability evaluation: The 10+-2 rule.
+\newblock {\em Commun. ACM}, 53(5):130--133, May 2010.
 
 \bibitem{jain2010}
 V.~Jain, B.~Bollmann, M.~Richardson, D.~Berger, M.~Helmst{\"a}dter,
