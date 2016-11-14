@@ -25,11 +25,6 @@ J.~Anderson, S.~Mohammed, B.~Grimm, B.~Jones, P.~Koshevoy, T.~Tasdizen,
   annotation and summarization of large volume data sets.
 \newblock {\em Journal of Microscopy}, 241(1):13--28, 2011.
 
-\bibitem{ANON}
-ANON.
-\newblock Anon.
-\newblock {\em ANON}, 2016.
-
 \bibitem{BogovicHJ13}
 J.~A. Bogovic, G.~B. Huang, and V.~Jain.
 \newblock Learned versus hand-designed feature representations for 3d
@@ -42,12 +37,6 @@ D.~B. Chklovskii, S.~Vitaladevuni, and L.~K. Scheffer.
   microscopy.
 \newblock {\em Current Opinion in Neurobiology}, 20(5):667 -- 675, 2010.
 \newblock Neuronal and glial cell biology – New technologies.
-
-\bibitem{Ciresan:2012f}
-D.~C. Ciresan, A.~Giusti, L.~M. Gambardella, and J.~Schmidhuber.
-\newblock Deep neural networks segment neuronal membranes in electron
-  microscopy images.
-\newblock In {\em NIPS}, 2012.
 
 \bibitem{Giuly2013DP2}
 R.~J. Giuly, K.-Y. Kim, and M.~H. Ellisman.
@@ -125,22 +114,17 @@ K.~Lee, A.~Zlateski, A.~Vishwanathan, and H.~S. Seung.
   boundary detection.
 \newblock {\em arXiv preprint arXiv:1508.04843}, 2015.
 
-\bibitem{jeff_science}
-J.~W. Lichtman and W.~Denk.
-\newblock The big and the small: Challenges of imaging the brain's circuits.
-\newblock {\em Science}, 334(6056):618--623, 2011.
-
 \bibitem{Liu2014}
 T.~Liu, C.~Jones, M.~Seyedhosseini, and T.~Tasdizen.
 \newblock A modular hierarchical approach to {3D} electron microscopy image
   segmentation.
 \newblock {\em Journal of Neuroscience Methods}, 226(0):88 -- 102, 2014.
 
-\bibitem{Masci:2013a}
-J.~Masci, A.~Giusti, D.~C. Ciresan, G.~Fricout, and J.~Schmidhuber.
-\newblock A fast learning algorithm for image segmentation with max-pooling
-  convolutional networks.
-\newblock In {\em ICIP}, 2013.
+\bibitem{nesterov}
+Y.~Nesterov.
+\newblock A method for unconstrained convex minimization problem with the rate
+  of convergence o (1/k2).
+\newblock In {\em Doklady an SSSR}, volume 269, pages 543--547, 1983.
 
 \bibitem{NunezIglesias2013Machine}
 J.~Nunez-Iglesias, R.~Kennedy, T.~Parag, J.~Shi, and D.~B. Chklovskii.
@@ -153,6 +137,12 @@ J.~Nunez-Iglesias, R.~Kennedy, S.~M. Plaza, A.~Chakraborty, and W.~T. Katz.
 \newblock Graph-based active learning of agglomeration {(GALA)}: A python
   library to segment {2D} and {3D} neuroimages.
 \newblock {\em Frontiers in Neuroinformatics}, 8(34), 2014.
+
+\bibitem{nunez2014graph}
+J.~Nunez-Iglesias, R.~Kennedy, S.~M. Plaza, A.~Chakraborty, and W.~T. Katz.
+\newblock Graph-based active learning of agglomeration (gala): a python library
+  to segment 2d and 3d neuroimages.
+\newblock {\em Frontiers in neuroinformatics}, 8, 2014.
 
 \bibitem{proofreading_bottleneck}
 H.~Peng, F.~Long, T.~Zhao, and E.~Myers.
@@ -181,11 +171,6 @@ R.~Sicat, M.~Hadwiger, and N.~J. Mitra.
 \newblock Graph abstraction for simplified proofreading of slice-based volume
   segmentation.
 \newblock In {\em EUROGRAPHICS Short Paper}, 2013.
-
-\bibitem{RAND}
-R.~Unnikrishnan, C.~Pantofaru, and M.~Hebert.
-\newblock A measure for objective evaluation of image segmentation algorithms.
-\newblock pages 34--, 2005.
 
 \bibitem{uzunbas}
 M.~G. Uzunbas, C.~Chen, and D.~Metaxas.

@@ -17,7 +17,7 @@ Similar to Bogovich~\etal~\cite{BogovicHJ13}, we use grayscale image data, corre
 \begin{center}
   \includegraphics[width=\linewidth]{gfx/cnn_inputs.pdf}
 \end{center}
-  \vspace{-4mm}
+ % \vspace{-4mm}
    \caption{Example inputs for learning correct splits and split errors as reflected in the segmentation relative to the ground truth. Image, membrane probabilities, merged binary labels, and a dilated border mask are combined to 4-channel input patches.}
 \label{fig:cnn_inputs}
 \end{figure}
@@ -33,7 +33,7 @@ Dilation of the segment prior to watershed is motivated by our observation that 
 \begin{center}
   \includegraphics[width=\linewidth]{gfx/merge_error.pdf}
 \end{center}
-  \vspace{-4mm}
+%  \vspace{-4mm}
    \caption{Merge errors are identified by generating randomly seeded watershed borders within a dilated label segment. These borders then are individually rated using the split error CNN by inverting the probability score. This way, a confident rating for a correct split most likely indicates the missing border of the merge error and can be used for correcting the labeling.}
 \label{fig:merge_error}
 \end{figure}
