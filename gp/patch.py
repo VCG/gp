@@ -236,8 +236,14 @@ class Patch(object):
                       ignore_zero_neighbor=True, patch_size=(75,75), clamp_result=True):
     '''
     '''
+    no_mask=False
     # grab the mask border
-    mask_borders = mh.labeled.borders(mask)
+    if mask.max() == 0.:
+      # ignore borders
+      print 'no mask'
+      no_mask = True
+    else:
+      mask_borders = mh.labeled.borders(mask)
     
     # fill segmentation using max overlap and relabel it
     fixed = Util.propagate_max_overlap(segmentation, gold)
@@ -249,12 +255,14 @@ class Patch(object):
     # grab borders of segmentation and fixed
     segmentation_borders = mh.labeled.borders(segmentation)
     fixed_borders = mh.labeled.borders(fixed)
-    fixed_borders[mask_borders == 1] = 0
+    if not no_mask:
+      fixed_borders[mask_borders == 1] = 0
     
     
     bad_borders = np.array(segmentation_borders)
     bad_borders[fixed_borders == 1] = 0
-    bad_borders[mask_borders == 1] = 0
+    if not no_mask:
+      bad_borders[mask_borders == 1] = 0
 
 
 
