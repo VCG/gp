@@ -21,7 +21,7 @@ print test_accuracy
 
 # store CNN
 sys.setrecursionlimit(1000000000)
-with open(os.path.expanduser('/n/regal/pfister_lab/haehn/CREMITEST/IPMLB_FULL_CREMI.p'), 'wb') as f:
+with open('/n/regal/pfister_lab/haehn/CREMITEST/IPMLB_FULL_CREMI.p', 'wb') as f:
   pickle.dump(cnn, f, -1)
 with open(os.path.expanduser('~/Projects/gp/nets/IPMLB_FULL_CREMI.p'), 'wb') as f:
   pickle.dump(cnn, f, -1)
