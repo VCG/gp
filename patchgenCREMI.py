@@ -103,12 +103,17 @@ def run(PATCH_PATH, start_slice, end_slice, filename):
     np.save(PATCH_PATH+filename+'_targets.npz', shuffled[1])
     print 'Done!'
 
-
-run('/n/regal/pfister_lab/haehn/CREMITEST/', 0, 17, 'trainA')
-run('/n/regal/pfister_lab/haehn/CREMITEST/', 17, 25, 'testA')
-run('/n/regal/pfister_lab/haehn/CREMITEST/', 25, 25+17, 'trainB')
-run('/n/regal/pfister_lab/haehn/CREMITEST/', 25+17, 50, 'testB')
-run('/n/regal/pfister_lab/haehn/CREMITEST/', 50, 50+17, 'trainC')
-run('/n/regal/pfister_lab/haehn/CREMITEST/', 50+17, 75, 'testC')
+run('/n/regal/pfister_lab/haehn/CREMITEST2/', 0, 50, 'trainA')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 17, 25, 'testA')
+run('/n/regal/pfister_lab/haehn/CREMITEST2/', 100,150, 'trainB')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 25+17, 50, 'testB')
+run('/n/regal/pfister_lab/haehn/CREMITEST2/', 200,250, 'trainC')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 50+17, 75, 'testC')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 0, 17, 'trainA')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 17, 25, 'testA')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 25, 25+17, 'trainB')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 25+17, 50, 'testB')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 50, 50+17, 'trainC')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 50+17, 75, 'testC')
 
 #run('/n/regal/pfister_lab/haehn/FINAL/IPMLB_before_NP', 10, 20, 'train', False)
