@@ -10,83 +10,89 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We evaluate guided proofreading extensively on multiple different real-world connectomics datasets of different species. All datasets were acquired using either via serial section electron microscopy (ssEM) or serial section transmission electron microscopy (ssTEM). We perform experiments for error correction based on a selection oracle, automatic selection with threshold, and the forced choice setting. The latter is designed as a between-subjects user study with novice and expert participants.
+We evaluate guided proofreading on multiple different real-world connectomics datasets of different species. All datasets were acquired using either serial section electron microscopy (ssEM) or serial section transmission electron microscopy (ssTEM). We perform experiments with the selection oracle, with automatic selection with threshold, and in the forced choice setting via a between-subjects user study with both novice and expert participants.
 
 \subsection{Datasets}
 
-\textbf{L. Cylinder.} We use the left part of the 3-cylinder mouse cortex volume of Kasthuri \etal~\cite{kasthuri2015saturated} ($2048\times2048\times300$ voxels). The tissue is dense mammalian neuropil from layers 4 and 5 of the S1 primary somatosensory cortex of a healthy mouse and was acquired using ssEM. The resolution of our dataset is $3\times3\, \text{nm}^2$ per pixel, and the section thickness is $30\, \text{nm}$. The image data and a manually-labeled expert segmentation is publicly available as ground truth for the entire dataset\footnote{https://software.rc.fas.harvard.edu/lichtman/vast/}.
-\\~\\
-\textbf{AC4 subvolume.} This dataset is part of a publicly available dataset of mouse cortex that was published for the ISBI 2013 challenge "SNEMI3D: 3D Segmentation of neurites in EM images". The resolution of this dataset is $6\times6\times30~\text{nm}^3\text{/voxel}$ and it was acquired using ssEM. Haehn~\etal~\cite{haehn_dojo_2014} found the most representative subvolume ($400\times400\times10$ voxels) of this dataset with respect to the distribution of object sizes and used it for their experiments on interactive proofreading tools for connectomics. We use their publicly available data, labeled ground truth, and study findings~\footnote{http://rhoana.org/dojo/}.
-\\~\\
-\textbf{CREMI A/B/C.} As part of the MICCAI 2016 challenge on circuit reconstruction from electron microscopy images (CREMI), six ssTEM datasets (each $1250\times1250\times125$ voxels) were made publicly available~\footnote{http://www.cremi.org}. Since only three include manually labeled ground truth, we use these three volumes for our experiments. The volumes are part of adult fruit fly (Drosophila melanogaster) brain. The resolution of all three datasets is $4\times4\times40~\text{nm}^3\text{/voxel}$.
-\\~\\
-\textbf{Automatic segmentation pipeline.}
-We use a state-of-the-art method to create a dense automatic segmentation of the data. Membrane probabilities are generated using a convolutional neural network based on the U-net architecture~\cite{RonnebergerFB15}. The probabilities are used to seed watershed and generate an oversegmentation using superpixels. Agglomeration is then performed by the GALA active learning classifier~\cite{nunez2014graph}.
+\paragraph{L. Cylinder.} We use the left part of the 3-cylinder mouse cortex volume of Kasthuri \etal~\cite{kasthuri2015saturated} ($2048\times2048\times300$ voxels). The tissue is dense mammalian neuropil from layers 4 and 5 of the S1 primary somatosensory cortex of a healthy mouse, and was acquired using ssEM. The dataset resolution is $3\times3\, \text{nm}^2$ per pixel, with section thickness of $30\, \text{nm}$. Image data and a manually-labeled expert `ground truth' segmentation is available publicly for the entire dataset\footnote{\scriptsize{\url{https://software.rc.fas.harvard.edu/lichtman/vast/}}}.
+
+\paragraph{AC4 subvolume.} This is part of a publicly-available dataset of mouse cortex that was published for the ISBI 2013 challenge ``SNEMI3D: 3D Segmentation of neurites in EM images''. The dataset resolution is $6\times6\times30~\text{nm}^3\text{/voxel}$ and it was acquired using ssEM. Haehn~\etal~\cite{haehn_dojo_2014} found the most representative subvolume ($400\times400\times10$ voxels) of this dataset with respect to the distribution of object sizes, and used it for their interactive connectomics proofreading tool experiments. We use their publicly available data, labeled ground truth, and study findings\footnote{\scriptsize{\url{http://rhoana.org/dojo/}}}.
+
+\paragraph{CREMI A/B/C.} As part of the MICCAI 2016 challenge on circuit reconstruction from electron microscopy images (CREMI), six ssTEM datasets were made publicly available\footnote{\scriptsize{\url{http://www.cremi.org}}},  each $1250\times1250\times125$ voxels. Since only three datasets include manually-labeled `ground truth', we use these three volumes for our experiments. The volumes are part of an adult fruit fly (Drosophila melanogaster) brain. The resolution of all three datasets is $4\times4\times40~\text{nm}^3\text{/voxel}$.
+
+\paragraph{Automatic segmentation pipeline.}
+We use a state-of-the-art method to create a dense automatic segmentation of the data. Membrane probabilities are generated using a CNN based on the U-net architecture~\cite{RonnebergerFB15}. The probabilities are used to seed watershed and generate an oversegmentation using superpixels. Agglomeration is then performed by the GALA active learning classifier~\cite{nunez2014graph}.
 
 \subsection{Classifier Training}
 
-To train our split error classifier, we use the L. Cylinder dataset. We use the first 250 sections of the data for training and validation. For n-fold cross validation, we select one quarter of this data and re-select after each epoch. We minimize cross-entropy loss and update using stochastic gradient descent with Nesterov momentum~\cite{nesterov}.
-To generate training data, we identify correct regions and split errors in the automatic segmentation by intersection with ground truth regions. This is required since extracellular space is not labeled in the ground truth but in our dense automatic segmentation.
-From these regions, we sample 112,760 correct and 112,760 split error patches with 4-channels as described above. The patches are normalized. To further augment our training data, we rotate patches within each mini-batch by $k*90$ degrees with randomly chosen $k$. The training parameters such as filter size, number of filters, learning rate, and momentum are the result of intuition and experience, studying recent machine learning research, and a brute force parameter search within a limited range (see supplementary material).
-The first row of table~\ref{tab:parameters} lists the final parameters. Our CNN configuration results in approximately 170,000 learnable parameters. We assume that training has converged if the validation loss does not decrease for 50 epochs. We test the CNN by generating a balanced set of 8,780 correct and 8,780 error patches using unseen data of the left cylinder dataset and report testing results in the second row of table~\ref{tab:parameters}.
+We train our split error classifier on the L. Cylinder dataset. We use the first 250 sections of the data for training and validation. For n-fold cross validation, we select one quarter of this data and re-select after each epoch. We minimize cross-entropy loss and update using stochastic gradient descent with Nesterov momentum~\cite{nesterov}. To generate training data, we identify correct regions and split errors in the automatic segmentation by intersection with ground truth regions. This is required since extracellular space is not labeled in the ground truth, but is in our dense automatic segmentation. From these regions, we sample 112,760 correct and 112,760 split error patches with 4-channels (Sec.~\ref{sec:spliterrordetection}). The patches are normalized. To augment our training data, we rotate patches within each mini-batch by $k*90$ degrees with randomly chosen integer $k$. The training parameters such as filter size, number of filters, learning rate, and momentum are the result of intuition and experience, studying recent machine learning research, and a limited brute force parameter search (see supplementary material). 
 
-\begin{table}[h]
-%\resizebox{\textwidth}{!}{%
-\small
-\begin{tabular}{l|l}
-\begin{tabular}{l}
-\textbf{Guided Proofreading}\\~\\
-\textbf{Parameters} \\
-Filter size: 3x3 \\ No. Filters 1: 64 \\ No. Filters 2-4: 48 \\ Dense units: 512 \\ Learning rate: 0.03-0.00001\\ Momentum: 0.9-0.999\\Mini-Batchsize: 128\\~\\
- \end{tabular}
-&
-\begin{tabular}{l}
-\textbf{Focused Proofreading}\\~\\
-\textbf{Parameters} \\
-Iterations: 3 \\
-Learning strategy: 2\\
-Mito agglomeration: Off\\
-Threshold: 0.0\\
-~\\
-~\\
-~\\
-~\\
- \end{tabular}
- \\
- \hline
- \\
- \begin{tabular}{l}
-\textbf{Results} \\ cost [m]: 383 \\ Val. loss: 0.0845 \\ Val. acc.: 0.969 \\ Test. acc.: 0.94 \\ Prec./Recall: 0.94/0.94 \\ F1 Score: 0.94
- \end{tabular}
-&
-\begin{tabular}{l}
-\textbf{Results} \\ cost [m]: 217 \\ ~ \\ ~ \\ Test. acc.: 0.99 \\ Prec./Recall: \HP{add}?/? \\ F1 Score: \HP{add}?
- \end{tabular}
+Table~\ref{tab:parameters} lists the final parameters. Our CNN configuration results in approximately 170,000 learnable parameters. We assume that training has converged if the validation loss does not decrease for 50 epochs. We test the CNN by generating a balanced set of 8,780 correct and 8,780 error patches using unseen data of the left cylinder dataset. 
+
+\begin{table}[t]
+\caption{Training parameters, cost, and results of our guided proofreading classifier versus focused proofreading by Plaza~\cite{focused_proofreading}. Both methods were trained on the same mouse brain dataset using the same hardware (Tesla K40 GPU).}%While the training of our classifier is more expensive, testing accuracy is superior. }
+
+\small{
+\begin{tabular}{ll}
+	\toprule
+	\begin{tabular}{l}
+		\textbf{Guided Proofreading} \\ \midrule
+		\emph{Parameters} \\ \midrule
+		Filter size: 3x3 \\ No. Filters 1: 64 \\ No. Filters 2--4: 48 \\ Dense units: 512 \\ Learning rate: 0.03--0.00001\\ Momentum: 0.9--0.999\\Mini-Batchsize: 128 \\
+	\end{tabular}
+	&
+	\begin{tabular}{l}
+		\vspace{0.2mm} \\
+		\midrule
+		\emph{Results---Test Set} \\ \midrule Cost [m]: 383 \\ Val. loss: 0.0845 \\ Val. acc.: 0.969 \\ Test. acc.: 0.94 \\ Prec./Recall: 0.94/0.94 \\ F1 Score: 0.94 \\ ~ \\
+	\end{tabular}
 \end{tabular}
-\vspace{1mm}
-\caption{Training parameters, cost, and results of our guided proofreading classifier versus focused proofreading by Plaza~\cite{focused_proofreading}. Both methods were trained on the same mouse brain dataset using the same hardware (Tesla K40 GPU).\HP{Maybe split this into two tables?}}%While the training of our classifier is more expensive, testing accuracy is superior. }
+
+\vspace{0.5mm}
+\begin{tabular}{ll}
+	\toprule
+	\begin{tabular}{l}
+		\textbf{Focused Proofreading}\\ \midrule
+		\emph{Parameters} \\ \midrule
+		Iterations: 3 \\
+		Learning strategy: 2\\
+		Mito agglomeration: Off~~~~~~ \\  % Crappy alignment spacing
+		Threshold: 0.0\\
+	\end{tabular}
+	&
+	\begin{tabular}{l}
+		\vspace{0.2mm} \\
+		\midrule
+		\emph{Results---Test Set} \\ \midrule cost [m]: 217 \\ Test. acc.: 0.99 \\ Prec./Recall: \HP{add}?/? \\ F1 Score: \HP{add}? \\
+	\end{tabular}
+%	\bottomrule
+\end{tabular}
+\hrule
+}
 \label{tab:parameters}
 \end{table}
 
 \subsection{Baseline Comparisons}
 
-\textbf{Interactive proofreading.} A comparison of interactive proofreading tools by Haehn~\etal~ concludes that novices perform best when using Dojo~\cite{haehn_dojo_2014}. We use the publicly available findings of their user study as a baseline comparison. More specifically, we use the data of the Dojo user with the reported best performance as a baseline.
-\\~\\
-\textbf{Computer-aided proofreading.} We compare against focused proofreading by Plaza~\cite{focused_proofreading}. Focused proofreading performs graph analysis on output from NeuroProof~\cite{neuroproof2013}. For training, we therefore replace GALA in our automatic segmentation pipeline with NeuroProof but use exactly the same input data including membrane probabilities. We obtained the best possible parameters for NeuroProof by consulting the developers and report them in table~\ref{tab:parameters}. Rather than using Raveler as the frontend, we use our own interface (Fig.~\ref{fig:ui}). This way, the comparison is based on the classifier rather than on the user interface.
+\paragraph{Interactive proofreading.} Haehn~\etal's comparison of interactive proofreading tools concludes that novices perform best when using Dojo~\cite{haehn_dojo_2014}. We use the publicly available findings of their user study as a baseline comparison. We use the data of all Dojo users in aggregate as a baseline.
+
+\paragraph{Computer-aided proofreading.} We compare against focused proofreading by Plaza~\cite{focused_proofreading}. Focused proofreading performs graph analysis on the output from NeuroProof~\cite{neuroproof2013}, instead of our GALA approach. Therefore, for training our focused proofreading baseline, we replace GALA in our automatic segmentation pipeline with NeuroProof but use exactly the same input data including membrane probabilities. We obtained the best possible parameters for NeuroProof by consulting the developers (Table~\ref{tab:parameters}). Rather than using Raveler as the frontend, we use our own interface (Fig.~\ref{fig:ui}) to compare only the classifier part of Plaza's approach.
 
 \subsection{Experiments}
 
-\textbf{Selection oracle evaluation.} We use the selection oracle as described in Sec.~\ref{sec:errorcorrection} for the decision whether to accept or reject a correction. The purpose of this experiment is to investigate how many corrections are required to reach the best possible outcome. This is a direct comparison of the guided proofreading and focused proofreading classifiers but can only be performed if ground truth data is available. We perform this experiment on all datasets listed above.
-\\~\\
-\textbf{Automatic method evaluation.} For this experiment we accept all suggested corrections if the rankings are above a configured threshold $p_t=.95$ (Sec.~\ref{sec:errorcorrection}. We observed this value as stable in previous experiments with the guided proofreading classifiers (see supplementary material). We compare against the focused proofreading classifier and perform this experiment on all reported datasets.
-\\~\\
-\textbf{Forced choice user experiments.} We conducted a quantitative user study to evaluate the forced choice setting as described in Sec.~\ref{sec:errorcorrection}. In particular, we evaluate how participants perform while correcting an automatic segmentation using the guided proofreading and focused proofreading tools. We designed a single factor between-subject experiment with the factor \textit{proofreading classifier} and asked participants to proofread the AC4 subvolume in a fixed time frame of 30 minutes. To enable comparison against the interactive proofreading study by~Haehn~\etal~\cite{haehn_dojo_2014}, we use the exact same study conditions, dataset, and time limit. The experiment was performed on a machine with standard, off-the-shelf hardware. All participants received monetary compensation for their time.
+\paragraph{Selection oracle evaluation.} We use the selection oracle as described in Sec.~\ref{sec:errorcorrection} for the decision whether to accept or reject a correction. The purpose of this experiment is to investigate how many corrections are required to reach the best possible outcome. This is a direct comparison of the guided proofreading and focused proofreading classifiers but can only be performed if ground truth data is available. We perform this experiment on all datasets listed above.
 
-\textbf{Novice Study Design.} We recruited participants with no experience in electron microscopy data or proofreading through flyers, mailing lists, and personal interaction. Based on sample size calculation theory, we estimated the study sample size as ten users per proofreading tool including four potential dropouts~\cite{samplesize1,samplesize2}. Nevertheless, all twenty participants completed the study ($N=20$, 10 female; 19-65 years old, $M$=30). Each study session started off with the participants signing the consent form and with a five minute standardized explanation of the task. The participants then were asked to do a 3 minute proofreading task on separate but representative data using focused proofreading. The participants were allowed to ask questions during this time. The classifier did not matter in this case since the user interface was the same. The experimenter then loaded the AC4 subvolume with initial pre-computed classifications by either guided proofreading or focused proofreading depending on assignment. After 30 minutes, the participants completed the raw NASA-TLX standard questions for task evaluation~\cite{NASATLX}.
+\paragraph{Automatic method evaluation.} For this experiment, we accept all suggested corrections if the rankings are above a configured threshold $p_t=.95$ (Sec.~\ref{sec:errorcorrection}). We observed this value as stable in previous experiments with the guided proofreading classifiers (see supplementary material). We compare against the focused proofreading classifier and perform this experiment on all reported datasets.
 
-\textbf{Expert Study Design.} We recruited 4 domain experts to evaluate performance of guided proofreading and focused proofreading. We obtained study consent and randomly assigned 2 experts to proofread using each classifier. The experts also did the 3 minute test run on different data prior to proofreading for 30 minutes. After the task ended, the experts were asked to complete the raw NASA-TLX questionnaire as well.
+\paragraph{Forced choice user experiments.} We conducted a quantitative user study to evaluate the forced choice setting (Sec.~\ref{sec:errorcorrection}). In particular, we evaluated how participants perform while correcting an automatic segmentation using the guided proofreading and focused proofreading tools. We designed a single factor between-subject experiment with the factor \textit{proofreading classifier}, and asked participants to proofread the AC4 subvolume in a fixed time frame of 30 minutes. To enable comparison against the interactive proofreading study by~Haehn~\etal~\cite{haehn_dojo_2014}, we use the exact same study conditions, dataset, and time limit. The experiment was performed on a machine with standard off-the-shelf hardware. All participants received monetary compensation.
 
-\textbf{Evaluation metric.} For each experiment, we measure the similarity between proofread segmentations and the manual ground truth labelings using \textit{variation of information} (VI). VI is a measure of the distance between two clusterings, closely related to mutual information, but lower being better. We calculate VI and treat it as a continuous variable during analysis.
+\paragraph{Novice Study Design.} We recruited participants with no experience in electron microscopy data or proofreading, through flyers, mailing lists, and personal interaction. Based on sample size calculation theory, we estimated the study needed ten users per proofreading tool including four potential dropouts~\cite{samplesize1,samplesize2}. All twenty participants completed the study ($N=20$, 10 female; 19-65 years old, $M$=30). 
+
+Each study session began with a five minute standardized explanation of the task. Then, the participants were asked to perform a 3 minute proofreading task on separate but representative data using focused proofreading. The participants were allowed to ask questions during this time. The classifier did not matter in this case since the user interface was the same. The experimenter then loaded the AC4 subvolume with initial pre-computed classifications by either guided proofreading or focused proofreading depending on assignment. After 30 minutes, the participants completed the raw NASA-TLX standard questions for task evaluation~\cite{NASATLX}.
+
+\paragraph{Expert Study Design.} We recruited 4 domain experts to evaluate the performance of both guided and focused proofreading. We obtained study consent and randomly assigned 2 experts to proofread using each classifier. The experts performed the 3 minute test run on different data prior to proofreading for 30 minutes. After the task ended, the experts were asked to complete the raw NASA-TLX questionnaire.
+
+\paragraph{Evaluation metric.} For each experiment, we measure the similarity between proofread segmentations and the manual `ground truth' labelings using \textit{variation of information} (VI). VI is a measure of the distance between two clusterings, closely related to mutual information, where lower means better. We treat VI as a continuous variable during analysis.
 
 %For baseline comparison, we also list the parameters and training results of focused proofreading in this table but elaborate on these further in section \ref{sec:evaluation}.
 
