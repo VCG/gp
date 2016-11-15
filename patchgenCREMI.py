@@ -20,7 +20,7 @@ def generate_patches(start_slice, end_slice):
 
         t0 = time.time()
         print 'working on slice', z
-        input_image, input_prob, input_gold, input_rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/'), z)
+        input_image, input_prob, input_gold, input_rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/TEST/'), z)
 
 
         error_patches, patches = gp.Patch.patchify_maxoverlap(input_image, input_prob, np.zeros((1,1250,1250),dtype=np.bool), input_rhoana, input_gold, sample_rate=1)
@@ -103,11 +103,11 @@ def run(PATCH_PATH, start_slice, end_slice, filename):
     np.save(PATCH_PATH+filename+'_targets.npz', shuffled[1])
     print 'Done!'
 
-run('/n/regal/pfister_lab/haehn/CREMITEST2/', 0, 50, 'trainA')
+run('/n/regal/pfister_lab/haehn/CREMITEST2/', 0, 75, 'test')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 17, 25, 'testA')
-run('/n/regal/pfister_lab/haehn/CREMITEST2/', 100,150, 'trainB')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 100,150, 'trainB')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 25+17, 50, 'testB')
-run('/n/regal/pfister_lab/haehn/CREMITEST2/', 200,250, 'trainC')
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 200,250, 'trainC')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 50+17, 75, 'testC')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 0, 17, 'trainA')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 17, 25, 'testA')
