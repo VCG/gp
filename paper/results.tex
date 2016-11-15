@@ -6,14 +6,14 @@
 
 We compare guided proofreading and focused proofreading classifiers and report precision and recall as well as f1 scores across datasets.
 
-\paragraph{L.~Cylinder.} Evaluation was performed on previously unseen sections of mouse cortex volume of Kasthuri~\etal~\cite{kasthuri2015saturated}. We generated an unbalanced dataset of 81,184 correct and 8,780 split error patches in respect to the ground truth labeling. We then ranked each patch by using focused proofreading, guided proofreading and compared precision/recall (Table \ref{tab:prcyl}. Our method exhibits higher precision and recall for correct and error patches.
+\paragraph{L.~Cylinder.} Evaluation was performed on previously unseen sections of mouse cortex volume of Kasthuri~\etal~\cite{kasthuri2015saturated}. We generated an unbalanced dataset of 81,184 correct and 8,780 split error patches in respect to the ground truth labeling. We then ranked each patch by using focused proofreading, guided proofreading and compared precision/recall (Table \ref{tab:prcyl}). Our method exhibits higher precision and recall for correct and error patches.
 
 \begin{table}[t]
 \caption{Classifier comparison on an unbalanced test set of the L.~Cylinder volume.}%While the training of our classifier is more expensive, testing accuracy is superior. }
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
- & Precision & Recall & F1 score & \# \\ 
+ & Precision & Recall & F1 score & Test \# \\ 
 \midrule
 \emph{Focused Proofreading} & ~ & ~ & ~ & ~ \\ 
 Correct & 0.93 & 0.31 & 0.47 & 81,184 \\ 
@@ -34,14 +34,14 @@ Split error & 0.61 & 0.96 & 0.74 & 8,780 \\
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
-& Precision & Recall & F1 score & \# \\ 
+& Precision & Recall & F1 score & Test \# \\ 
 \midrule
 \emph{Focused Proofreading} & ~ & ~ & ~ & ~ \\ 
 Correct & 0.94 & 0.69 & 0.80 & 3,488 \\ 
 Split error & 0.14 & 0.51 & 0.21 & 332 \\ 
 \emph{Guided Proofreading} & ~ & ~ & ~ & ~ \\ 
-correct & 1.00 & 0.92 & 0.96 & 3,488 \\ 
-split error & 0.54 & 0.95 & 0.69 & 332 \\ 
+Correct & 1.00 & 0.92 & 0.96 & 3,488 \\ 
+Split error & 0.54 & 0.95 & 0.69 & 332 \\ 
 \bottomrule
 \end{tabular} 
 }
