@@ -1,9 +1,7 @@
 \begin{figure*}[t]
-\begin{center}
+\centering
 \includegraphics[width=\linewidth]{gfx/architecture.pdf}
-\end{center}
-  \vspace{-4mm}
-   \caption{Our guided proofreading classifiers use a traditional CNN architecture of four convolutional layers, each followed by max pooling and dropout regularization. The 4-channel input patches are labelled either as correct splits or as split errors.}
+\caption{Our guided proofreading classifiers use a traditional CNN architecture of four convolutional layers, each followed by max pooling and dropout regularization. The 4-channel input patches are labelled either as correct splits or as split errors.}
 \label{fig:architecture}
 \end{figure*}
 
@@ -16,8 +14,8 @@ Many works tackle this problem. NeuroProof~\cite{neuroproof2013} decreases error
 It is also possible to learn segmentation classification features directly from images with CNNs. Ronneberger \etal~\cite{RonnebergerFB15} use a contracting/expanding CNN path architecture to enable precise boundary localization with small amounts of training data. Lee \etal~\cite{lee2015recursive} recursively train very deep networks with 2D and 3D filters to detect boundaries.
 %
 All these approaches make good progress; however, in general, proofreading is still required to correct errors.
-\\~\\
-\textbf{Interactive Proofreading.} While proofreading is very time consuming, it is fairly easy for humans to perform corrections through splitting and merging segments. One expert tool is Raveler, introduced by Chklovskii~\etal~\cite{chklovskii2010, raveler}. Raveler is used today by professional proofreaders, and it offers many parameters for tweaking the process. Similar systems exist as products or plugins to visualization systems,~\eg, V3D~\cite{proofreading_bottleneck} and AVIZO~\cite{markus_proofreading}.
+
+\paragraph{Interactive Proofreading.} While proofreading is very time consuming, it is fairly easy for humans to perform corrections through splitting and merging segments. One expert tool is Raveler, introduced by Chklovskii~\etal~\cite{chklovskii2010, raveler}. Raveler is used today by professional proofreaders, and it offers many parameters for tweaking the process. Similar systems exist as products or plugins to visualization systems,~\eg, V3D~\cite{proofreading_bottleneck} and AVIZO~\cite{markus_proofreading}.
 
 Recent papers have attacked the problem of proofreading massive datasets through crowdsourcing with novices~\cite{saalfeld09,anderson2011,Giuly2013DP2}. One popular platform is EyeWire, by Kim \etal~\cite{eyewire_nature}, where participants earn virtual rewards for merging over-segmented labelings to reconstruct retina cells.
 
@@ -30,9 +28,9 @@ Mojo, and Dojo through a quantitative user study (Sec.~3 and
 4, ~\cite{haehn_dojo_2014}). Dojo had the highest performance. In this paper, we
 use Dojo as a baseline for interactive proofreading.
 
-All interactive proofreading solutions require the user to find potential errors manually, which takes the majority of the time~\cite{proofreading_bottleneck,haehn_dojo_2014}. Recent papers propose computer-aided proofreading systems to reduce the time spent in this visual search task.
-\\~\\
-\textbf{Computer-aided Proofreading.} Uzunbas \etal~\cite{uzunbas} showed that potential labeling errors can be found by considering the merge tree of an automatic segmentation method. The authors track uncertainty throughout the automatic labeling by training a conditional random field. This segmentation technique produces uncertainty estimates, which inform potential regions for proofreading to the user. While this applies to isotropic volumes, more work is needed to apply it to the typically anisotropic connectromics dataset volumes.
+All interactive proofreading solutions require the user to find potential errors manually, which takes the majority of the time~\cite{proofreading_bottleneck,haehn_dojo_2014}. Recent papers propose computer-aided proofreading systems to quicken this visual search task.
+
+\paragraph{Computer-aided Proofreading.} Uzunbas \etal~\cite{uzunbas} showed that potential labeling errors can be found by considering the merge tree of an automatic segmentation method. The authors track uncertainty throughout the automatic labeling by training a conditional random field. This segmentation technique produces uncertainty estimates, which inform potential regions for proofreading to the user. While this applies to isotropic volumes, more work is needed to apply it to the typically anisotropic connectromics dataset volumes.
 
 %Their method requires further work to overcome the requirement of isotropic volumes, a property not given for most connectomics datasets. Our approach, guided proofreading, works on isotropic as well as anisotropic data, and finds merge and split errors.
 
