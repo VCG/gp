@@ -9,7 +9,7 @@ import os
 HOMEDIR = '/n/home05/haehn/'
 REGALDIR = '/n/regal/pfister_lab/haehn/'
 DATADIR = HOMEDIR + 'data/CREMIGP/TEST/'
-OUTDIR = REGALDIR + 'cremiGP/'
+OUTDIR = REGALDIR + 'cremiGP2/'
 
 #
 # load cnn
@@ -25,7 +25,7 @@ input_image = []
 input_prob = []
 input_gold = []
 input_rhoana = []
-test_slices = range(15,25) + range(25+15,50) + range(50+15,75)
+test_slices = range(20,25) + range(25+20,50) + range(50+20,75)
 for z in test_slices:
     image, prob, gold, rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/TEST/'), z)
     input_image.append(image)
