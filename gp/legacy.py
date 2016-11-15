@@ -983,6 +983,7 @@ class Legacy(object):
               # print 'found', l, n, slice, max_in_slice
           
       if superMax < sureness_threshold:
+        print superMax
         break
 
 

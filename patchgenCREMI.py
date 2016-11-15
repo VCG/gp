@@ -20,7 +20,7 @@ def generate_patches(start_slice, end_slice):
 
         t0 = time.time()
         print 'working on slice', z
-        input_image, input_prob, input_gold, input_rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/TEST/'), z)
+        input_image, input_prob, input_gold, input_rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/'), z)
 
 
         error_patches, patches = gp.Patch.patchify_maxoverlap(input_image, input_prob, np.zeros((1,1250,1250),dtype=np.bool), input_rhoana, input_gold, sample_rate=1)
