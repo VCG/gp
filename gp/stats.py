@@ -174,7 +174,7 @@ class Stats(object):
 
     font = {'family' : 'sans-serif',
             'weight' : 'normal',
-            'size'   : 22}
+            'size'   : 48}
 
     plt.rc('font', **font)
     plt.rc('legend',**{'fontsize':22})
