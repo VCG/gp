@@ -174,10 +174,10 @@ class Stats(object):
 
     font = {'family' : 'sans-serif',
             'weight' : 'normal',
-            'size'   : 48}
+            'size'   : 36}
 
     plt.rc('font', **font)
-    plt.rc('legend',**{'fontsize':22})
+    plt.rc('legend',**{'fontsize':26})
 
     for u in fp_vi_per_c_per_user:
         plt.plot(u, linewidth=3)
