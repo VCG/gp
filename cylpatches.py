@@ -12,12 +12,12 @@ for z in range(250,300):
     
     image, prob, mask, gold, rhoana = gp.Util.read_section(os.path.expanduser('~/data/cylinderNEW'),z)
     
-    error_patches, patches = gp.Patch.patchify_maxoverlap(image, prob, mask, rhoana, gold, sample_rate=1, clamp_result=False)
+    error_patches, patches = gp.Patch.patchify_maxoverlap(image, prob, mask, rhoana, gold, sample_rate=1, clamp_result=True)
     
     e_p.append(error_patches)
     p.append(patches)    
 
-OUTDIR = '/n/regal/pfister_lab/haehn/CYLPATCHES/'
+OUTDIR = '/n/regal/pfister_lab/haehn/CYLPATCHES_CLAMPED/'
 
 with open(OUTDIR+'e_p.p', 'wb') as f:
   pickle.dump(e_p, f)
