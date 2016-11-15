@@ -63,7 +63,7 @@ Table~\ref{tab:parameters} lists the final parameters. Our CNN configuration res
 	\begin{tabular}{l}
 		\vspace{0.2mm} \\
 		\midrule
-		\emph{Results---Test Set} \\ \midrule cost [m]: 217 \\ Test. acc.: 0.99 \\ Prec./Recall: 0.58/0.56 \\ F1 Score: 0.54 \\
+		\emph{Results---Test Set} \\ \midrule Cost [m]: 217 \\ Test. acc.: 0.99 \\ Prec./Recall: 0.58/0.56 \\ F1 Score: 0.54 \\
 	\end{tabular}
 %	\bottomrule
 \end{tabular}
@@ -98,7 +98,7 @@ Each study session began with a five minute standardized explanation of the task
 
 \paragraph{Expert study design.} We recruited 4 domain experts to evaluate the performance of both guided and focused proofreading. We obtained study consent and randomly assigned 2 experts to proofread using each classifier. The experts performed the 3 minute test run on different data prior to proofreading for 30 minutes. After the task ended, the experts were asked to complete the raw NASA-TLX questionnaire.
 
-\paragraph{Evaluation metric.} For each experiment, we measure the similarity between proofread segmentations and the manual `ground truth' labelings using \textit{variation of information} (VI). VI is a measure of the distance between two clusterings, closely related to mutual information, where lower means a better match to ground truth. We treat VI as a continuous variable during analysis.
+\paragraph{Evaluation metric.} We measure the similarity between proofread segmentations and the manual `ground truth' labelings using \textit{variation of information} (VI). VI is a measure of the distance between two clusterings, closely related to mutual information (the lower, the better).% We treat VI as a continuous variable during analysis.
 
 %For baseline comparison, we also list the parameters and training results of focused proofreading in this table but elaborate on these further in section \ref{sec:evaluation}.
 
