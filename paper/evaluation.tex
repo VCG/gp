@@ -63,7 +63,7 @@ Table~\ref{tab:parameters} lists the final parameters. Our CNN configuration res
 	\begin{tabular}{l}
 		\vspace{0.2mm} \\
 		\midrule
-		\emph{Results---Test Set} \\ \midrule cost [m]: 217 \\ Test. acc.: 0.99 \\ Prec./Recall: \HP{add}?/? \\ F1 Score: \HP{add}? \\
+		\emph{Results---Test Set} \\ \midrule cost [m]: 217 \\ Test. acc.: 0.99 \\ Prec./Recall: 0.58/0.56 \\ F1 Score: 0.54 \\
 	\end{tabular}
 %	\bottomrule
 \end{tabular}
@@ -76,7 +76,7 @@ Table~\ref{tab:parameters} lists the final parameters. Our CNN configuration res
 
 \paragraph{Interactive proofreading.} Haehn~\etal's comparison of interactive proofreading tools concludes that novices perform best when using Dojo~\cite{haehn_dojo_2014}. We use the publicly available findings of their user study as a baseline comparison. We use the data of all Dojo users in aggregate as a baseline.
 
-\paragraph{Computer-aided proofreading.} We compare against focused proofreading by Plaza~\cite{focused_proofreading}. Focused proofreading performs graph analysis on the output from NeuroProof~\cite{neuroproof2013}, instead of our GALA approach. Therefore, for training our focused proofreading baseline, we replace GALA in our automatic segmentation pipeline with NeuroProof but use exactly the same input data including membrane probabilities. We obtained the best possible parameters for NeuroProof by consulting the developers (Table~\ref{tab:parameters}). Rather than using Raveler as the frontend, we use our own interface (Fig.~\ref{fig:ui}) to compare only the classifier part of Plaza's approach.
+\paragraph{Computer-aided proofreading.} We compare against focused proofreading by Plaza~\cite{focused_proofreading}. Focused proofreading performs graph analysis on the output from NeuroProof~\cite{neuroproof2013}, instead of our GALA approach. Therefore, for training our focused proofreading baseline, we replace GALA in our automatic segmentation pipeline with NeuroProof but use exactly the same input data including membrane probabilities. We obtained the best possible parameters for NeuroProof by consulting the developers (Table~\ref{tab:parameters}). Rather than using Raveler as the frontend, we use our own interface (Fig.~\ref{fig:ui}) to compare only the classifier from Plaza's approach.
 
 \subsection{Experiments}
 
@@ -86,7 +86,7 @@ Table~\ref{tab:parameters} lists the final parameters. Our CNN configuration res
 
 \paragraph{Forced choice user experiments.} We conducted a quantitative user study to evaluate the forced choice setting (Sec.~\ref{sec:errorcorrection}). In particular, we evaluated how participants perform while correcting an automatic segmentation using the guided proofreading and focused proofreading tools. We designed a single factor between-subject experiment with the factor \textit{proofreading classifier}, and asked participants to proofread the AC4 subvolume in a fixed time frame of 30 minutes. To enable comparison against the interactive proofreading study by~Haehn~\etal~\cite{haehn_dojo_2014}, we use the exact same study conditions, dataset, and time limit. The experiment was performed on a machine with standard off-the-shelf hardware. All participants received monetary compensation.
 
-\paragraph{Novice study design.} We recruited participants with no experience in electron microscopy data or proofreading, through flyers, mailing lists, and personal interaction. Based on sample size calculation theory, we estimated the study needed ten users per proofreading tool including four potential dropouts~\cite{samplesize1,samplesize2}. All twenty participants completed the study ($N=20$, 10 female; 19-65 years old, $M$=30). 
+\paragraph{Novice study design.} We recruited participants with no experience in electron microscopy data or proofreading through flyers, mailing lists, and personal interaction. Based on sample size calculation theory, we estimated the study needed ten users per proofreading tool including four potential dropouts~\cite{samplesize1,samplesize2}. All twenty participants completed the study ($N=20$, 10 female; 19-65 years old, $M$=30). 
 
 Each study session began with a five minute standardized explanation of the task. Then, the participants were asked to perform a 3 minute proofreading task on separate but representative data using focused proofreading. The participants were allowed to ask questions during this time. The classifier did not matter in this case since the user interface was the same. The experimenter then loaded the AC4 subvolume with initial pre-computed classifications by either guided proofreading or focused proofreading depending on assignment. After 30 minutes, the participants completed the raw NASA-TLX standard questions for task evaluation~\cite{NASATLX}.
 \begin{figure*}[t]
@@ -94,12 +94,12 @@ Each study session began with a five minute standardized explanation of the task
 \includegraphics[width=\linewidth]{gfx/ac4trails.pdf}
 \end{center}
   \vspace{-4mm}
-   \caption{Performance comparison of focused proofreading by Plaza and our guided proofreading methods on the AC4 subvolume. All measurements are reported as median VI, the lower the better. We compare different approaches of accepting or rejecting corrections for each method: automatic selection with threshold (indicated by the red line), forced choice by ten novice users, forced choice by two domain experts, and the selection oracle. In all cases, guided proofreading yields better results with less corrections.}
+   \caption{Performance comparison of Plaza's focused proofreading and our guided proofreading methods on the AC4 subvolume. All measurements are reported as median VI, the lower the better. We compare different approaches of accepting or rejecting corrections for each method: automatic selection with threshold (indicated by the red line), forced choice by ten novice users, forced choice by two domain experts, and the selection oracle. In all cases, guided proofreading yields better results with fewer corrections.}
 \label{fig:ac4trails}
 \end{figure*}
 \paragraph{Expert study design.} We recruited 4 domain experts to evaluate the performance of both guided and focused proofreading. We obtained study consent and randomly assigned 2 experts to proofread using each classifier. The experts performed the 3 minute test run on different data prior to proofreading for 30 minutes. After the task ended, the experts were asked to complete the raw NASA-TLX questionnaire.
 
-\paragraph{Evaluation metric.} For each experiment, we measure the similarity between proofread segmentations and the manual `ground truth' labelings using \textit{variation of information} (VI). VI is a measure of the distance between two clusterings, closely related to mutual information, where lower means better. We treat VI as a continuous variable during analysis.
+\paragraph{Evaluation metric.} For each experiment, we measure the similarity between proofread segmentations and the manual `ground truth' labelings using \textit{variation of information} (VI). VI is a measure of the distance between two clusterings, closely related to mutual information, where lower means a better match to ground truth. We treat VI as a continuous variable during analysis.
 
 %For baseline comparison, we also list the parameters and training results of focused proofreading in this table but elaborate on these further in section \ref{sec:evaluation}.
 
