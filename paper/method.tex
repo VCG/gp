@@ -9,26 +9,18 @@
 
 We build a split error classifier with output $p$ using a CNN to check whether an edge within an existing automatic segmentation is valid ($p=0$) or not ($p=1$). Rather than analyzing every input pixel, the classifier operates only on segment boundaries, which requires less pixel context and is faster. In contrast to Bogovic \etal~\cite{BogovicHJ13}, we work with 2D slices rather than 3D volumes. This enables proofreading prior or in parallel to a computationally expensive stitching and 3D alignment of individual EM images.
 
-\paragraph{Convolutional Neural Network Architecture.} Split error detection of a given boundary is a binary classification task since the boundary is either correct or erroneous. However, in reality, the score $p$ is between 0 and 1. The classification complexity arises from hundreds of different cell types in connectomics data rather than from the classification decision itself. Intuitively, this yields a wider architecture with more filters rather than a deeper architecture with more layers. We explored different architectural configurations---including residual networks~\cite{resnet}---by performing a brute force parameter search and comparing precision and recall (see supplementary materials). Our final CNN configuration for split error detection is composed of four convolutional layers, each followed by max pooling as well as dropout regularization to prevent overfitting due to limited training data (Fig.~\ref{fig:architecture}).
+\paragraph{CNN Architecture.} Boundary split error detection is a binary classification task since the boundary is either correct or erroneous. However, in reality, the score $p$ is between 0 and 1. In connectromics, classification complexity arises from hundreds of different cell types, rather than from the classification decision itself. Intuitively, this yields a wider architecture with more filters rather than a deeper architecture with more layers. We explored different architectures---including residual networks~\cite{resnet}---with brute force parameter searches and precision and recall comparisons (see supplementary materials). Our final CNN configuration for split error detection has four convolutional layers, each followed by max pooling with dropout regularization to prevent overfitting due to limited training data (Fig.~\ref{fig:architecture}).
 
 \paragraph{Classifier Inputs.} To train the CNN, we consider boundary context in the decision making process by using a $75\times75$ pixel patch at the center of an existing boundary. This size covers approximately $80\%$ of all boundaries in the 6~nm Mouse S1 AC3 Open Connectome Project dataset. If the boundary length is not fully covered, we sample up to 10 non-overlapping patches along the boundary, and combine the resulting score by averaging weighted by the boundary length coverage per patch.
 
-Similar to Bogovich~\etal~\cite{BogovicHJ13}, we use grayscale image data,
-corresponding boundary probabilities, and a single binary mask combining the two
-neighboring labels as inputs to our CNN. However, we observed that the
-boundary probability information generated from EM images is often misleading
-due to noise or artifacts in the data. This can result in merge errors within
-the automatic segmentation. To better direct our classifier to train on the true
-boundary, we extract the border between two segments. Then, we dilate this border
-by 5 pixels to consider slight edge ambiguities and use this binary mask as an
-additional input. This creates a stacked 4-channel input patch.
-Fig.~\ref{fig:cnn_inputs} shows examples of correct and erroneous input
-patches and their corresponding automatic segmentation and ground truth.
+Similar to Bogovich~\etal~\cite{BogovicHJ13}, we use grayscale image data, corresponding boundary probabilities, and a single binary mask combining the two neighboring labels as inputs to our CNN. However, we observed that the boundary probability information generated from EM images is often misleading due to noise or artifacts in the data. This can result in merge errors within the automatic segmentation. To better direct our classifier to train on the true boundary, we extract the border between two segments. Then, we dilate this border by 5 pixels to consider slight edge ambiguities and use this binary mask as an additional input. This creates a stacked 4-channel input patch. Fig.~\ref{fig:cnn_inputs} shows examples of correct and erroneous input patches and their corresponding automatic segmentation and ground truth.
 
 \begin{figure}[t]
-\centering  
-\includegraphics[width=\linewidth]{gfx/cnn_inputs.pdf}
-\caption{Example inputs for learning correct splits and split errors, as per a candidate segmentation versus the ground truth. Image, membrane probabilities, merged binary labels, and a dilated border mask provide 4-channel input patches.}
+\begin{center}
+  \includegraphics[width=\linewidth]{gfx/cnn_inputs.pdf}
+\end{center}
+ % \vspace{-4mm}
+   \caption{Example inputs for learning correct splits and split errors, as per a candidate segmentation versus the ground truth. Image, membrane probabilities, merged binary labels, and a dilated border mask provide 4-channel input patches.}
 \label{fig:cnn_inputs}
 \end{figure}
 
@@ -40,9 +32,11 @@ Identification and correction of merge errors is more challenging than finding a
 Dilation of the segment prior to watershed is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier. For this, we invert the probability score such that a correct split (previously encoded as $p=0$) is most likely a candidate for a merge error (now encoded as $p=1$). In other words, if a generated boundary is ranked as correct, it probably should be in the segmentation. Fig. \ref{fig:merge_error} illustrates this procedure.
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{gfx/merge_error.pdf}
-\caption{Merge errors are identified by generating randomly-seeded watershed borders within a dilated label segment. Then, each border is individually rated using the split error CNN by inverting the probability score. A confident rating for a correct split most likely indicates the missing border of the merge error, and can be used to correct the labeling.}
+\begin{center}
+  \includegraphics[width=\linewidth]{gfx/merge_error.pdf}
+\end{center}
+%  \vspace{-4mm}
+   \caption{Merge errors are identified by generating randomly-seeded watershed borders within a dilated label segment. Then, each border is individually rated using the split error CNN by inverting the probability score. A confident rating for a correct split most likely indicates the missing border of the merge error, and can be used to correct the labeling.}
 \label{fig:merge_error}
 \end{figure}
 
