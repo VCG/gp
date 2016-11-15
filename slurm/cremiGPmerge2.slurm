@@ -32,7 +32,7 @@ source /n/home05/haehn/nolearncox/bin/activate
 
 # we are working in TEMP
 cd /n/home05/haehn/Projects/gp/
-python cremiGP_merge.py
+python cremiGP_merge2.py
 
 # end of program
 exit 0;
