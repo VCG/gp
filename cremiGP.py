@@ -27,7 +27,7 @@ input_gold = []
 input_rhoana = []
 test_slices = range(15,25) + range(25+15,50) + range(50+15,75)
 for z in test_slices:
-    image, prob, gold, rhoana = gp.Util.read_cremi_section(os.path.expanduser('/home/d/data/CREMIGP/TEST/'), z)
+    image, prob, gold, rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/TEST/'), z)
     input_image.append(image)
     input_prob.append(255.-prob)
     input_gold.append(gold)
