@@ -21,7 +21,7 @@ from util import Util
 class Stats(object):
 
   @staticmethod
-  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=500, filename=None, DATADIR = '/home/d/GPSTUDY/'):
+  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=500, clampY=False, filename=None, DATADIR = '/home/d/GPSTUDY/', skipoutput=False, data='dojo', hline=-1 ):
 
     def VI(gt, seg):
       # total_vi = 0
@@ -36,6 +36,15 @@ class Stats(object):
     init_mean_vi = VI(gold, rhoana)[0]
     init_median_vi = VI(gold, rhoana)[1]
     init_vi_per_slice = VI(gold, rhoana)[2]
+
+    dojo_best_vi = 0.33414926373414477
+    cylinder_best_vi = 0.27683609273291143
+    if data == 'dojo':
+      best_vi = dojo_best_vi  
+      clampY = [0.32, 0.55]
+    else:
+      best_vi = cylinder_best_vi
+      clampY = [0.25, 0.5]
 
     print 'No. users', len(FP_USERS)
 
@@ -52,9 +61,10 @@ class Stats(object):
     fp_vis =[]
 
     for i,f in enumerate(FP_USERS):
-        with open(DATADIR+FP_USERS[i]+'/'+newrhoana, 'rb') as f:
-            fp_newrhoana = pickle.load(f)
-            fp_outputs.append(fp_newrhoana)
+        if not skipoutput:
+          with open(DATADIR+FP_USERS[i]+'/'+newrhoana, 'rb') as f:
+              fp_newrhoana = pickle.load(f)
+              fp_outputs.append(fp_newrhoana)
         with open(DATADIR+FP_USERS[i]+'/'+times, 'rb') as f:
             fp_time = pickle.load(f)
             fp_time = [int(v) for v in fp_time]
@@ -65,6 +75,8 @@ class Stats(object):
         with open(DATADIR+FP_USERS[i]+'/'+correction_vis, 'rb') as f:
             fp_correction_vis = pickle.load(f) 
             fp_vis.append(fp_correction_vis)
+
+    # return None, None, fp_vis
 
     fp_times_mean = []
     for t in fp_times:
@@ -146,21 +158,26 @@ class Stats(object):
 
     fig = plt.figure(figsize=(10,7))
     # fig, ax = plt.subplots()
-    plt.ylim([0.32, 0.55])
+    if clampY:
+      plt.ylim(clampY)
     if clampX:
       plt.xlim(0,clampX)
 
-    plt.axhline(y=0.4763612343909136, color='gray', linestyle=':', linewidth=2, label='Initial Segmentation')
-    plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=2, label='Best Possible')
+    plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=2, label='Initial Segmentation')
+    plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=2, label='Best Possible')
+    if hline!=-1:
+      plt.axvline(x=hline, color='red', ymin=0, ymax=.375, linewidth=2)
     plt.xlabel('Correction')
     plt.ylabel('Variation of Information')
-    # legend = ax.legend(loc='upper right')
+    ax = plt.gca()
+    legend = ax.legend(loc='upper left')
 
     font = {'family' : 'sans-serif',
             'weight' : 'normal',
             'size'   : 22}
 
     plt.rc('font', **font)
+    plt.rc('legend',**{'fontsize':22})
 
     for u in fp_vi_per_c_per_user:
         plt.plot(u, linewidth=3)
@@ -172,17 +189,18 @@ class Stats(object):
       plt.savefig(filename)
     plt.show()
 
-
+    
     fp_vi_per_slice_per_user = []
     fp_vi_per_slice = [0,0,0,0,0,0,0,0,0,0]
-    for o in fp_outputs:
-        fp_vi_per_slice_per_user.append(VI(gold, o)[2])
-        last_split_vis.append(VI(gold, o)[2])
-    for u in fp_vi_per_slice_per_user:
-        for z,v in enumerate(u):
-            fp_vi_per_slice[z] += v
-    for z in range(10):
-        fp_vi_per_slice[z] /= len(fp_outputs)
+    if not skipoutput:
+      for o in fp_outputs:
+          fp_vi_per_slice_per_user.append(VI(gold, o)[2])
+          last_split_vis.append(VI(gold, o)[2])
+      for u in fp_vi_per_slice_per_user:
+          for z,v in enumerate(u):
+              fp_vi_per_slice[z] += v
+      for z in range(10):
+          fp_vi_per_slice[z] /= len(fp_outputs)
 
 
     return fp_vi_per_slice, first_split_vis, last_split_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
