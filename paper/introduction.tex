@@ -39,26 +39,24 @@ semi-automatic correction tools~\cite{proofreading_bottleneck}.
 \label{fig:merge_and_slit_errors}
 \end{figure}
 
-Our goal is to automatically detect split and merge errors to reduce visual
+Our goal is to automatically detect potential split and merge errors to reduce visual
 inspection time. Further, to reduce correction time, we propose
 corrections to the user to accept or reject. We call this process \textit{guided
 proofreading}.
 
-We learn a classifier for split errors with a convolutional neural network
+We train a classifier for split error detection with a convolutional neural network
 (CNN). This takes as input patches of membrane segmentation probabilities, cell
-segmentation masks, and boundary masks, and outputs a probability score. As we
+segmentation masks, and boundary masks, and outputs a split-probability score. As we
 must process large data, this classifier only operates on cell boundaries, which
 reduces computation over methods that analyze every pixel. For merge errors, we
 invert and reuse the split classification network, instead asking it to rate a
-set of generated candidate boundaries that hypothesize a split. %We compute
+set of generated boundaries that hypothesize a split. %We compute
 %corrections for both types of errors.
 
-We also propose a greedy algorithm for guided proofreading. Possible erroneous
-regions are sorted by their score, and a candidate correction is generated for each
+Possible erroneous regions are sorted by their score, and a candidate correction is generated for each
 region. Then, a user works through this list of regions and corrections. In a
 forced choice setting, the user either selects a correction or skips it to
-advance to the next region. In an automatic setting, errors with a high
-probability are automatically corrected first, given an appropriate
+advance to the next region. In an automatic setting, errors with a high probability are automatically corrected first, given an appropriate
 probability threshold, after which the user would take over. Finally, to test
 the limits of performance, we create an oracle which only accepts corrections
 that improve the segmentation, based on knowledge of the ground truth. This is

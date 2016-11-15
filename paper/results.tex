@@ -1,12 +1,11 @@
 \section{Results and Discussion}
 
 %We measure the performance of proofreading quantitatively by comparing VI scores of segmentations against ground truth labelings. Lower VI scores indicate less distance to the ground truth and a better segmentation. For all experiments, we report the VI score of the initial segmentation followed by the VI score of the proofreading output.
+Additional plots are available as supplemental material due to reasons of space. 
 
 \subsection{Precision and Recall}
 
-We compare guided and focused proofreading classifiers and report precision, recall, and F1 scores across datasets.
-
-\paragraph{L.~Cylinder.} Evaluation was performed on previously unseen sections of the mouse cortex volume from Kasthuri~\etal~\cite{kasthuri2015saturated}. We generated an unbalanced dataset of 81,184 correct and 8,780 split error patches with respect to the ground truth labeling. Then, we ranked each patch by using focused proofreading and guided proofreading, and compare precision/recall (Table \ref{tab:prcyl}). Our method exhibits higher precision and recall for correct and erroroneous patches.
+\paragraph{L.~Cylinder.} Evaluation was performed on previously unseen sections of the mouse cortex volume from Kasthuri~\etal~\cite{kasthuri2015saturated}. We generated an unbalanced dataset of 81,184 correct and 8,780 split error patches with respect to the ground truth labeling. Then, we ranked each patch by using focused proofreading and guided proofreading, and compare precision/recall (Table \ref{tab:prcyl}). Our method exhibits higher precision and recall for correct and erroneous patches.
 
 \begin{table}[t]
 \caption{Classifier comparison on an unbalanced test set of the L.~Cylinder volume.}%While the training of our classifier is more expensive, testing accuracy is superior. }
@@ -48,12 +47,12 @@ Split error & 0.54 & 0.95 & 0.69 & 332 \\
 \label{tab:prac4}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{gfx/ac4boxplot.pdf}
 \caption{VI distributions of guided proofreading (GP), focused proofreading (FP) and Dojo output across slices of the AC4 subvolume, with different error correction approaches. The variation resulting from performance of FP with automatic selection is $4.5\times$ higher than GP (as indicated by the arrow), with median VI of $1.9$ and $SD=0.496$.}
 \label{fig:ac4boxplot}
-\end{figure*}
+\end{figure}
 
 \subsection{Forced Choice User Experiment}
 We performed a user study to evaluate the forced choice error correction method among novices and experts. To be comparable to Haehn~\etal's Dojo user study~\cite{haehn_dojo_2014}, participants were asked to proofread the AC4 subvolume for 30 minutes. We counted 10 merge errors and 322 split errors by computing the maximum overlap of the initial segmentation with respect to the ground truth labeling (provided in \cite{haehn_dojo_2014}). For evaluation, we measure the performance of proofreading quantitatively by comparing VI scores of segmentations. Median VI $=0.476$ ($SD=0.089$), with mean VI $=0.512$ ($SD=0.09$). Most novices and all experts were able to improve upon this score with both focused proofreading and guided proofreading (Fig.~\ref{fig:ac4trails}).
@@ -71,7 +70,7 @@ We performed a user study to evaluate the forced choice error correction method 
 
 \paragraph{Automatic selection with threshold.} Focused proofreading was not designed to run automatically. This explains the poor performance on the AC4 subvolume (VI of $1.9$, $SD=0.496$) and on the L.~Cylinder dataset (VI of $2.75$, $SD=0.789$). For guided proofreading, we set $p_t=0.95$ for both datasets. This reduces median VI in the AC4 subvolume to $0.398$ ($SD=0.068$). This result is comparable to expert performance. Guided proofreading also reduces VI in the L.~Cylinder data to $0.352$ ($SD=0.087$).
 
-\paragraph{Merge Error Detection} Guided proofreading performs merge error detection prior to split error detection. The classifier found 10 merge errors in the AC4 subvolume, of which 4 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 of these errors (Prec./Recall 0.87/0.80, F1-score 0.80). This was not captured in median VI, but resulted in a mean VI reduction from $0.512$ ($SD=0.09$) to $0.509$ ($SD=0.086$). The selection oracle reduced mean VI with only merge errors to $0.508$ ($SD=0.086$). In the forced choice user study, novices marked 1.9 merge errors for correction and reduced mean VI to $0.502$ (experts marked 2, VI $0.503$, $SD=0.086$). This shows how hard it is to identify merge errors. In 50 sections of the L.~Cylinder dataset, 151 merge errors were automatically found of which 17 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 true VI-reducing errors and 30 VI-increasing ones (Prec./Recall 0.82/0.73, f1-score 0.77) to negligible VI effect. 
+\paragraph{Merge Error Detection.} Guided proofreading performs merge error detection prior to split error detection. The classifier found 10 merge errors in the AC4 subvolume, of which 4 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 of these errors (Prec./Recall 0.87/0.80, F1-score 0.80). This was not captured in median VI, but resulted in a mean VI reduction from $0.512$ ($SD=0.09$) to $0.509$ ($SD=0.086$). The selection oracle reduced mean VI with only merge errors to $0.508$ ($SD=0.086$). In the forced choice user study, novices marked 1.9 merge errors for correction and reduced mean VI to $0.502$ (experts marked 2, VI $0.503$, $SD=0.086$). This shows how hard it is to identify merge errors. In 50 sections of the L.~Cylinder dataset, 151 merge errors were automatically found of which 17 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 true VI-reducing errors and 30 VI-increasing ones (Prec./Recall 0.82/0.73, F1-score 0.77) to negligible VI effect. 
 
 %\subsection{Limitations}
 %Guided proofreading works on 2D image sections. This enables error correction without a computationally expensive alignment process. However, the output requires an additional (block-)merging step prior to 3D  analysis.
