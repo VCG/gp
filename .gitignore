@@ -87,3 +87,17 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+*.aux
+
+*.brf
+
+*.fdb_latexmk
+
+*.fls
+
+*.brf
+
+paper/guidedproofreading_review.aux
+
+paper/guidedproofreading_review.brf
