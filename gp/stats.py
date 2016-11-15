@@ -170,11 +170,11 @@ class Stats(object):
     plt.xlabel('Correction')
     plt.ylabel('Variation of Information')
     ax = plt.gca()
-    legend = ax.legend(loc='upper left')
+    legend = ax.legend(loc='lower right')
 
     font = {'family' : 'sans-serif',
             'weight' : 'normal',
-            'size'   : 36}
+            'size'   : 40}
 
     plt.rc('font', **font)
     plt.rc('legend',**{'fontsize':26})
