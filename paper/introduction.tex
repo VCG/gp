@@ -49,7 +49,7 @@ We train a classifier for split error detection with a convolutional neural netw
 segmentation masks, and boundary masks, and outputs a split-probability score. As we
 must process large data, this classifier only operates on cell boundaries, which
 reduces computation over methods that analyze every pixel. For merge errors, we
-invert and reuse the split classification network, instead asking it to rate a
+invert and reuse the split classification network, and ask it to rate a
 set of generated boundaries that hypothesize a split. %We compute
 %corrections for both types of errors.
 
