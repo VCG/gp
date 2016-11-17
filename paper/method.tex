@@ -11,16 +11,15 @@ We build a split error classifier with output $p$ using a CNN to check whether a
 
 \paragraph{CNN Architecture.} Boundary split error detection is a binary classification task since the boundary is either correct or erroneous. However, in reality, the score $p$ is between 0 and 1. In connectromics, classification complexity arises from hundreds of different cell types, rather than from the classification decision itself. Intuitively, this yields a wider architecture with more filters rather than a deeper architecture with more layers. We explored different architectures---including residual networks~\cite{resnet}---with brute force parameter searches and precision and recall comparisons (see supplementary materials). Our final CNN configuration for split error detection has four convolutional layers, each followed by max pooling with dropout regularization to prevent overfitting due to limited training data (Fig.~\ref{fig:architecture}).
 
-\paragraph{Classifier Inputs.} To train the CNN, we consider boundary context in the decision making process by using a $75\times75$ pixel patch at the center of an existing boundary. This size covers approximately $80\%$ of all boundaries in the 6~nm Mouse S1 AC3 Open Connectome Project dataset\footnote{\scriptsize{\url{http://openconnectomeproject.org/}}}. If the boundary length is not fully covered, we sample up to 10 non-overlapping patches along the boundary, and average the resulting scores weighted by the boundary length coverage per patch.
+\paragraph{Classifier Inputs.} To train the CNN, we consider boundary context in the decision making process via a $75\times75$ patch over the center of an existing boundary. This size covers approximately $80\%$ of all boundaries in the 6~nm Mouse S1 AC3 Open Connectome Project dataset. If the boundary is not fully covered, we sample up to 10 non-overlapping patches along the boundary, and average the resulting scores weighted by the boundary length coverage per patch.
+%\footnote{\scriptsize{\url{http://openconnectomeproject.org/}}}
 
-Similar to Bogovich~\etal~\cite{BogovicHJ13}, we use grayscale image data, corresponding boundary probabilities, and a single binary mask combining the two neighboring labels as inputs to our CNN. However, we observed that the boundary probability information generated from EM images is often misleading due to noise or artifacts in the data. This can result in merge errors within the automatic segmentation. To better direct our classifier to train on the true boundary, we extract the border between two segments. Then, we dilate this border by 5 pixels to consider slight edge ambiguities and use this binary mask as an additional input. This creates a stacked 4-channel input patch. Fig.~\ref{fig:cnn_inputs} shows examples of correct and erroneous input patches and their corresponding automatic segmentation and ground truth.
+Similar to Bogovic~\etal~\cite{BogovicHJ13}, we use grayscale image data, corresponding boundary probabilities, and a single binary mask combining the two neighboring labels as inputs to our CNN. However, we observed that the boundary probability information generated from EM images is often misleading due to noise or artifacts in the data. This can result in merge errors within the automatic segmentation. To better direct our classifier to train on the true boundary, we extract the border between two segments. Then, we dilate this border by 5 pixels to consider slight edge ambiguities and use this binary mask as an additional input. This creates a stacked 4-channel input patch. Fig.~\ref{fig:cnn_inputs} shows examples of correct and erroneous input patches and their corresponding automatic segmentation and ground truth.
 
 \begin{figure}[t]
-\begin{center}
-  \includegraphics[width=\linewidth]{gfx/cnn_inputs.pdf}
-\end{center}
- % \vspace{-4mm}
-   \caption{Example inputs for learning correct splits and split errors, as per a candidate segmentation versus the ground truth. Image, membrane probabilities, merged binary labels, and a dilated border mask provide 4-channel input patches.}
+\centering
+\includegraphics[width=\linewidth]{gfx/cnn_inputs.pdf}
+\caption{Example inputs for learning correct splits and split errors, as per a candidate segmentation versus the ground truth. Image, membrane probabilities, merged binary labels, and a dilated border mask provide 4-channel input patches.}
 \label{fig:cnn_inputs}
 \end{figure}
 
@@ -32,11 +31,9 @@ Identification and correction of merge errors is more challenging than finding a
 Dilation of the segment prior to watershed is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier. For this, we invert the probability score such that a correct split (previously encoded as $p=0$) is most likely a candidate for a merge error (now encoded as $p=1$). In other words, if a generated boundary is ranked as correct, it probably should be in the segmentation. Fig. \ref{fig:merge_error} illustrates this procedure.
 
 \begin{figure}[t]
-\begin{center}
-  \includegraphics[width=\linewidth]{gfx/merge_error_v4.pdf}
-\end{center}
-%  \vspace{-4mm}
-   \caption{Merge errors are identified by generating randomly-seeded watershed borders within a dilated label segment. Then, each border is individually rated using the split error CNN by inverting the probability score. A confident rating for a correct split most likely indicates the missing border of the merge error, and can be used to correct the labeling.}
+\centering
+\includegraphics[width=\linewidth]{gfx/merge_error_v4.pdf}
+\caption{Merge errors are identified by generating randomly-seeded watershed borders within a dilated label segment. Then, each border is individually rated using the split error CNN by inverting the probability score. A confident rating for a correct split most likely indicates the missing border of the merge error, and can be used to correct the labeling.}
 \label{fig:merge_error}
 \end{figure}
 
@@ -56,11 +53,11 @@ discarded. This is guided proofreading with a perfect user, and allows us to ass
 
 \subsection{User Interface}
 
-We integrate guided proofreading into an existing large data connectomics workflow. The web-based system is designed with a novice-friendly user interface (Fig.~\ref{fig:ui}). We show the current labeling of a cell boundary outline and its proposed correction overlayed on EM image data. The user cannot to distinguish the current labeling from the proposed correction to avoid selection bias. We also show a solid overlay of the current and the proposed labeling. In addition, we show the image without overlays to provide an unoccluded view. User interaction is simple and involves one mouse click on either the current labeling or the correction. After interaction, the next potential error is shown.
+We integrate guided proofreading into an existing large data connectomics workflow. The web-based system is designed with a novice-friendly user interface (Fig.~\ref{fig:ui}). We show the current labeling of a cell boundary outline and its proposed correction overlayed on EM image data. The user cannot distinguish the current labeling from the proposed correction to avoid selection bias. We also show a solid overlay of the current and the proposed labeling. In addition, we show the image without overlays to provide an unoccluded view. User interaction is simple and involves one mouse click on either the current labeling or the correction. After interaction, the next potential error is shown.
 
 \begin{figure}[t]
 \includegraphics[width=\linewidth]{gfx/user_interface_split.pdf}
-\caption{Our guided proofreading user interface. A candidate error region is shown on the left. The user must choose between the region being a split error which needs correcting (center) or not (right). Hovering highlights the current selection with a blue border, and a mouse click confirms the choice and advances to the next potential error.}
+\caption{User interface. A candidate error region is shown on the left. The user must choose between the region being a split error which needs correcting (center) or not (right). Confirming the choice advances to the next potential error.} % Hovering highlights the current selection with a blue border, and a}
 \label{fig:ui}
 \end{figure}
 
