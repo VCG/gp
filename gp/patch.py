@@ -731,20 +731,20 @@ class Patch(object):
   def load_cremi(patch_size=(75,75), verbose=True):
 
 
-    PATCH_PATH = '/n/regal/pfister_lab/haehn/CREMITEST2/'
+    PATCH_PATH = '/n/regal/pfister_lab/haehn/CREMIBIG/'
 
     t0 = time.time()
 
     training = np.load(PATCH_PATH+'train.npy', mmap_mode='r')
     training_targets = np.load(PATCH_PATH+'train_targets.npy')
 
-    #test = np.load(PATCH_PATH+'test.npy', mmap_mode='r')
-    #test_targets = np.load(PATCH_PATH+'test_targets.npy')
+    test = np.load(PATCH_PATH+'test.npz.npy', mmap_mode='r')
+    test_targets = np.load(PATCH_PATH+'test_targets.npz.npy')
 
     if verbose:
       print 'Loaded', PATCH_PATH, 'in', time.time()-t0, 'seconds.'
 
-    return training, training_targets.astype(np.uint8)#, test, test_targets.astype(np.uint8)
+    return training, training_targets.astype(np.uint8), test, test_targets.astype(np.uint8)
 
   # @staticmethod
   # def load_cremi(patch_size=(75,75), verbose=True):

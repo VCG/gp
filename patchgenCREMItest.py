@@ -31,10 +31,10 @@ def generate_patches(start_slice, end_slice):
         all_error_patches += error_patches
         all_correct_patches += patches
         
-    with open('/n/regal/pfister_lab/haehn/CREMIBIG/e_p.p', 'wb') as f:
+    with open('/n/regal/pfister_lab/haehn/CREMIBIG/test_e_p.p', 'wb') as f:
       pickle.dump(all_error_patches, f)
 
-    with open('/n/regal/pfister_lab/haehn/CREMIBIG/p.p', 'wb') as f:
+    with open('/n/regal/pfister_lab/haehn/CREMIBIG/test_p.p', 'wb') as f:
       pickle.dump(all_correct_patches, f)
     
     NO_PATCHES = len(all_error_patches) + len(all_correct_patches)
