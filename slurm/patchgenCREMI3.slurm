@@ -10,8 +10,8 @@
 #SBATCH -t 10-12:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=haehn@seas.harvard.edu
-#SBATCH -o /n/home05/haehn/SLURM/gp/out-patchgencremi.txt
-#SBATCH -e /n/home05/haehn/SLURM/gp/err-patchgencremi.txt
+#SBATCH -o /n/home05/haehn/SLURM/gp/out-patchgencremi3.txt
+#SBATCH -e /n/home05/haehn/SLURM/gp/err-patchgencremi3.txt
 
 source new-modules.sh
 module load Anaconda/2.5.0-fasrc01
@@ -32,7 +32,7 @@ source /n/home05/haehn/nolearncox/bin/activate
 
 # we are working in TEMP
 cd /n/home05/haehn/Projects/gp/
-python patchgenCREMI.py 0 100 train_0_100
+python patchgenCREMI.py 200 298 train_200_298
 
 # end of program
 exit 0;

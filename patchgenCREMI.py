@@ -5,7 +5,7 @@ import mahotas as mh
 import numpy as np
 import os
 import time
-
+import sys
 
 def generate_patches(start_slice, end_slice):
 
@@ -20,7 +20,7 @@ def generate_patches(start_slice, end_slice):
 
         t0 = time.time()
         print 'working on slice', z
-        input_image, input_prob, input_gold, input_rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/TEST/'), z)
+        input_image, input_prob, input_gold, input_rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/'), z)
 
 
         error_patches, patches = gp.Patch.patchify_maxoverlap(input_image, input_prob, np.zeros((1,1250,1250),dtype=np.bool), input_rhoana, input_gold, sample_rate=1)
@@ -31,10 +31,10 @@ def generate_patches(start_slice, end_slice):
         all_error_patches += error_patches
         all_correct_patches += patches
         
-    with open('/n/regal/pfister_lab/haehn/CREMITEST/e_p.p', 'wb') as f:
+    with open('/n/regal/pfister_lab/haehn/CREMIBIG/e_p.p', 'wb') as f:
       pickle.dump(all_error_patches, f)
 
-    with open('/n/regal/pfister_lab/haehn/CREMITEST/p.p', 'wb') as f:
+    with open('/n/regal/pfister_lab/haehn/CREMIBIG/p.p', 'wb') as f:
       pickle.dump(all_correct_patches, f)
     
     NO_PATCHES = len(all_error_patches) + len(all_correct_patches)
@@ -103,7 +103,12 @@ def run(PATCH_PATH, start_slice, end_slice, filename):
     np.save(PATCH_PATH+filename+'_targets.npz', shuffled[1])
     print 'Done!'
 
-run('/n/regal/pfister_lab/haehn/CREMITEST2/', 0, 75, 'test')
+
+start = sys.argv[1]
+end = sys.argv[2]
+label = sys.argv[3]
+run('/n/regal/pfister_lab/haehn/CREMIBIG/', int(start), int(end), label)
+# run('/n/regal/pfister_lab/haehn/CREMITEST2/', 0, 75, 'test')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 17, 25, 'testA')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 100,150, 'trainB')
 # run('/n/regal/pfister_lab/haehn/CREMITEST2/', 25+17, 50, 'testB')
