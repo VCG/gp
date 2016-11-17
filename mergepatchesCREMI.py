@@ -4,14 +4,14 @@ import numpy as np
 #
 #
 
-basedir = '/n/regal/pfister_lab/haehn/CREMITEST2/'
+basedir = '/n/regal/pfister_lab/haehn/CREMIBIG/'
 
-trainA = basedir + 'trainA.npz.npy'
-trainA_targets = basedir + 'trainA_targets.npz.npy'
-trainB = basedir + 'trainB.npz.npy'
-trainB_targets = basedir + 'trainB_targets.npz.npy'
-trainC = basedir + 'trainC.npz.npy'
-trainC_targets = basedir + 'trainC_targets.npz.npy'
+trainA = basedir + 'train_0_100.npz.npy'
+trainA_targets = basedir + 'train_0_100_targets.npz.npy'
+trainB = basedir + 'train_100_200.npz.npy'
+trainB_targets = basedir + 'train_100_200_targets.npz.npy'
+trainC = basedir + 'train_200_289.npz.npy'
+trainC_targets = basedir + 'train_200_289_targets.npz.npy'
 
 counter = 0
 
