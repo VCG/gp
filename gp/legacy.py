@@ -717,7 +717,7 @@ class Legacy(object):
   @staticmethod
   def perform_sim_user_merge_correction(cnn, big_M, input_image, input_prob, input_rhoana, input_gold, merge_errors):
 
-      def dojoVI(gt, seg):
+      def dojo3VI(gt, seg):
         # total_vi = 0
         slice_vi = []    
         for i in range(len(gt)):
@@ -765,7 +765,7 @@ class Legacy(object):
             # this is a good fix
             rhoana_after_merge_correction[z] = new_rhoana
 
-            rhoanas.append(dojoVI(input_gold, rhoana_after_merge_correction))
+            rhoanas.append(dojo3VI(input_gold, rhoana_after_merge_correction))
 
             #
             # and remove the original label from our bigM matrix
@@ -780,7 +780,15 @@ class Legacy(object):
             new_m[:,:] = -1
             new_m[0:-2,0:-2] = bigM[z]
 
-            # print 'adding', label1, 'to', z
+            print 'adding', label1, 'to', z, new_rhoana.shape, new_rhoana.max(), len(bigM)
+
+            if label1 >= new_m.shape[0]:
+              new_m2 = np.zeros((new_m.shape[0]+2, new_m.shape[1]+2), dtype=bigM[z].dtype)
+              new_m2[:,:] = -1
+              new_m2[0:-2,0:-2] = new_m
+
+              new_m = new_m2
+
 
             new_m = Legacy.add_new_label_to_M(cnn, new_m, input_image[z], input_prob[z], new_rhoana, label1)
             new_m = Legacy.add_new_label_to_M(cnn, new_m, input_image[z], input_prob[z], new_rhoana, label2)
