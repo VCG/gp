@@ -10,7 +10,7 @@ trainA = basedir + 'train_0_100.npz.npy'
 trainA_targets = basedir + 'train_0_100_targets.npz.npy'
 trainB = basedir + 'train_100_200.npz.npy'
 trainB_targets = basedir + 'train_100_200_targets.npz.npy'
-trainC = basedir + 'train_200_289.npz.npy'
+trainC = basedir + 'train_200_298.npz.npy'
 trainC_targets = basedir + 'train_200_298_targets.npz.npy'
 
 counter = 0
