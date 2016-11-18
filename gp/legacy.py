@@ -379,7 +379,7 @@ class Legacy(object):
             results = Legacy.fix_single_merge(cnn,
                                               input_image[DOJO_SLICE],
                                               input_prob[DOJO_SLICE],
-                                              before_merge_error, N=10, 
+                                              before_merge_error, N=50, 
                                               erode=True, 
                                               invert=True,
                                               dilate=True,
