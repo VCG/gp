@@ -13,21 +13,25 @@
 #SBATCH -e /n/home05/haehn/SLURM/gp/err-mergecremi.txt
 
 source new-modules.sh
+
 module load Anaconda/2.5.0-fasrc01
 module load gcc/4.9.0-fasrc01
+export CUDA_HOME=/usr/local/cuda-7.0
+export CUDA_LIB=/usr/local/cuda-7.0/lib64
+export CUDA_INCLUDE=/usr/local/cuda-7.0/include
+export PATH=/usr/local/cuda-7.0/bin:$PATH
+export CPATH=/usr/local/cuda-7.0/include:$CPATH
+export FPATH=/usr/local/cuda-7.0/include:$FPATH
+export LD_LIBRARY_PATH=/usr/local/cuda-7.0/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=/usr/local/cuda-7.0/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-7.0/lib64:$LD_LIBRARY_PATH
+export LIBRARY_PATH=/usr/local/cuda-7.0/lib64:$LIBRARY_PATH
 
-module load cuda/7.5-fasrc01
 module load cudnn/7.0-fasrc01
-
+module load jpeg/6b-fasrc01
 module load opencv/3.0.0-fasrc04
 
-# custom HDF5 lib
-export LIBRARY_PATH=/n/home05/haehn/nolearncox/src/hdf5-1.8.17/hdf5/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=/n/home05/haehn/nolearncox/src/hdf5-1.8.17/hdf5/lib:$LD_LIBRARY_PATH
-export CPATH=/n/home05/haehn/nolearncox/src/hdf5-1.8.17/hdf5/include:$CPATH
-export FPATH=/n/home05/haehn/nolearncox/src/hdf5-1.8.17/hdf5/include:$FPATH
-
-source /n/home05/haehn/nolearncox/bin/activate
+source activate AETROS
 
 # we are working in TEMP
 cd /n/home05/haehn/Projects/gp/
