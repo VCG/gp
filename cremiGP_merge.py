@@ -9,12 +9,12 @@ import os
 HOMEDIR = '/n/home05/haehn/'
 REGALDIR = '/n/regal/pfister_lab/haehn/'
 DATADIR = HOMEDIR + 'data/CREMIGP/TEST/'
-OUTDIR = REGALDIR + 'cremiGP2/'
+OUTDIR = REGALDIR + 'CREMIBIG/'
 
 #
 # load cnn
 #
-with open('nets/IPMLB_FULL_CREMILARGE.p', 'rb') as f:
+with open('nets/IPMLB_FULL_CREMI_FINAL.p', 'rb') as f:
   cnn = pickle.load(f)
 cnn.uuid = 'IPMLB'
 
@@ -25,7 +25,7 @@ input_image = []
 input_prob = []
 input_gold = []
 input_rhoana = []
-test_slices = range(20,25) + range(25+20,50) + range(50+20,75)
+test_slices = range(75)# + range(25+20,50) + range(50+20,75)
 for z in test_slices:
     image, prob, gold, rhoana = gp.Util.read_cremi_section(os.path.expanduser('~/data/CREMIGP/TEST/'), z)
     input_image.append(image)
@@ -39,7 +39,7 @@ original_mean_VI, original_median_VI, original_VI_s = gp.Legacy.VI(input_gold, i
 
 
 # find merge errors, if we did not generate them before
-merge_error_file = OUTDIR+'/merges.p'
+merge_error_file = OUTDIR+'/merge_errors.p'
 if os.path.exists(merge_error_file):
   print 'Loading merge errors from file..'
   with open(merge_error_file, 'rb') as f:

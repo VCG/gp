@@ -780,14 +780,14 @@ class Legacy(object):
             new_m[:,:] = -1
             new_m[0:-2,0:-2] = bigM[z]
 
-            print 'adding', label1, 'to', z, new_rhoana.shape, new_rhoana.max(), len(bigM)
+            # print 'adding', label1, 'to', z, new_rhoana.shape, new_rhoana.max(), len(bigM)
 
-            if label1 >= new_m.shape[0]:
-              new_m2 = np.zeros((new_m.shape[0]+2, new_m.shape[1]+2), dtype=bigM[z].dtype)
-              new_m2[:,:] = -1
-              new_m2[0:-2,0:-2] = new_m
+            # if label1 >= new_m.shape[0]:
+            #   new_m2 = np.zeros((new_m.shape[0]+2, new_m.shape[1]+2), dtype=bigM[z].dtype)
+            #   new_m2[:,:] = -1
+            #   new_m2[0:-2,0:-2] = new_m
 
-              new_m = new_m2
+            #   new_m = new_m2
 
 
             new_m = Legacy.add_new_label_to_M(cnn, new_m, input_image[z], input_prob[z], new_rhoana, label1)
