@@ -6,12 +6,12 @@
 #SBATCH -n 1 # Number of cores
 #SBATCH -N 1 # Ensure that all cores are on one machine
 #SBATCH --gres=gpu
-#SBATCH --mem=50000
+#SBATCH --mem=90000
 #SBATCH -t 10-12:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=haehn@seas.harvard.edu
-#SBATCH -o /n/home05/haehn/SLURM/gp/out-cylgp.txt
-#SBATCH -e /n/home05/haehn/SLURM/gp/err-cylgp.txt
+#SBATCH -o /n/home05/haehn/SLURM/gp/out-cremigp.txt
+#SBATCH -e /n/home05/haehn/SLURM/gp/err-cremigp.txt
 
 source new-modules.sh
 module load Anaconda/2.5.0-fasrc01
