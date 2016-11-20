@@ -39,7 +39,7 @@ original_mean_VI, original_median_VI, original_VI_s = gp.Legacy.VI(input_gold, i
 
 
 # find merge errors, if we did not generate them before
-merge_error_file = OUTDIR+'/merge_errors.p'
+merge_error_file = OUTDIR+'/merge_errors_10.p'
 if os.path.exists(merge_error_file):
   print 'Loading merge errors from file..'
   with open(merge_error_file, 'rb') as f:
