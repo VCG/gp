@@ -12,6 +12,6 @@ for i in range(5,80,5):
 print 'Total merge errors', len(mergeerrors)
 
 with open(OUTDIR+'merge_errors.p', 'wb') as f:
-    pickle.dump(merge_errors, f)
+    pickle.dump(mergeerrors, f)
 
 print 'All done!'
