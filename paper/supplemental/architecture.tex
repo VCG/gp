@@ -1,7 +1,56 @@
 \section{Classifier}
 
-\subsection{CNN Architecture}
-2 vs 4 layers vs resnet
+\subsection{Architecture}
+We explored different architectures for the convolutional neural network (CNN) for split error detection. In table \ref{tab:architecture} we compare traditional CNN architectures versus residual networks~\cite{resnet}. The traditional architecture generalized better than residual networks on unseen testing data.
+
+\begin{table}[h]
+\caption{Traditional CNN Architecture versus Residual Network Architecture \cite{resnet}. All configurations are compared using the same parameters. Our final choice (indicated by *) trains relatively fast and performs better.}%While the training of our classifier is more expensive, testing accuracy is superior. }
+
+\small{
+\begin{tabular}{@{}ll|l@{}}
+	\toprule
+     ~ & \textbf{Traditional Network} & \textbf{Residual Network}  \\ \midrule	
+\begin{tabular}{@{}r|@{}}
+Conv. Layers \\
+Dropout Reg. \\
+Cost [m] \\
+Test. Acc. \\
+Prec./Recall \\
+F1 Score\\
+~
+\end{tabular} & 
+\begin{tabular}{@{}c|c@{}}
+ 2 & 4 \\
+ y & y \\
+ 27.5 & 383 \\
+ 0.925 & 0.94 \\
+ 0.93/0.93 &
+ 0.94/0.94 \\
+ 0.93 & 0.94 \\
+ ~&*
+\end{tabular}
+& 
+\begin{tabular}{@{}c|c@{}}
+ 5 & 13 \\
+ y & n \\
+5080 & 1094 \\
+ 0.93 & 0.90 \\
+ 0.7/0.53 &
+ 0.74/0.66 \\
+ 0.39 & 0.64\\
+ ~&~
+
+\end{tabular}
+
+\end{tabular}
+\hspace{2mm}
+\hrule
+}
+\label{tab:architecture}
+\end{table}
+
+
+
 
 \subsection{Training Parameters}
 
