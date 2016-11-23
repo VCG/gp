@@ -218,10 +218,22 @@ class Stats(object):
 
     dojo_best_vi = 0.33414926373414477
     cylinder_best_vi = 0.27683609273291143 # this is without the skipping border
+    cremi_A_best_vi = 0.92974989787739659
+    cremi_B_best_vi = 1.2940966349
+    cremi_C_best_vi = 1.45485772678
     # cylinder_best_vi = 0.3 # this is with skipping border
     if data == 'dojo':
       best_vi = dojo_best_vi  
       clampY = [0.32, 0.55]
+    elif data =='cremiA':
+      best_vi = cremi_A_best_vi
+      clampY = [0.85,1.1]
+    elif data =='cremiB':
+      best_vi = cremi_B_best_vi
+      clampY = [1.2,1.8]
+    elif data =='cremiC':
+      best_vi = cremi_C_best_vi
+      clampY = [1.35,1.96]
     else:
       best_vi = cylinder_best_vi
       clampY = [0.25, 0.5]
@@ -254,7 +266,7 @@ class Stats(object):
             fp_corrections.append(fp_correction)
         with open(DATADIR+FP_USERS[i]+'/'+correction_vis, 'rb') as f:
             fp_correction_vis = pickle.load(f) 
-            fp_vis.append(fp_correction_vis)
+            fp_vis.append(fp_correction_vis[1:])
 
     # return None, None, fp_vis
 
@@ -285,6 +297,7 @@ class Stats(object):
     first_split_vis = []
     last_split_vis = []
     for k,v in enumerate(fp_corrections):
+
         vis = [init_median_vi]
         merge_vis = [init_median_vi]
         split_vis = [init_median_vi]
@@ -309,7 +322,9 @@ class Stats(object):
                 # user accepted correction, now look up the vi
                 vi = fp_vis[k][correctionindex]
                 correctionindex += 1    
+
                 vis.append(np.median(vi))
+
 
                 if c[0] == 'merge':
                   merge_vis.append(vi)
@@ -337,11 +352,13 @@ class Stats(object):
         merge_vi_per_c_per_user.append(merge_vis)
         split_vi_per_c_per_user.append(split_vis)
 
+    #return fp_vi_per_c_per_user, merge_vis, split_vis, None
+
     # fig = plt.figure(figsize=(10,7))
     # fig, ax = plt.subplots()
-    # if clampY:
-    plt.ylim(0.1,0.7)
-    plt.yticks(np.arange(0.1, 0.71, 0.1))
+    if clampY:
+        plt.ylim(clampY[0],clampY[1])
+        plt.yticks(np.arange(clampY[0], clampY[1], 0.1))
     if clampX:
       plt.xlim(0,clampX)
 
@@ -351,7 +368,7 @@ class Stats(object):
     plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=4, label='Initial Segmentation')
     plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=4, label='Best Possible')
     if hline!=-1:
-      plt.axvline(x=hline, color='red', ymin=0, ymax=.395, linewidth=4)
+      plt.axvline(x=hline, color='red', ymin=0, ymax=.357, linewidth=4)
     if clabel:
       plt.xlabel('Correction')
     if vilabel:
@@ -360,7 +377,7 @@ class Stats(object):
     if hideXlabels:
       ax.set_xticks([])
     else:
-      plt.xticks(np.arange(0, clampX+1, 5000))
+      plt.xticks(np.arange(0, clampX+1, 1000))
     if hideYlabels:
       ax.set_yticks([])
 
@@ -372,7 +389,7 @@ class Stats(object):
             'size'   : 46}
 
     plt.rc('font', **font)
-    plt.rc('legend',**{'fontsize':40})
+    plt.rc('legend',**{'fontsize':46})
 
     for u in fp_vi_per_c_per_user:
         plt.plot(u, linewidth=4)
@@ -385,21 +402,22 @@ class Stats(object):
     # plt.show()
 
     
-    # fp_vi_per_slice_per_user = []
-    # fp_vi_per_slice = [0,0,0,0,0,0,0,0,0,0]
-    # if not skipoutput:
-    #   for o in fp_outputs:
-    #       fp_vi_per_slice_per_user.append(VI(gold, o)[2])
-    #       last_split_vis.append(VI(gold, o)[2])
-    #   for u in fp_vi_per_slice_per_user:
-    #       for z,v in enumerate(u):
-    #           fp_vi_per_slice[z] += v
-    #   for z in range(10):
-    #       fp_vi_per_slice[z] /= len(fp_outputs)
+    fp_vi_per_slice_per_user = []
+    fp_vi_per_slice = [0]*len(gold)
+    if not skipoutput:
+      for o in fp_outputs:
+          fp_vi_per_slice_per_user.append(VI(gold, o)[2])
+          last_split_vis.append(VI(gold, o)[2])
+      for u in fp_vi_per_slice_per_user:
+          for z,v in enumerate(u):
+              fp_vi_per_slice[z] += v
+      for z in range(len(gold)):
+          fp_vi_per_slice[z] /= len(fp_outputs)
 
     # # pass
     # # return fig
-    # return fp_vi_per_slice, first_split_vis, last_split_vis,fp_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
+
+    return fp_vi_per_slice, first_split_vis, last_split_vis,fp_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
 
 
   @staticmethod
