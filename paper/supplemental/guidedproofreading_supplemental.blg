@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: guidedproofreading_supplemental.aux
 The style file: ieee.bst
 Database file #1: connectomics.bib
-You've used 1 entry,
+You've used 3 entries,
             2120 wiz_defined-function locations,
-            503 strings with 3960 characters,
-and the built_in function-call counts, 357 in all, are:
-= -- 27
-> -- 23
+            514 strings with 4174 characters,
+and the built_in function-call counts, 843 in all, are:
+= -- 73
+> -- 37
 < -- 0
-+ -- 9
-- -- 8
-* -- 27
-:= -- 66
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 7
++ -- 15
+- -- 12
+* -- 56
+:= -- 146
+add.period$ -- 8
+call.type$ -- 3
+change.case$ -- 15
 chr.to.int$ -- 0
-cite$ -- 1
-duplicate$ -- 14
-empty$ -- 29
-format.name$ -- 8
-if$ -- 70
+cite$ -- 3
+duplicate$ -- 32
+empty$ -- 78
+format.name$ -- 12
+if$ -- 174
 int.to.chr$ -- 0
-int.to.str$ -- 1
-missing$ -- 1
-newline$ -- 8
-num.names$ -- 2
-pop$ -- 11
+int.to.str$ -- 3
+missing$ -- 2
+newline$ -- 17
+num.names$ -- 6
+pop$ -- 22
 preamble$ -- 1
-purify$ -- 6
+purify$ -- 12
 quote$ -- 0
-skip$ -- 7
+skip$ -- 22
 stack$ -- 0
-substring$ -- 5
-swap$ -- 2
+substring$ -- 36
+swap$ -- 4
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 4
+type$ -- 12
 warning$ -- 0
-while$ -- 2
-width$ -- 2
-write$ -- 12
+while$ -- 7
+width$ -- 4
+write$ -- 31

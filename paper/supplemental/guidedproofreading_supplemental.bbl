@@ -6,4 +6,14 @@ K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \newblock In {\em The IEEE Conference on Computer Vision and Pattern
   Recognition (CVPR)}, June 2016.
 
+\bibitem{focused_proofreading}
+S.~M. Plaza.
+\newblock {Focused Proofreading: Efficiently Extracting Connectomes from
+  Segmented EM Images}, Sept. 2014.
+
+\bibitem{shaffer1995}
+J.~P. Shaffer.
+\newblock Multiple hypothesis testing.
+\newblock {\em Annual Review of Psychology}, 46(1):561--584, 1995.
+
 \end{thebibliography}
