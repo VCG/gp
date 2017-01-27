@@ -63,8 +63,9 @@ Dataset & \makecell{Training Set\\Membrane Detection (U-Net)} & \makecell{Traini
 
 
 \section{Faster Proofreading}
-We agree with reviewer 2 that our claim that GP enables faster proofreading is not clearly presented. We report the average correction times for novice users in lines 756-765. Figure 7 (column 3) shows VI reduction after 30 minutes and the slopes in figure 6 also indicate better performance for GP. However, this presentation is not ideal and we will add Tab.~\ref{tab:correctiontimes} to the paper.
-
+We agree with reviewer 2 that our results regarding faster proofreading with GP are not clearly presented. 
+%We report the average correction times for novice users in lines 756-765. Figure 7 (column 3) shows VI reduction after 30 minutes and the slopes in figure 6 also indicate better performance for GP. However, this presentation is not ideal and 
+We will add Tab.~\ref{tab:correctiontimes} to the paper (previously reported in lines 756-765, slopes in figure 6, column 3 in figure 7) to better present our findings.
 
 \begin{table}[h]
 \caption{Average proofreading speed for novice users of Dojo, FP and GP. Higher VI reduction per minute shows better performance of GP.}%While the training of our classifier is more expensive, testing accuracy is superior. }
@@ -84,12 +85,12 @@ We agree with reviewer 2 that our claim that GP enables faster proofreading is n
 
 \section{Merge Error Detection}
 
-Reviewer 3 suggests a better explanation of the merge error detection. We updated figure 4 in the paper to include the watershed seeds (Fig. 1). We will also add a pseudo code description of the algorithm to the supplemental material. We hope that this will make this part easier to understand.
+Reviewer 3 suggests a better explanation of the merge error detection. We updated figure 4 in the paper to include the watershed seeds (Fig. 1). We will also add a pseudo code description of the algorithm to the supplemental material to promote understanding.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{gfx/merge_error_v4.pdf}
-\caption{Updated figure 4, including the random watershed seeds. (TODO)}
+\caption{Updated figure 4 to include the random watershed seeds. (TODO)}
 \label{fig:merge_error}
 \end{figure}
 
