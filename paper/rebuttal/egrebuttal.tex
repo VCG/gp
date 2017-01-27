@@ -30,7 +30,7 @@
 \maketitle
 \thispagestyle{empty}
 
-Thank you for your constructive comments. We will fix all minor issues. We would like to clarify and correct the following major remarks.
+Thank you for your constructive comments. We will fix all minor issues. We would like to clarify the following major remarks.
 
 \section{Quantitative Evaluation}
 Reviewer 2 requests an objective quantitative evaluation. We define such experiments in lines 573-590 and report the results in Fig.~6, Fig.~7 and lines 792-818 (also in supplemental Sec.~2 and 3). The evaluation is fully numeric and we report VI scores. We will change the wording in the manuscript to emphasize this.
@@ -39,8 +39,28 @@ Reviewer 2 requests an objective quantitative evaluation. We define such experim
 Reviewer 2 expresses concerns regarding reproducibility. However, we define all parameters in the manuscript and promise to release code and data (line 847).
 
 \section{Optimal Parameters}
-Reviewer 2 
+We define several parameters in the paper. However, we agree with reviewer 2 that finding the optimal values could be better explained and will synchronize this information with the paper. 
+The \textbf{threshold $p_t=0.95$} was observed to be stable when evaluating on previously unseen testing data (lines 585-586, supplemental Sec. 1.3). The \textbf{input border is dilated by 5 pixels} to consider slight edge ambiguities and to cover extra-cellular space between segments in high-resolution electron microscopy data (lines 308-310). During merge error detection, \textbf{labels are dilated by 20 pixels} prior to finding potential borders (line 323) with border-seeded watershed---this way the borders tend to attach to real membrane boundaries (lines 364-366). 
+%Here, we list all parameters and describe how their values are obtained. We will synchronize this information with the paper.
 
+%
+%\begin{itemize}
+%\item \textbf{Threshold $p_t$.} The threshold $p_t=0.95$ was observed to be stable when evaluating on previously unseen testing data (lines 585-586, supplemental Sec. 1.3).
+%\item \textbf{Dilated Boundary Input.} We dilate the border between segments by 5 pixels to consider slight edge ambiguities and to cover extra-cellular space between segments in high-resolution electron microscopy data (lines 308-310).
+%\item \textbf{Dilated Label.} During merge error detection, labels are dilated by 20 pixels prior to finding potential borders (line 323) with border-seeded watershed. By doing so, the borders tend to attach to real membrane boundaries (lines 364-366).
+%\end{itemize}
+
+%\begin{table}[h]
+%\caption{Parameters of GP, their values and how these values are obtained.}%While the training of our classifier is more expensive, testing accuracy is superior. }
+%\resizebox{\linewidth}{!}{
+%\begin{tabular}{l}
+%\toprule
+%Threshold $p_t=0.95$, Observed on previously unseed testing data (lines 585-586, supplemental Sec. 1.3) \\ 
+%\bottomrule
+%\end{tabular} 
+%}
+%\label{tab:parameters}
+%\end{table}
 
 \section{Training Datasets U-net vs. GP}
 Reviewer 3 raises the question if GP was trained on the same data as membrane detection (U-net). There was no overlap (Tab.~\ref{tab:trainingdata}).
@@ -85,7 +105,7 @@ We will add Tab.~\ref{tab:correctiontimes} to the paper (previously reported in 
 
 \section{Merge Error Detection}
 
-Reviewer 3 suggests a better explanation of the merge error detection. We updated figure 4 in the paper to include the watershed seeds (Fig. 1). We will also add a pseudo code description of the algorithm to the supplemental material to promote understanding.
+Reviewer 3 suggests a better explanation of the merge error detection. We updated figure 4 in the paper to include the watershed seeds (Fig. 1). We will also add a pseudo code version of the algorithm to the supplemental material to promote understanding.
 
 \begin{figure}[h]
 \centering
