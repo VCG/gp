@@ -285,7 +285,7 @@ class Manager(object):
         self._input_rhoana[z] = new_rhoana
 
         vi = UITools.VI(self._input_gold, input_rhoana)
-        # print 'New global VI', vi[1]
+        print 'New global VI', vi[0]
         self._correction_vis.append(vi[2])        
 
         #
@@ -301,7 +301,7 @@ class Manager(object):
         new_m[:,:] = -1
         new_m[0:-2,0:-2] = self._bigM[z]
 
-        print 'adding', label1, 'to', z
+        #print 'adding', label1, 'to', z
 
         new_m = gp.Legacy.add_new_label_to_M(self._cnn, new_m, input_image[z], input_prob[z], new_rhoana, label1)
         new_m = gp.Legacy.add_new_label_to_M(self._cnn, new_m, input_image[z], input_prob[z], new_rhoana, label2)
