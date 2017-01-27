@@ -30,10 +30,10 @@
 \maketitle
 \thispagestyle{empty}
 
-Thank you for your constructive comments. We will fix all minor issues. We would like to clarify the following major remarks.
+Thank you for your constructive comments. We will fix all minor issues. We would like to clarify and correct the following major remarks.
 
 \section{Quantitative Evaluation}
-Reviewer 2 requests an objective quantitative evaluation. We define such experiments in line 573-590 and report the results in Fig.~6, Fig.~7 and line 792-818 (also in supplemental Sec.~2 and 3). The evaluation is fully numeric and we report VI scores. We will change the wording in the manuscript to make this more clear.
+Reviewer 2 requests an objective quantitative evaluation. We define such experiments in lines 573-590 and report the results in Fig.~6, Fig.~7 and lines 792-818 (also in supplemental Sec.~2 and 3). The evaluation is fully numeric and we report VI scores. We will change the wording in the manuscript to emphasize this.
 
 \section{Reproducibility}
 Reviewer 2 expresses concerns regarding reproducibility. However, we define all parameters in the manuscript and promise to release code and data (line 847).
@@ -42,11 +42,11 @@ Reviewer 2 expresses concerns regarding reproducibility. However, we define all 
 Reviewer 2 
 
 
-\section{Training Data Sets U-net vs. GP}
-Reviewer 3 raises the question if GP was trained on the same data as membrane detection (U-net). There was no overlap in training the classifiers (Tab.~\ref{tab:trainingdata}).
+\section{Training Datasets U-net vs. GP}
+Reviewer 3 raises the question if GP was trained on the same data as membrane detection (U-net). There was no overlap (Tab.~\ref{tab:trainingdata}).
 
 \begin{table}[h]
-\caption{Training data of membrane detection vs. taining data of GP (for supplemental material).}%While the training of our classifier is more expensive, testing accuracy is superior. }
+\caption{Training data of membrane detection vs. training data of GP (for supplemental material).}%While the training of our classifier is more expensive, testing accuracy is superior. }
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
@@ -62,26 +62,45 @@ Dataset & \makecell{Training Set\\Membrane Detection (U-Net)} & \makecell{Traini
 \end{table}
 
 
-\section{Faster Correction Times}
-There seems to be a misunderstanding 
+\section{Faster Proofreading}
+We agree with reviewer 2 that our claim that GP enables faster proofreading is not clearly presented. We report the average correction times for novice users in lines 756-765. Figure 7 (column 3) shows VI reduction after 30 minutes and the slopes in figure 6 also indicate better performance for GP. However, this presentation is not ideal and we will add Tab.~\ref{tab:correctiontimes} to the paper.
 
+
+\begin{table}[h]
+\caption{Average proofreading speed for novice users of Dojo, FP and GP. Higher VI reduction per minute shows better performance of GP.}%While the training of our classifier is more expensive, testing accuracy is superior. }
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrr}
+\toprule
+ & \makecell{Correction Time [s]} & \makecell{VI Reduction per minute} \\
+\midrule
+\emph{Dojo} & 30.5 & -0.002 \\
+\emph{FP} & 4.9 & 0.00023 \\
+\emph{GP} & 6.2 & 0.00173 \\
+\bottomrule
+\end{tabular} 
+}
+\label{tab:correctiontimes}
+\end{table}
 
 \section{Merge Error Detection}
+
+Reviewer 3 suggests a better explanation of the merge error detection. We updated figure 4 in the paper to include the watershed seeds (Fig. 1). We will also add a pseudo code description of the algorithm to the supplemental material. We hope that this will make this part easier to understand.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{gfx/merge_error_v4.pdf}
-\caption{Updated Figure 4. (not yet)}
+\caption{Updated figure 4, including the random watershed seeds. (TODO)}
 \label{fig:merge_error}
 \end{figure}
 
 
-\section{}
+\section{GALA Active Learning Classifier}
 
+We use GALA in our automatic segmentation pipeline (line 499). GALA uses a random forest classifier to agglomerate segments. While it does not require user interaction, it requires parameters. We will either add a reference to our yet unpublished segmentation pipeline or add a section to the supplemental material describing it in more detail as requested by reviewer 3.
 
-{\small
-\bibliographystyle{ieee}
-\bibliography{egbib}
-}
+%{\small
+%\bibliographystyle{ieee}
+%\bibliography{egbib}
+%}
 
 \end{document}
