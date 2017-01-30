@@ -148,11 +148,14 @@ class Util(object):
 
     if color:
       plt.imshow(Util.colorize(array), picker=True)
+      iii = Util.colorize(array)
     else:
       plt.imshow(array, cmap='gray', picker=True)
+      iii = array
 
     if file!='':
-      plt.savefig(file)
+      mh.imsave(file, iii.astype(np.uint8))
+      #plt.savefig(file)
 
   @staticmethod
   def view_rgba(patch, text=''):

@@ -208,7 +208,7 @@ class Legacy(object):
     ws = mh.cwatershed(speed_image, seeds)
     ws[array == 0] = 0
 
-    return ws    
+    return seeds, ws    
 
 
   @staticmethod
