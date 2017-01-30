@@ -37,13 +37,13 @@ Thank you for your time and constructive comments. We will fix all minor issues.
 \vspace{-1mm}
 
 \paragraph{R2: Quantitative Evaluation}
-R2 requests an objective quantitative evaluation. Fortunately, our `automatic' and `oracle' experiments are exactly this. We define such experiments in lines 573--590 and report the results in Fig.~6, Fig.~7, and lines 792--818 (also in supplemental Sec.~2 and 3). These evaluations use the quantitative VI metric against a ground truth segmentation, with no user in the loop.
+R2 requests an objective quantitative evaluation. Our `automatic' and `oracle' experiments are exactly this. We define such experiments in lines 573--590 and report the results in Fig.~6, Fig.~7, and lines 792--818 (also in supplemental Sec.~2 and 3). These evaluations use the quantitative VI metric against a ground truth segmentation, with no user in the loop.
 
 \vspace{-1mm}
 
 \paragraph{R2: Faster than State of the Art?}
 %We report the average correction times for novice users in lines 756-765. Figure 7 (column 3) shows VI reduction after 30 minutes and the slopes in figure 6 also indicate better performance for GP. However, this presentation is not ideal and 
-`Faster' here considers both how long each correction takes, and the likely VI reduction from that correction. Our approach has comparable correction time to the state-of-the-art Focused Proofreading appraoch, but a significantly greater VI reduction per correction (7.5$\times$). Our presentation of this discovery could have been improved. We will add Table~\ref{tab:correctiontimes} to make this clearer (previously reported in lines 756-765, slopes in Fig.~6, and column 3 in Fig.~7).
+`Faster' here considers both how long each correction takes, and the likely VI reduction from that correction. Our approach has comparable correction time to the state-of-the-art Focused Proofreading approach, but a significantly greater VI reduction per correction (7.5$\times$). We agree that the presentation of this comparison was not ideal. We will add Table~\ref{tab:correctiontimes} to make this clearer (previously reported in lines 756-765, slopes in Fig.~6, and column 3 in Fig.~7).
 
 \begin{table}[h]
 \caption{Average proofreading speed for users of Dojo, Focused Proofreading (FP) and our Guided Proofreading (GP). For comparable correction time, our system achieves significantly higher VI reduction per minute (7.5$\times$) over state-of-the-art FP.}%While the training of our classifier is more expensive, testing accuracy is superior. }
@@ -62,15 +62,15 @@ Approach & \makecell{Time Per Correction (s)} & \makecell{VI Reduction Per Minut
 \label{tab:correctiontimes}
 \end{table}
 
-\vspace{-1mm}
+\vspace{-5mm}
 
 \paragraph{R2: Reproducibility}
-R2 expresses concerns regarding reproducibility. As per line 847, we have promised to release all our code and data, and we disclose all parameters.
+R2 expresses concerns regarding reproducibility. As per line 847, we have promised to release all our code including trained models and data, and we disclose all parameters.
 
 \vspace{-1mm}
 
 \paragraph{R2: How were Optimal Parameters chosen?}
-The \textbf{threshold $p_t=0.95$} was observed to be stable when evaluating on previously-unseen test data (lines 585-586, supplemental Sec. 1.3). The \textbf{input border is dilated by 5 pixels} to consider slight edge ambiguities and to cover extra-cellular space between segments in high-resolution electron microscopy data (lines 308-310). During merge error detection, \textbf{labels are dilated by 20 pixels} prior to finding potential borders (line 323) with border-seeded watershed---this way the borders tend to attach to real membrane boundaries (lines 364-366). As we use a CNN, there are many additional parameters; we consider choosing these effectively to be an open problem, and for this we used learned experience and local brute-force searches.
+The \textbf{threshold $p_t=0.95$} was observed to be stable when evaluating VI reduction on previously-unseen test data (lines 585-586, supplemental Sec. 1.3). The \textbf{input border is dilated by 5 pixels} to consider slight edge ambiguities and extra-cellular space in high-resolution electron microscopy data (lines 308-310). During merge error detection, \textbf{labels are dilated by 20 pixels} prior to finding potential borders (line 323) with border-seeded watershed---this way the borders tend to attach to real membrane boundaries (lines 364-366). As we use a CNN, there are many additional parameters; we consider choosing these effectively to be an open problem, and for this we used learned experience and local brute-force searches on separate training data.
 %Here, we list all parameters and describe how their values are obtained. We will synchronize this information with the paper.
 %We define several parameters in the paper. However, we agree with reviewer 2 that finding the optimal values requires better explanations and we will synchronize the following information with the paper. 
 
@@ -99,22 +99,44 @@ R3 raises the question of whether our GP approach was trained on the same data a
 \vspace{-1mm}
 
 \begin{table}[h]
-\caption{Training data of membrane detection vs.~training data of GP (for supplemental material).}%While the training of our classifier is more expensive, testing accuracy is superior. }
+\caption{Training data of membrane detection vs.~training data of GP vs.~test data (for supplemental material).}%While the training of our classifier is more expensive, testing accuracy is superior. }
 \vspace{-1mm}
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
 %Dataset & \makecell{Training Set\\Membrane Detection (U-Net)} & \makecell{Training Set\\Guided Proofreading} \\ 
-Dataset & \makecell{Training Set\\U-Net} & \makecell{Training Set\\GP} \\ 
+\makecell{Training Set\\U-Net / GALA} & \makecell{Training Set\\GP} & \makecell{Test Set\\GP}\\ 
 \midrule
-\makecell{\emph{L. Cylinder}\\~} & \makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{L. Cylinder\\($2048\times2048\times250$vx)} \\ 
-\makecell{\emph{AC4 subvolume}\\~} & \makecell{AC4 excl. test\\ ($1000\times1000\times90$vx)} &  \makecell{L. Cylinder\\ ($2048\times2048\times250$vx)} \\ 
-\makecell{\emph{CREMI A/B/C}\\~} & \makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{CREMI A/B/C\\($1250\times1250\times300$vx)} \\ 
+\makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{L. Cylinder\\($2048\times2048\times250$vx)} &
+\makecell{$\text{L. Cylinder}_\text{test}$\\($2048\times2048\times50$vx)}
+\\ 
+\makecell{AC4 excl. test\\ ($1024\times1024\times90$vx)} &  \makecell{L. Cylinder\\($2048\times2048\times250$vx)} &
+\makecell{$\text{AC4}_\text{test}$ subvolume\\($400\times400\times10$vx)} \\ 
+\makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{CREMI A/B/C\\($1250\times1250\times300$vx)} &
+\makecell{$\text{CREMI A/B/C}_\text{test}$\\($1250\times1250\times15$vx)} \\ 
 \bottomrule
 \end{tabular} 
 }
 \label{tab:trainingdata}
 \end{table}
+
+%\begin{table}[h]
+%\caption{Training data of membrane detection vs.~training data of GP (for supplemental material).}%While the training of our classifier is more expensive, testing accuracy is superior. }
+%\vspace{-1mm}
+%\resizebox{\linewidth}{!}{
+%\begin{tabular}{lrrrr}
+%\toprule
+%%Dataset & \makecell{Training Set\\Membrane Detection (U-Net)} & \makecell{Training Set\\Guided Proofreading} \\ 
+%Dataset & \makecell{Training Set\\U-Net} & \makecell{Training Set\\GP} \\ 
+%\midrule
+%\makecell{\emph{$\text{L. Cylinder}_\text{test}$}\\~} & \makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{L. Cylinder\\($2048\times2048\times250$vx)} \\ 
+%\makecell{\emph{AC4 subvolume}\\~} & \makecell{AC4 excl. test\\ ($1000\times1000\times90$vx)} &  \makecell{L. Cylinder\\ ($2048\times2048\times250$vx)} \\ 
+%\makecell{\emph{CREMI A/B/C}\\~} & \makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{CREMI A/B/C\\($1250\times1250\times300$vx)} \\ 
+%\bottomrule
+%\end{tabular} 
+%}
+%\label{tab:trainingdata}
+%\end{table}
 
 \vspace{-5mm}
 
@@ -126,7 +148,7 @@ R3 requests a better explanation of the merge error detection (Sec. 3.2). We hav
 \centering
 \includegraphics[width=\linewidth]{gfx/merge_error_v6.pdf}
 \vspace{-6mm}
-\caption{Merge errors are identified by generating randomly-seeded watershed borders within a dilated label segment. Then, each border is individually rated using the split error CNN by inverting the probability score.}
+\caption{Potential borders are generated on inverted images by randomly placing watershed seeds (green) on the boundary of a dilated segment. The best ranked seeds and border (both in red) result in the shown error correction.}
 \label{fig:merge_error}
 \end{figure}
 
@@ -158,7 +180,7 @@ R3 requests a better explanation of the merge error detection (Sec. 3.2). We hav
 	\State{$l_d$ = \textbf{dilate}(\emph{l}, 20)}
 	\State{invImage = \textbf{invert}(image)}
 	\For{N iterations}
-		\State{$s_1$, $s_2$ = \textbf{randomSeeds}($l_d$)}
+		\State{$s_1$, $s_2$ = \textbf{randomSeedsOnBoundary}($l_d$)}
 		\State{wsImage = \textbf{watershed}(invImage, $l_d$, $s_1$, $s_2$)}
 		\State{border = \textbf{border}(wsImage)}
 		\State{$p$ = \textbf{rank}(border)}
