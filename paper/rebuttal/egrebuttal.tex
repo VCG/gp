@@ -10,6 +10,8 @@
 \usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{makecell}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 
 % Include other packages here, before hyperref.
 
@@ -47,7 +49,7 @@ R2 requests an objective quantitative evaluation. Fortunately, our `automatic' a
 Approach & \makecell{Time Per Correction (s)} & \makecell{VI Reduction Per Minute} \\
 \midrule
 \emph{Dojo} & 30.5 & -0.002 \\
-\emph{Dojo Expert?} & xxx & xxx \\
+%\emph{Dojo Expert?} & xxx & xxx \\
 \emph{FP} & 4.9 & 0.00023 \\
 \emph{GP} & 6.2 & 0.00173 \\
 \bottomrule
@@ -59,7 +61,7 @@ Approach & \makecell{Time Per Correction (s)} & \makecell{VI Reduction Per Minut
 \paragraph{R2: Reproducibility}
 R2 expresses concerns regarding reproducibility. As per line 847, we have promised to release all our code and data, and we disclose all parameters.
 
-\paragraph{R2: How were Optimal Parameters Chosen?}
+\paragraph{R2: How were Optimal Parameters chosen?}
 The \textbf{threshold $p_t=0.95$} was observed to be stable when evaluating on previously-unseen test data (lines 585-586, supplemental Sec. 1.3). The \textbf{input border is dilated by 5 pixels} to consider slight edge ambiguities and to cover extra-cellular space between segments in high-resolution electron microscopy data (lines 308-310). During merge error detection, \textbf{labels are dilated by 20 pixels} prior to finding potential borders (line 323) with border-seeded watershed---this way the borders tend to attach to real membrane boundaries (lines 364-366). As we use a CNN, there are many additional parameters; we consider choosing these effectively to be an open problem, and for this we used learned experience and local brute-force searches.
 %Here, we list all parameters and describe how their values are obtained. We will synchronize this information with the paper.
 %We define several parameters in the paper. However, we agree with reviewer 2 that finding the optimal values requires better explanations and we will synchronize the following information with the paper. 
@@ -107,7 +109,7 @@ Dataset & \makecell{Training Set\\U-Net} & \makecell{Training Set\\GP} \\
 
 
 \paragraph{R3: Merge Error Detection}
-R3 requests a better explanation of the merge error detection. We have updated Figure 4 in the main paper to include the watershed seeds (Fig. 1). We will also add a pseudo code version of the algorithm to the supplemental material to promote understanding.
+R3 requests a better explanation of the merge error detection. We have updated Figure 4 in the main paper to include the watershed seeds (Fig. 1). We will also add a pseudo code version of the algorithm to the supplemental material to promote understanding (Alg. \ref{code:mergeerror}).
 
 \begin{figure}[h]
 \centering
@@ -116,6 +118,39 @@ R3 requests a better explanation of the merge error detection. We have updated F
 \label{fig:merge_error}
 \end{figure}
 
+\begin{algorithm}
+\caption{Merge Error Detection for label \emph{l}}\label{code:mergeerror}
+\begin{algorithmic}[1]
+%\State{mergeErrors = []}
+%\For{\emph{l} in $\forall$labels}
+	\State{$l_d$ = dilate(\emph{l}, 20)}
+	%\For{N iterations}
+		%\State{$s_1$,$s_2$ = findRandomSeeds($l_d$)}
+		\State{border = watershed($l_d$, $\text{seeds}_\text{random}$)}
+		%\State{border = findBorder(ws)}
+		\State{$p_\text{split}$ = rank(border)}
+		\State{$p_\text{merge}$ = $1-p_\text{split}$}
+		%\State{correct($\max p_\text{merge}$)}
+	%\EndFor
+
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Merge Error Detection for one label}\label{code:mergeerror2}
+\begin{algorithmic}[1]
+%\State{mergeErrors = []}
+%\For{\emph{l} in $\forall$labels}
+	\State{dilate label}
+	\For{N iterations}
+		\State{watershed (randomly seeded)}
+		\State{$p$ = rank border using split error CNN}
+		\State{$p_\text{merge}$ = $1-p$}	
+	\EndFor
+	\State{find max $p_\text{merge}$}
+
+\end{algorithmic}
+\end{algorithm}
 
 \paragraph{R3: GALA Active Learning Classifier}
 In our automatic segmentation pipeline (line 499), GALA uses a random forest classifier to agglomerate segments. While it does not require user interaction, it does require parameters. We will add a section to the supplemental material containing a full description of the approach and our use of it. %either add a reference to our yet unpublished segmentation pipeline or 
