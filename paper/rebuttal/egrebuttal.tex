@@ -109,45 +109,48 @@ Dataset & \makecell{Training Set\\U-Net} & \makecell{Training Set\\GP} \\
 
 
 \paragraph{R3: Merge Error Detection}
-R3 requests a better explanation of the merge error detection. We have updated Figure 4 in the main paper to include the watershed seeds (Fig. 1). We will also add pseudo code of the algorithm to the supplemental material to promote understanding (Alg. \ref{code:mergeerror}).
+R3 requests a better explanation of the merge error detection (Sec. 3.2). We have updated Figure 4 in the main paper to be more descriptive (Fig. 1). We will also add pseudo code of the algorithm to the supplemental material to promote understanding (Alg. \ref{code:mergeerror}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{gfx/merge_error_v6.pdf}
-\caption{Updated Figure 4 including the random watershed seeds (yellow).}
+\caption{Merge errors are identified by generating randomly-seeded watershed borders within a dilated label segment. Then, each border is individually rated using the split error CNN by inverting the probability score.}
 \label{fig:merge_error}
 \end{figure}
 
+%\begin{algorithm}
+%\caption{Merge Error Detection for label \emph{l}}\label{code:mergeerror}
+%\begin{algorithmic}[1]
+%%\State{mergeErrors = []}
+%%\For{\emph{l} in $\forall$labels}
+%	\State{$l_d$ = dilate(\emph{l}, 20)}
+%	%\For{N iterations}
+%		%\State{$s_1$,$s_2$ = findRandomSeeds($l_d$)}
+%		\State{border = watershed($l_d$, $\text{seeds}_\text{random}$)}
+%		%\State{border = findBorder(ws)}
+%		\State{$p_\text{split}$ = rank(border)}
+%		\State{$p_\text{merge}$ = $1-p_\text{split}$}
+%		%\State{correct($\max p_\text{merge}$)}
+%	%\EndFor
+%
+%\end{algorithmic}
+%\end{algorithm}
+
 \begin{algorithm}
-\caption{Merge Error Detection for label \emph{l}}\label{code:mergeerror}
+\caption{Merge Error Detection for a label \emph{l}}\label{code:mergeerror}
 \begin{algorithmic}[1]
 %\State{mergeErrors = []}
 %\For{\emph{l} in $\forall$labels}
-	\State{$l_d$ = dilate(\emph{l}, 20)}
-	%\For{N iterations}
-		%\State{$s_1$,$s_2$ = findRandomSeeds($l_d$)}
-		\State{border = watershed($l_d$, $\text{seeds}_\text{random}$)}
-		%\State{border = findBorder(ws)}
-		\State{$p_\text{split}$ = rank(border)}
-		\State{$p_\text{merge}$ = $1-p_\text{split}$}
-		%\State{correct($\max p_\text{merge}$)}
-	%\EndFor
-
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}
-\caption{Merge Error Detection for one label}\label{code:mergeerror2}
-\begin{algorithmic}[1]
-%\State{mergeErrors = []}
-%\For{\emph{l} in $\forall$labels}
-	\State{dilate label}
+	\State{$l_d$ = \textbf{dilate}(\emph{l}, 20)}
+	\State{invImage = \textbf{invert}(image)}
 	\For{N iterations}
-		\State{watershed (randomly seeded)}
-		\State{$p$ = rank border using split error CNN}
+		\State{$s_1$,$s_2$ = \textbf{randomSeeds}($l_d$)}
+		\State{wsImage = \textbf{watershed}(invImage, $l_d$,$s_1$,$s_2$)}
+		\State{border = \textbf{border}(wsImage)}
+		\State{$p$ = \textbf{rank}(border)}
 		\State{$p_\text{merge}$ = $1-p$}	
 	\EndFor
-	\State{find max $p_\text{merge}$}
+	\State{\textbf{find}(max $p_\text{merge})$}
 
 \end{algorithmic}
 \end{algorithm}
