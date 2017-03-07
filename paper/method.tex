@@ -9,7 +9,7 @@
 
 We build a split error classifier with output $p$ using a CNN to check whether an edge within an existing automatic segmentation is valid ($p=0$) or not ($p=1$). Rather than analyzing every input pixel, the classifier operates only on segment boundaries, which requires less pixel context and is faster. In contrast to Bogovic \etal~\cite{BogovicHJ13}, we work with 2D slices rather than 3D volumes. This enables proofreading prior or in parallel to a computationally expensive stitching and 3D alignment of individual EM images.
 
-\paragraph{CNN Architecture.} Boundary split error detection is a binary classification task since the boundary is either correct or erroneous. However, in reality, the score $p$ is between 0 and 1. In connectromics, classification complexity arises from hundreds of different cell types, rather than from the classification decision itself. Intuitively, this yields a wider architecture with more filters rather than a deeper architecture with more layers. We explored different architectures---including residual networks~\cite{resnet}---with brute force parameter searches and precision and recall comparisons (see supplementary materials). Our final CNN configuration for split error detection has four convolutional layers, each followed by max pooling with dropout regularization to prevent overfitting due to limited training data (Fig.~\ref{fig:architecture}).
+\paragraph{CNN Architecture.} Boundary split error detection is a binary classification task since the boundary is either correct or erroneous. However, in reality, the score $p$ is between 0 and 1. In connectomics, classification complexity arises from hundreds of different cell types, rather than from the classification decision itself. Intuitively, this yields a wider architecture with more filters rather than a deeper architecture with more layers. We explored different architectures---including residual networks~\cite{resnet}---with brute force parameter searches and precision and recall comparisons (see supplementary materials). Our final CNN configuration for split error detection has four convolutional layers, each followed by max pooling with dropout regularization to prevent overfitting due to limited training data (Fig.~\ref{fig:architecture}).
 
 \paragraph{Classifier Inputs.} To train the CNN, we consider boundary context in the decision making process via a $75\times75$ patch over the center of an existing boundary. This size covers approximately $80\%$ of all boundaries in the 6~nm Mouse S1 AC3 Open Connectome Project dataset. If the boundary is not fully covered, we sample up to 10 non-overlapping patches along the boundary, and average the resulting scores weighted by the boundary length coverage per patch.
 %\footnote{\scriptsize{\url{http://openconnectomeproject.org/}}}
@@ -19,7 +19,7 @@ Similar to Bogovic~\etal~\cite{BogovicHJ13}, we use grayscale image data, corres
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{gfx/cnn_inputs.pdf}
-\caption{Example inputs for learning correct splits and split errors, as per a candidate segmentation versus the ground truth. Image, membrane probabilities, merged binary labels, and a dilated border mask provide 4-channel input patches.}
+\caption{Example inputs for learning correct splits and split errors (candidate segmentation versus the ground truth). Image, membrane probabilities, merged binary labels, and a dilated border mask provide 4-channel input patches.}
 \label{fig:cnn_inputs}
 \end{figure}
 
