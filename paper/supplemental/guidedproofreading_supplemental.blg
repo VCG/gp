@@ -3,44 +3,52 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: guidedproofreading_supplemental.aux
 The style file: ieee.bst
 Database file #1: connectomics.bib
-You've used 3 entries,
+I was expecting a `,' or a `}'---line 61 of file connectomics.bib
+ : 
+ : journal   = {CoRR},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--can't use both author and editor fields in focused_proofreading
+Warning--empty journal in RonnebergerFB15
+You've used 6 entries,
             2120 wiz_defined-function locations,
-            514 strings with 4174 characters,
-and the built_in function-call counts, 843 in all, are:
-= -- 73
-> -- 37
-< -- 0
-+ -- 15
-- -- 12
-* -- 56
-:= -- 146
-add.period$ -- 8
-call.type$ -- 3
-change.case$ -- 15
+            536 strings with 5638 characters,
+and the built_in function-call counts, 2324 in all, are:
+= -- 213
+> -- 136
+< -- 2
++ -- 54
+- -- 48
+* -- 167
+:= -- 385
+add.period$ -- 17
+call.type$ -- 6
+change.case$ -- 41
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 32
-empty$ -- 78
-format.name$ -- 12
-if$ -- 174
+cite$ -- 8
+duplicate$ -- 84
+empty$ -- 165
+format.name$ -- 48
+if$ -- 482
 int.to.chr$ -- 0
-int.to.str$ -- 3
-missing$ -- 2
-newline$ -- 17
-num.names$ -- 6
-pop$ -- 22
+int.to.str$ -- 6
+missing$ -- 6
+newline$ -- 32
+num.names$ -- 12
+pop$ -- 51
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 36
 quote$ -- 0
-skip$ -- 22
+skip$ -- 69
 stack$ -- 0
-substring$ -- 36
-swap$ -- 4
-text.length$ -- 0
+substring$ -- 115
+swap$ -- 25
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 12
-warning$ -- 0
-while$ -- 7
-width$ -- 4
-write$ -- 31
+type$ -- 22
+warning$ -- 2
+while$ -- 19
+width$ -- 7
+write$ -- 63
+(There was 1 error message)

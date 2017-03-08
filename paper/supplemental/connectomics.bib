@@ -3,27 +3,22 @@
                Gary B. Huang and
                Viren Jain},
   title     = {Learned versus Hand-Designed Feature Representations for 3d Agglomeration},
-  journal   = {CoRR},
-  volume    = {abs/1312.6159},
-  year      = {2013},
-  url       = {http://arxiv.org/abs/1312.6159},
-  timestamp = {Mon, 06 Jan 2014 15:10:41 +0100},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/BogovicHJ13},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
+  journal = {International Conference on Learning Representations (ICLR)},
+  year={2014}
 }
 
 @article{RonnebergerFB15,
-  author    = {Olaf Ronneberger and
-               Philipp Fischer and
-               Thomas Brox},
-  title     = {U-Net: Convolutional Networks for Biomedical Image Segmentation},
-  journal   = {CoRR},
-  volume    = {abs/1505.04597},
-  year      = {2015},
-  url       = {http://arxiv.org/abs/1505.04597},
-  timestamp = {Mon, 01 Jun 2015 14:13:54 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/RonnebergerFB15},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
+  author = {Ronneberger, Olaf and Fischer, Philipp and Brox, Thomas},
+  editor = {Navab, Nassir and Hornegger, Joachim and Wells, William M. and Frangi, Alejandro F.},
+  title = {U-Net: Convolutional Networks for Biomedical Image Segmentation},
+  bookTitle = {Medical Image Computing and Computer-Assisted Intervention -- MICCAI 2015: 18th International Conference, Munich, Germany, October 5-9, 2015, Proceedings, Part III},
+  year = {2015},
+  publisher = {Springer International Publishing},
+  address = {Cham},
+  pages = {234--241},
+  isbn = {978-3-319-24574-4},
+  doi = {10.1007/978-3-319-24574-4_28},
+  url = {http://dx.doi.org/10.1007/978-3-319-24574-4_2}
 }
 
 @article{nunez2014graph,
@@ -59,6 +54,14 @@
 	URL = {http://europepmc.org/articles/PMC4074887},
 }
 
+@misc{rhoananet,
+Author = {Seymour Knowles-Barley and Verena Kaynig and Thouis Ray Jones and Alyssa Wilson and Joshua Morgan and Dongil Lee and Daniel Berger and Narayanan Kasthuri and Jeff W. Lichtman and Hanspeter Pfister},
+Title = {RhoanaNet Pipeline: Dense Automatic Neural Annotation},
+ee = {http://arxiv.org/abs/1611.06973},
+journal   = {CoRR},
+volume    = {abs/1611.06973},
+year      = {2016}
+}
 
 @article{kaynig2015large,
   title={Large-scale automatic reconstruction of neuronal processes from electron microscopy images},
@@ -1195,36 +1198,31 @@ month={Jan}
   bibsource = {dblp computer science bibliography, http://dblp.org}
 }
 
-@misc{focused_proofreading,
-    abstract = {{Identifying complex neural circuitry from electron microscopic (EM) images
-may help unlock the mysteries of the brain. However, identifying this circuitry
-requires time-consuming, manual tracing (proofreading) due to the size and
-intricacy of these image datasets, thus limiting state-of-the-art analysis to
-very small brain regions. Potential avenues to improve scalability include
-automatic image segmentation and crowd sourcing, but current efforts have had
-limited success. In this paper, we propose a new strategy, focused
-proofreading, that works with automatic segmentation and aims to limit
-proofreading to the regions of a dataset that are most impactful to the
-resulting circuit. We then introduce a novel workflow, which exploits
-biological information such as synapses, and apply it to a large dataset in the
-fly optic lobe. With our techniques, we achieve significant tracing speedups of
-3-5x without sacrificing the quality of the resulting circuit. Furthermore, our
-methodology makes the task of proofreading much more accessible and hence
-potentially enhances the effectiveness of crowd sourcing.}},
-    archivePrefix = {arXiv},
-    author = {Plaza, Stephen M.},
-    citeulike-article-id = {13608697},
-    citeulike-linkout-0 = {http://arxiv.org/abs/1409.1199},
-    citeulike-linkout-1 = {http://arxiv.org/pdf/1409.1199},
-    day = {3},
-    eprint = {1409.1199},
-    month = sep,
-    posted-at = {2015-05-11 22:19:22},
-    priority = {2},
-    title = {{Focused Proofreading: Efficiently Extracting Connectomes from Segmented EM Images}},
-    url = {http://arxiv.org/abs/1409.1199},
-    year = {2014}
+@Inbook{focused_proofreading,
+author="Plaza, Stephen M.",
+editor="Carneiro, Gustavo
+and Mateus, Diana
+and Peter, Lo{\"i}c
+and Bradley, Andrew
+and Tavares, Jo{\~a}o Manuel R. S.
+and Belagiannis, Vasileios
+and Papa, Jo{\~a}o Paulo
+and Nascimento, Jacinto C.
+and Loog, Marco
+and Lu, Zhi
+and Cardoso, Jaime S.
+and Cornebise, Julien",
+title="Focused Proofreading to Reconstruct Neural Connectomes from EM Images at Scale",
+bookTitle="Deep Learning and Data Labeling for Medical Applications: First International Workshop, LABELS 2016, and Second International Workshop, DLMIA 2016, Held in Conjunction with MICCAI 2016, Athens, Greece, October 21, 2016, Proceedings",
+year="2016",
+publisher="Springer International Publishing",
+address="Cham",
+pages="249--258",
+isbn="978-3-319-46976-8",
+doi="10.1007/978-3-319-46976-8_26",
+url="http://dx.doi.org/10.1007/978-3-319-46976-8_26"
 }
+
 
 @article{chklovskii2010,
 title = "Semi-automated reconstruction of neural circuits using electron microscopy ",
@@ -1248,14 +1246,4 @@ abstract = "Reconstructing neuronal circuits at the level of synapses is a centr
   howpublished = {\url{http://cremi.org/} },
   year = {2016},
   note = {Accessed on 11/01/2016}
-}
-
-@article{dropout,
-  author  = {Nitish Srivastava and Geoffrey Hinton and Alex Krizhevsky and Ilya Sutskever and Ruslan Salakhutdinov},
-  title   = {Dropout: A Simple Way to Prevent Neural Networks from Overfitting},
-  journal = {Journal of Machine Learning Research},
-  year    = {2014},
-  volume  = {15},
-  pages   = {1929-1958},
-  url     = {http://jmlr.org/papers/v15/srivastava14a.html}
 }

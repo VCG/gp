@@ -99,8 +99,56 @@ For automatic selection, we observed a threshold $p_t=0.95$ as stable when evalu
 \label{fig:cylboxplot}
 \end{figure}
 
+\subsection{Merge Error Detection Pseudo Code}
+
+\begin{algorithm}[H]
+\caption{Merge Error Detection for a label \emph{l}}\label{code:mergeerror}
+\begin{algorithmic}[1]
+%\State{mergeErrors = []}
+%\For{\emph{l} in $\forall$labels}
+	\State{$l_d$ = \textbf{dilate}(\emph{l}, 20)}
+	\State{invImage = \textbf{invert}(image)}
+	\For{N iterations}
+		\State{$s_1$, $s_2$ = \textbf{randomSeedsOnBoundary}($l_d$)}
+		\State{wsImage = \textbf{watershed}(invImage, $l_d$, $s_1$, $s_2$)}
+		\State{border = \textbf{border}(wsImage)}
+		\State{$p$ = \textbf{rank}(border)}
+		\State{$p_\text{merge}$ = $1-p$}	
+	\EndFor
+	\State{\textbf{find}(max $p_\text{merge})$}
+
+\end{algorithmic}
+\end{algorithm}
+
 \subsection{Limitations}
 Guided proofreading works on 2D image sections. This enables error correction without a computationally expensive alignment process. However, the output requires an additional (block-)merging step prior to 3D analysis. Several software packages exist for this purpose.
 
 As described in Section~\ref{sec:addexp}, the guided proofreading classifier has to be retrained if used on a different species than mouse. In our experiments, parameters did not need to be changed.
 
+\section{Automatic Segmentation Pipeline}
+
+We create a dense automatic segmentation of electron microscopy data using a combination of a U-net~\cite{RonnebergerFB15} and the GALA agglomeration method~\cite{nunez2014graph}. These classifiers are trained on different data than GP (Tab.~\ref{tab:trainingdata}).
+
+\begin{table}[h]
+\caption{Training data of membrane detection (U-Net / GALA) vs.~training data of GP vs.~test data.}%While the training of our classifier is more expensive, testing accuracy is superior. }
+\vspace{-1mm}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrr}
+\toprule
+%Dataset & \makecell{Training Set\\Membrane Detection (U-Net)} & \makecell{Training Set\\Guided Proofreading} \\ 
+\makecell{Training Set\\U-Net / GALA} & \makecell{Training Set\\GP} & \makecell{Test Set\\GP}\\ 
+\midrule
+\makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{L. Cylinder\\($2048\times2048\times250$vx)} &
+\makecell{$\text{L. Cylinder}_\text{test}$\\($2048\times2048\times50$vx)}
+\\ 
+\makecell{AC4 excl. test\\ ($1024\times1024\times90$vx)} &  \makecell{L. Cylinder\\($2048\times2048\times250$vx)} &
+\makecell{$\text{AC4}_\text{test}$ subvolume\\($400\times400\times10$vx)} \\ 
+\makecell{AC3+AC4\\($1024\times1024\times175$vx)} & \makecell{CREMI A/B/C\\($1250\times1250\times300$vx)} &
+\makecell{$\text{CREMI A/B/C}_\text{test}$\\($1250\times1250\times15$vx)} \\ 
+\bottomrule
+\end{tabular} 
+}
+\label{tab:trainingdata}
+\end{table}
+
+GALA uses a random forest classifier to agglomerate segments. We use an agglomeration level of 0.3 (after a grid search). Further details of our pipeline are described in~\cite{rhoananet}.
