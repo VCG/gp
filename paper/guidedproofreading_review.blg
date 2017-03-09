@@ -9,46 +9,45 @@ Warning--empty publisher in NASATLX
 Warning--there's a number but no volume in mojo2
 Warning--can't use both volume and number fields in nesterov
 Warning--can't use both author and editor fields in focused_proofreading
-Warning--empty journal in RonnebergerFB15
 You've used 33 entries,
             2120 wiz_defined-function locations,
-            707 strings with 11638 characters,
-and the built_in function-call counts, 13765 in all, are:
-= -- 1284
+            710 strings with 11499 characters,
+and the built_in function-call counts, 13834 in all, are:
+= -- 1293
 > -- 856
-< -- 9
+< -- 10
 + -- 343
 - -- 306
-* -- 1120
-:= -- 2277
-add.period$ -- 103
+* -- 1129
+:= -- 2284
+add.period$ -- 105
 call.type$ -- 33
 change.case$ -- 250
 chr.to.int$ -- 0
-cite$ -- 40
-duplicate$ -- 440
-empty$ -- 934
+cite$ -- 39
+duplicate$ -- 444
+empty$ -- 944
 format.name$ -- 306
-if$ -- 2820
+if$ -- 2840
 int.to.chr$ -- 0
 int.to.str$ -- 33
 missing$ -- 31
-newline$ -- 171
+newline$ -- 172
 num.names$ -- 62
-pop$ -- 252
+pop$ -- 250
 preamble$ -- 1
 purify$ -- 218
 quote$ -- 0
 skip$ -- 327
 stack$ -- 0
 substring$ -- 787
-swap$ -- 112
-text.length$ -- 9
+swap$ -- 116
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 130
-warning$ -- 7
+warning$ -- 6
 while$ -- 103
 width$ -- 35
-write$ -- 366
-(There were 7 warnings)
+write$ -- 371
+(There were 6 warnings)

@@ -9,7 +9,8 @@ K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \bibitem{rhoananet}
 S.~Knowles-Barley, V.~Kaynig, T.~R. Jones, A.~Wilson, J.~Morgan, D.~Lee,
   D.~Berger, N.~Kasthuri, J.~W. Lichtman, and H.~Pfister.
-\newblock Rhoananet pipeline: Dense automatic neural annotation.
+\newblock Rhoananet pipeline: Dense automatic neural annotation, 2016.
+\newblock (available on arXiv:1611.06973 [cs.CV]).
 
 \bibitem{nunez2014graph}
 J.~Nunez-Iglesias, R.~Kennedy, S.~M. Plaza, A.~Chakraborty, and W.~T. Katz.
@@ -24,9 +25,11 @@ S.~M. Plaza.
 \newblock Springer International Publishing, Cham, 2016.
 
 \bibitem{RonnebergerFB15}
-O.~Ronneberger, P.~Fischer, and T.~Brox.
+O.~Ronneberger, P.Fischer, and T.~Brox.
 \newblock U-net: Convolutional networks for biomedical image segmentation.
-\newblock pages 234--241, 2015.
+\newblock In {\em Medical Image Computing and Computer-Assisted Intervention
+  (MICCAI)}, volume 9351 of {\em LNCS}, pages 234--241. Springer, 2015.
+\newblock (available on arXiv:1505.04597 [cs.CV]).
 
 \bibitem{shaffer1995}
 J.~P. Shaffer.

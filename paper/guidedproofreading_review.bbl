@@ -177,9 +177,11 @@ S.~M. Plaza.
 \newblock Springer International Publishing, Cham, 2016.
 
 \bibitem{RonnebergerFB15}
-O.~Ronneberger, P.~Fischer, and T.~Brox.
+O.~Ronneberger, P.Fischer, and T.~Brox.
 \newblock U-net: Convolutional networks for biomedical image segmentation.
-\newblock pages 234--241, 2015.
+\newblock In {\em Medical Image Computing and Computer-Assisted Intervention
+  (MICCAI)}, volume 9351 of {\em LNCS}, pages 234--241. Springer, 2015.
+\newblock (available on arXiv:1505.04597 [cs.CV]).
 
 \bibitem{saalfeld09}
 S.~Saalfeld, A.~Cardona, V.~Hartenstein, and P.~Toman\v{c}\'{a}k.
