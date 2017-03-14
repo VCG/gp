@@ -101,6 +101,8 @@ For automatic selection, we observed a threshold $p_t=0.95$ as stable when evalu
 
 \subsection{Merge Error Detection Pseudo Code}
 
+We provide pseudo code on how we detect merge errors to foster understanding of the reported algorithm (Alg.~\ref{code:mergeerror}). In our experiments, we use $N=50$ iterations.
+
 \begin{algorithm}[H]
 \caption{Merge Error Detection for a label \emph{l}}\label{code:mergeerror}
 \begin{algorithmic}[1]
@@ -127,7 +129,7 @@ As described in Section~\ref{sec:addexp}, the guided proofreading classifier has
 
 \section{Automatic Segmentation Pipeline}
 
-We create a dense automatic segmentation of electron microscopy data using a combination of a U-net~\cite{RonnebergerFB15} and the GALA agglomeration method~\cite{nunez2014graph}. These classifiers are trained on different data than GP (Tab.~\ref{tab:trainingdata}).
+We create a dense automatic segmentation of electron microscopy data using a combination of a U-net~\cite{RonnebergerFB15} and the GALA agglomeration method~\cite{nunez2014graph}. To not bias, these classifiers are trained on different data than GP (Tab.~\ref{tab:trainingdata}).
 
 \begin{table}[h]
 \caption{Training data of membrane detection (U-Net / GALA) vs.~training data of GP vs.~test data.}%While the training of our classifier is more expensive, testing accuracy is superior. }
@@ -151,4 +153,4 @@ We create a dense automatic segmentation of electron microscopy data using a com
 \label{tab:trainingdata}
 \end{table}
 
-GALA uses a random forest classifier to agglomerate segments. We use an agglomeration level of 0.3 (after a grid search). Further details of our pipeline are described in~\cite{rhoananet}.
+GALA uses a random forest classifier to agglomerate segments. We use an agglomeration level of 0.3 (after a grid search). We follow the method by Knowles-Barley~\etal as described in~\cite{rhoananet}.
