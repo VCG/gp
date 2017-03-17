@@ -363,7 +363,7 @@ class Stats(object):
       for u in fp_vi_per_c_per_user2:
           plt.plot(u, linewidth=6, color='#0571b0', label='Guided Proofreading')
 
-      legend = ax.legend(loc='upper right')
+      legend = ax.legend(bbox_to_anchor=(-0.28,1.5), loc='upper right', ncol=2)
 
     else:
 
