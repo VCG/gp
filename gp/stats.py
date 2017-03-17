@@ -30,176 +30,7 @@ class Stats(object):
 
 
   @staticmethod
-  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=500, clampY=False, filename=None, hideXlabels=True, hideYlabels=True, DATADIR = '/home/d/GPSTUDY/', skipoutput=False, data='dojo', hline=-1, returnplt=False, showlegend=False, vilabel=False,clabel=False ):
-
-
-    # def VI(gt, seg):
-    #   # total_vi = 0
-    #   slice_vi = []    
-    #   for i in range(len(gt)):
-    #       current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
-    #       # total_vi += current_vi
-    #       slice_vi.append(current_vi)
-    #   # total_vi /= 10
-    #   return np.mean(slice_vi), np.median(slice_vi), slice_vi
-
-    # init_mean_vi = VI(gold, rhoana)[0]
-    # init_median_vi = VI(gold, rhoana)[1]
-    # init_vi_per_slice = VI(gold, rhoana)[2]
-    # print init_median_vi
-    # print 'No. users', len(FP_USERS)
-
-    # dojo_best_vi = 0.33414926373414477
-    # cylinder_best_vi = 0.27683609273291143
-
-    # newrhoana = 'ui_results.p'
-    # times = 'times.p'
-    # corrections = 'corrections.p'
-    # correction_vis = 'correction_vis.p'
-
-    # fp_outputs = []
-    # fp_times = []
-    # fp_corrections = []
-    # fp_vis =[]
-
-    # for i,f in enumerate(FP_USERS):
-    #     with open(DATADIR+FP_USERS[i]+'/'+newrhoana, 'rb') as f:
-    #         fp_newrhoana = pickle.load(f)
-    #         fp_outputs.append(fp_newrhoana)
-    #     with open(DATADIR+FP_USERS[i]+'/'+times, 'rb') as f:
-    #         fp_time = pickle.load(f)
-    #         fp_time = [int(v) for v in fp_time]
-    #         fp_times.append(fp_time)
-    #     with open(DATADIR+FP_USERS[i]+'/'+corrections, 'rb') as f:
-    #         fp_correction = pickle.load(f)       
-    #         fp_corrections.append(fp_correction)
-    #     with open(DATADIR+FP_USERS[i]+'/'+correction_vis, 'rb') as f:
-    #         fp_correction_vis = pickle.load(f) 
-    #         fp_vis.append(fp_correction_vis)
-
-    # fp_times_mean = []
-    # for t in fp_times:
-    #     fp_times_mean.append(np.mean(t))
-    # print 'Avg. correction time',np.mean(fp_times_mean)
-
-    # fp_corrections_mean = []
-    # fp_accepted_corrections = []
-
-    # for c in fp_corrections:
-    #     fp_corrections_mean.append(len(c))
-    #     a_counter = 0
-    #     for d in c:
-    #         if d[1] == '1':
-    #             # user accepted
-    #             a_counter +=1
-    #     fp_accepted_corrections.append(a_counter)
-        
-    # print 'Avg. corrections',np.mean(fp_corrections_mean)
-    # print 'Avg. accepted', np.mean(fp_accepted_corrections)
-
-    # fp_vi_per_c_per_user = []
-    # merge_vi_per_c_per_user = []
-    # split_vi_per_c_per_user = []
-    # first_split_vis = []
-    # last_split_vis = []
-    # for k,v in enumerate(fp_corrections):
-    #     vis = [init_median_vi]
-    #     merge_vis = [init_median_vi]
-    #     split_vis = [init_median_vi]
-    #     correctionindex = 0
-    #     stored_first_split_vi = False
-    #     for j,c in enumerate(v):
-    #         # if c[0] == 'merge':
-    #         #     vi = fp_vis[k][correctionindex]
-    #         #     merge_vis.append(np.median(vi))
-    #         # elif c[0] == 'split':
-    #         #     vi = fp_vis[k][correctionindex]
-    #         #     merge_vis.append(np.median(vi))
-
-    #         if not stored_first_split_vi and c[0] == 'split' and c[1] == '1':
-    #           # store the VI for the first split
-    #           vi = fp_vis[k][correctionindex]
-    #           first_split_vis.append(vi)
-
-    #           stored_first_split_vi = True
-
-    #         if c[1] == '1':
-    #             # user accepted correction, now look up the vi
-    #             vi = fp_vis[k][correctionindex]
-    #             correctionindex += 1    
-    #             vis.append(np.median(vi))
-
-    #             if c[0] == 'merge':
-    #               merge_vis.append(vi)
-    #             elif c[0] == 'split':
-    #               split_vis.append(vi)
-    #         else:
-    #             vis.append(vis[-1])
-
-    #             if c[0] == 'merge':
-    #               merge_vis.append(vis[-1])
-    #             elif c[0] == 'split':
-    #               split_vis.append(vis[-1])
-
-    # #         print fp_corrections[k][j]
-    # #         if fp_corrections[k][j][1] == '1':
-    # # #             print 'a'
-    # #             vi_per_c = np.median(c)
-    # #         else:
-    # #             vi_per_c = vis[-1]
-    # #         vis.append(vi_per_c)
-    #     #print len(vis)
-        
-    #     fp_vi_per_c_per_user.append(vis)
-    #     # print vis[-1]
-    #     merge_vi_per_c_per_user.append(merge_vis)
-    #     split_vi_per_c_per_user.append(split_vis)
-
-    # fig = plt.figure(figsize=(10,7))
-    # # fig, ax = plt.subplots()
-    # # plt.ylim([0.32, 0.55])
-    # # if clampX:
-    # #   plt.xlim(0,clampX)
-
-    # # plt.axhline(y=0.4763612343909136, color='gray', linestyle=':', linewidth=2, label='Initial Segmentation')
-    # # plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=2, label='Best Possible')
-    # plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=2, label='Initial Segmentation')
-    # plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=2, label='Best Possible')    
-    # plt.xlabel('Correction')
-    # plt.ylabel('Variation of Information')
-    # # legend = ax.legend(loc='upper right')
-
-    # font = {'family' : 'sans-serif',
-    #         'weight' : 'normal',
-    #         'size'   : 22}
-
-    # plt.rc('font', **font)
-
-    # for u in fp_vi_per_c_per_user:
-    #     plt.plot(u, linewidth=3)
-
-    # if oracle:
-    #   plt.plot(oracle, linewidth=2, linestyle=':')
-
-    # if filename:
-    #   plt.savefig(filename)
-    # plt.show()
-
-
-    # fp_vi_per_slice_per_user = []
-    # fp_vi_per_slice = [0]*50
-    # for o in fp_outputs:
-    #     fp_vi_per_slice_per_user.append(VI(gold, o)[2])
-    #     last_split_vis.append(VI(gold, o)[2])
-    # for u in fp_vi_per_slice_per_user:
-    #     for z,v in enumerate(u):
-    #         fp_vi_per_slice[z] += v
-    # for z in range(50):
-    #     fp_vi_per_slice[z] /= len(fp_outputs)
-
-
-    # return fp_vi_per_slice, first_split_vis, last_split_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
-
+  def analyze_users2(u1, u2, gold, rhoana, oracle=None, clampX=500, clampY=False, filename=None, bestlabel=False, hideXlabels=True, hideYlabels=True, DATADIR = '/home/d/GPSTUDY/', skipoutput=False, data='dojo', hline=-1, returnplt=False, showlegend=False, vilabel=False,clabel=False ):
 
 
     def VI(gt, seg):
@@ -224,7 +55,7 @@ class Stats(object):
     # cylinder_best_vi = 0.3 # this is with skipping border
     if data == 'dojo':
       best_vi = dojo_best_vi  
-      clampY = [0.32, 0.55]
+      clampY = [0.32, 0.57]
     elif data =='cremiA':
       best_vi = cremi_A_best_vi
       clampY = [0.85,1.1]
@@ -247,28 +78,34 @@ class Stats(object):
     corrections = 'corrections.p'
     correction_vis = 'correction_vis.p'
 
+    #
+    #
+    #
+
+
     fp_outputs = []
     fp_times = []
     fp_corrections = []
     fp_vis =[]
 
-    for i,f in enumerate(FP_USERS):
-        if not skipoutput:
-          with open(DATADIR+FP_USERS[i]+'/'+newrhoana, 'rb') as f:
-              fp_newrhoana = pickle.load(f)
-              fp_outputs.append(fp_newrhoana)
-        with open(DATADIR+FP_USERS[i]+'/'+times, 'rb') as f:
+    for i,f in enumerate(u1):
+        # if not skipoutput:
+        with open(DATADIR+u1[i]+'/'+newrhoana, 'rb') as f:
+            fp_newrhoana = pickle.load(f)
+            fp_outputs.append(fp_newrhoana)
+        with open(DATADIR+u1[i]+'/'+times, 'rb') as f:
             fp_time = pickle.load(f)
             fp_time = [int(v) for v in fp_time]
             fp_times.append(fp_time)
-        with open(DATADIR+FP_USERS[i]+'/'+corrections, 'rb') as f:
+        with open(DATADIR+u1[i]+'/'+corrections, 'rb') as f:
             fp_correction = pickle.load(f)       
             fp_corrections.append(fp_correction)
-        with open(DATADIR+FP_USERS[i]+'/'+correction_vis, 'rb') as f:
+        with open(DATADIR+u1[i]+'/'+correction_vis, 'rb') as f:
             fp_correction_vis = pickle.load(f) 
-            fp_vis.append(fp_correction_vis[1:])
+            fp_vis.append(fp_correction_vis)
 
     # return None, None, fp_vis
+
 
     fp_times_mean = []
     for t in fp_times:
@@ -303,6 +140,7 @@ class Stats(object):
         split_vis = [init_median_vi]
         correctionindex = 0
         stored_first_split_vi = False
+
         for j,c in enumerate(v):
             # if c[0] == 'merge':
             #     vi = fp_vis[k][correctionindex]
@@ -320,6 +158,8 @@ class Stats(object):
 
             if c[1] == '1':
                 # user accepted correction, now look up the vi
+                # print len(fp_vis[k]), correctionindex
+                #print k, correctionindex, len(fp_vis)
                 vi = fp_vis[k][correctionindex]
                 correctionindex += 1    
 
@@ -352,37 +192,161 @@ class Stats(object):
         merge_vi_per_c_per_user.append(merge_vis)
         split_vi_per_c_per_user.append(split_vis)
 
+
+    fp_outputs = []
+    fp_times = []
+    fp_corrections = []
+    fp_vis =[]
+
+
+    for i,f in enumerate(u2):
+        if not skipoutput:
+          with open(DATADIR+u2[i]+'/'+newrhoana, 'rb') as f:
+              fp_newrhoana = pickle.load(f)
+              fp_outputs.append(fp_newrhoana)
+        with open(DATADIR+u2[i]+'/'+times, 'rb') as f:
+            fp_time = pickle.load(f)
+            fp_time = [int(v) for v in fp_time]
+            fp_times.append(fp_time)
+        with open(DATADIR+u2[i]+'/'+corrections, 'rb') as f:
+            fp_correction = pickle.load(f)       
+            fp_corrections.append(fp_correction)
+        with open(DATADIR+u2[i]+'/'+correction_vis, 'rb') as f:
+            fp_correction_vis = pickle.load(f) 
+            fp_vis.append(fp_correction_vis)
+
+    # return None, None, fp_vis
+
+    fp_times_mean = []
+    for t in fp_times:
+        fp_times_mean.append(np.mean(t))
+    if not returnplt:
+      print 'Avg. correction time',np.mean(fp_times_mean)
+
+    fp_corrections_mean = []
+    fp_accepted_corrections = []
+
+    for c in fp_corrections:
+        fp_corrections_mean.append(len(c))
+        a_counter = 0
+        for d in c:
+            if d[1] == '1':
+                # user accepted
+                a_counter +=1
+        fp_accepted_corrections.append(a_counter)
+    if not returnplt:    
+      print 'Avg. corrections',np.mean(fp_corrections_mean)
+      print 'Avg. accepted', np.mean(fp_accepted_corrections)
+
+    fp_vi_per_c_per_user2 = []
+    merge_vi_per_c_per_user = []
+    split_vi_per_c_per_user = []
+    first_split_vis = []
+    last_split_vis = []
+    for k,v in enumerate(fp_corrections):
+
+        vis = [init_median_vi]
+        merge_vis = [init_median_vi]
+        split_vis = [init_median_vi]
+        correctionindex = 0
+        stored_first_split_vi = False
+        for j,c in enumerate(v):
+            # if c[0] == 'merge':
+            #     vi = fp_vis[k][correctionindex]
+            #     merge_vis.append(np.median(vi))
+            # elif c[0] == 'split':
+            #     vi = fp_vis[k][correctionindex]
+            #     merge_vis.append(np.median(vi))
+
+            if not stored_first_split_vi and c[0] == 'split' and c[1] == '1':
+              # store the VI for the first split
+              vi = fp_vis[k][correctionindex]
+              first_split_vis.append(vi)
+
+              stored_first_split_vi = True
+
+            if c[1] == '1':
+                # user accepted correction, now look up the vi
+                # print fp_vis[k]
+                #print k, correctionindex, len(fp_vis)
+                vi = fp_vis[k][correctionindex]
+                correctionindex += 1    
+
+                vis.append(np.median(vi))
+
+
+                if c[0] == 'merge':
+                  merge_vis.append(vi)
+                elif c[0] == 'split':
+                  split_vis.append(vi)
+            else:
+                vis.append(vis[-1])
+
+                if c[0] == 'merge':
+                  merge_vis.append(vis[-1])
+                elif c[0] == 'split':
+                  split_vis.append(vis[-1])
+
+    #         print fp_corrections[k][j]
+    #         if fp_corrections[k][j][1] == '1':
+    # #             print 'a'
+    #             vi_per_c = np.median(c)
+    #         else:
+    #             vi_per_c = vis[-1]
+    #         vis.append(vi_per_c)
+        #print len(vis)
+        
+        fp_vi_per_c_per_user2.append(vis)
+        # print vis[-1]
+        merge_vi_per_c_per_user.append(merge_vis)
+        split_vi_per_c_per_user.append(split_vis)
+
+
+
+
     #return fp_vi_per_c_per_user, merge_vis, split_vis, None
 
     # fig = plt.figure(figsize=(10,7))
     # fig, ax = plt.subplots()
     if clampY:
         plt.ylim(clampY[0],clampY[1])
-        plt.yticks(np.arange(clampY[0], clampY[1], 0.1))
+        #plt.yticks(np.arange(clampY[0], clampY[1], 0.05))
+        plt.yticks(np.arange(0.35, 0.57, 0.05))
     if clampX:
       plt.xlim(0,clampX)
 
     
+    ax = plt.gca()
+    if not bestlabel:
 
+      plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=4)
+      plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=4)
 
-    plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=4, label='Initial Segmentation')
-    plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=4, label='Best Possible')
+    else:
+
+      plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=4, label='Initial Segmentation')
+      plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=4, label='Best Possible')
+      legend = ax.legend(loc='upper right')
+
     if hline!=-1:
-      plt.axvline(x=hline, color='red', ymin=0, ymax=.357, linewidth=4)
+      plt.axvline(x=hline, color='green', ymin=0, ymax=.357, linewidth=4)
     if clabel:
       plt.xlabel('Correction')
     if vilabel:
       plt.ylabel('Variation of Information')
-    ax = plt.gca()
+    
     if hideXlabels:
       ax.set_xticks([])
     else:
-      plt.xticks(np.arange(0, clampX+1, 1000))
+      plt.xticks(np.arange(0, clampX+1, 500))
+
     if hideYlabels:
+
       ax.set_yticks([])
 
-    if showlegend:
-      legend = ax.legend(loc='upper right')
+
+    ax.tick_params(axis='x', which='major', pad=15)
+
 
     font = {'family' : 'sans-serif',
             'weight' : 'normal',
@@ -391,11 +355,27 @@ class Stats(object):
     plt.rc('font', **font)
     plt.rc('legend',**{'fontsize':46})
 
-    for u in fp_vi_per_c_per_user:
-        plt.plot(u, linewidth=4)
+    if showlegend:
+
+      for u in fp_vi_per_c_per_user:
+          plt.plot(u, linewidth=6, color='#ca0020', label='Focused Proofreading')
+
+      for u in fp_vi_per_c_per_user2:
+          plt.plot(u, linewidth=6, color='#0571b0', label='Guided Proofreading')
+
+      legend = ax.legend(loc='upper right')
+
+    else:
+
+      for u in fp_vi_per_c_per_user:
+          plt.plot(u, linewidth=6, color='#ca0020')
+
+      for u in fp_vi_per_c_per_user2:
+          plt.plot(u, linewidth=6, color='#0571b0')
+
 
     if oracle:
-      plt.plot(oracle, linewidth=4, linestyle=':')
+      plt.plot(oracle, linewidth=6, linestyle=':')
 
     # if filename:
     #   plt.savefig(filename)
@@ -418,6 +398,402 @@ class Stats(object):
     # # return fig
 
     return fp_vi_per_slice, first_split_vis, last_split_vis,fp_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
+
+
+  @staticmethod
+  def analyze_users(FP_USERS, gold, rhoana, oracle=None, clampX=500, clampY=False, filename=None, hideXlabels=True, hideYlabels=True, DATADIR = '/home/d/GPSTUDY/', skipoutput=False, data='dojo', hline=-1, returnplt=False, showlegend=False, vilabel=False,clabel=False ):
+
+
+    def VI(gt, seg):
+      # total_vi = 0
+      slice_vi = []    
+      for i in range(len(gt)):
+          current_vi = Util.vi(gt[i].astype(np.int64), seg[i].astype(np.int64))
+          # total_vi += current_vi
+          slice_vi.append(current_vi)
+      # total_vi /= 10
+      return np.mean(slice_vi), np.median(slice_vi), slice_vi
+
+    init_mean_vi = VI(gold, rhoana)[0]
+    init_median_vi = VI(gold, rhoana)[1]
+    init_vi_per_slice = VI(gold, rhoana)[2]
+    print init_median_vi
+    print 'No. users', len(FP_USERS)
+
+    best_vi = 0.33414926373414477
+    cylinder_best_vi = 0.27683609273291143
+
+    newrhoana = 'ui_results.p'
+    times = 'times.p'
+    corrections = 'corrections.p'
+    correction_vis = 'correction_vis.p'
+
+    fp_outputs = []
+    fp_times = []
+    fp_corrections = []
+    fp_vis =[]
+
+    for i,f in enumerate(FP_USERS):
+        with open(DATADIR+FP_USERS[i]+'/'+newrhoana, 'rb') as f:
+            fp_newrhoana = pickle.load(f)
+            fp_outputs.append(fp_newrhoana)
+        with open(DATADIR+FP_USERS[i]+'/'+times, 'rb') as f:
+            fp_time = pickle.load(f)
+            fp_time = [int(v) for v in fp_time]
+            fp_times.append(fp_time)
+        with open(DATADIR+FP_USERS[i]+'/'+corrections, 'rb') as f:
+            fp_correction = pickle.load(f)       
+            fp_corrections.append(fp_correction)
+        with open(DATADIR+FP_USERS[i]+'/'+correction_vis, 'rb') as f:
+            fp_correction_vis = pickle.load(f) 
+            fp_vis.append(fp_correction_vis)
+
+    print len(fp_vis)
+
+    fp_times_mean = []
+    for t in fp_times:
+        fp_times_mean.append(np.mean(t))
+    print 'Avg. correction time',np.mean(fp_times_mean)
+
+    fp_corrections_mean = []
+    fp_accepted_corrections = []
+
+    for c in fp_corrections:
+        fp_corrections_mean.append(len(c))
+        a_counter = 0
+        for d in c:
+            if d[1] == '1':
+                # user accepted
+                a_counter +=1
+        fp_accepted_corrections.append(a_counter)
+        
+    print 'Avg. corrections',np.mean(fp_corrections_mean)
+    print 'Avg. accepted', np.mean(fp_accepted_corrections)
+
+    fp_vi_per_c_per_user = []
+    merge_vi_per_c_per_user = []
+    split_vi_per_c_per_user = []
+    first_split_vis = []
+    last_split_vis = []
+    for k,v in enumerate(fp_corrections):
+        vis = [init_median_vi]
+        merge_vis = [init_median_vi]
+        split_vis = [init_median_vi]
+        correctionindex = 0
+        stored_first_split_vi = False
+        for j,c in enumerate(v):
+            # if c[0] == 'merge':
+            #     vi = fp_vis[k][correctionindex]
+            #     merge_vis.append(np.median(vi))
+            # elif c[0] == 'split':
+            #     vi = fp_vis[k][correctionindex]
+            #     merge_vis.append(np.median(vi))
+
+            if not stored_first_split_vi and c[0] == 'split' and c[1] == '1':
+              # store the VI for the first split
+              vi = fp_vis[k][correctionindex]
+              first_split_vis.append(vi)
+
+              stored_first_split_vi = True
+
+            if c[1] == '1':
+                # user accepted correction, now look up the vi
+                print len(fp_vis[k]), correctionindex
+                vi = fp_vis[k][correctionindex]
+                correctionindex += 1    
+                vis.append(np.median(vi))
+
+                if c[0] == 'merge':
+                  merge_vis.append(vi)
+                elif c[0] == 'split':
+                  split_vis.append(vi)
+            else:
+                vis.append(vis[-1])
+
+                if c[0] == 'merge':
+                  merge_vis.append(vis[-1])
+                elif c[0] == 'split':
+                  split_vis.append(vis[-1])
+
+    #         print fp_corrections[k][j]
+    #         if fp_corrections[k][j][1] == '1':
+    # #             print 'a'
+    #             vi_per_c = np.median(c)
+    #         else:
+    #             vi_per_c = vis[-1]
+    #         vis.append(vi_per_c)
+        #print len(vis)
+        
+        fp_vi_per_c_per_user.append(vis)
+        # print vis[-1]
+        merge_vi_per_c_per_user.append(merge_vis)
+        split_vi_per_c_per_user.append(split_vis)
+
+    fig = plt.figure(figsize=(10,7))
+    # fig, ax = plt.subplots()
+    # plt.ylim([0.32, 0.55])
+    # if clampX:
+    #   plt.xlim(0,clampX)
+
+    # plt.axhline(y=0.4763612343909136, color='gray', linestyle=':', linewidth=2, label='Initial Segmentation')
+    # plt.axhline(y=0.33414926373414477, color='gray', linestyle='--', linewidth=2, label='Best Possible')
+    plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=2, label='Initial Segmentation')
+    plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=2, label='Best Possible')    
+    plt.xlabel('Correction')
+    plt.ylabel('Variation of Information')
+    # legend = ax.legend(loc='upper right')
+
+    font = {'family' : 'sans-serif',
+            'weight' : 'normal',
+            'size'   : 22}
+
+    plt.rc('font', **font)
+
+    for u in fp_vi_per_c_per_user:
+        plt.plot(u, linewidth=3)
+
+    if oracle:
+      plt.plot(oracle, linewidth=2, linestyle=':')
+
+    if filename:
+      plt.savefig(filename)
+    plt.show()
+
+
+    fp_vi_per_slice_per_user = []
+    fp_vi_per_slice = [0]*50
+    for o in fp_outputs:
+        fp_vi_per_slice_per_user.append(VI(gold, o)[2])
+        last_split_vis.append(VI(gold, o)[2])
+    for u in fp_vi_per_slice_per_user:
+        for z,v in enumerate(u):
+            fp_vi_per_slice[z] += v
+    for z in range(50):
+        fp_vi_per_slice[z] /= len(fp_outputs)
+
+
+    return fp_vi_per_slice, first_split_vis, last_split_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
+
+
+
+    # def VI(gt, seg):
+    #   # total_vi = 0
+    #   slice_vi = []    
+    #   for i in range(len(gt)):
+    #       current_vi = Util.vi(gt[i].astype(np.uint64), seg[i].astype(np.uint64))
+    #       # total_vi += current_vi
+    #       slice_vi.append(current_vi)
+    #   # total_vi /= 10
+    #   return np.mean(slice_vi), np.median(slice_vi), slice_vi
+
+    # init_mean_vi = VI(gold, rhoana)[0]
+    # init_median_vi = VI(gold, rhoana)[1]
+    # init_vi_per_slice = VI(gold, rhoana)[2]
+
+    # dojo_best_vi = 0.33414926373414477
+    # cylinder_best_vi = 0.27683609273291143 # this is without the skipping border
+    # cremi_A_best_vi = 0.92974989787739659
+    # cremi_B_best_vi = 1.2940966349
+    # cremi_C_best_vi = 1.45485772678
+    # # cylinder_best_vi = 0.3 # this is with skipping border
+    # if data == 'dojo':
+    #   best_vi = dojo_best_vi  
+    #   clampY = [0.32, 0.55]
+    # elif data =='cremiA':
+    #   best_vi = cremi_A_best_vi
+    #   clampY = [0.85,1.1]
+    # elif data =='cremiB':
+    #   best_vi = cremi_B_best_vi
+    #   clampY = [1.2,1.8]
+    # elif data =='cremiC':
+    #   best_vi = cremi_C_best_vi
+    #   clampY = [1.35,1.96]
+    # else:
+    #   best_vi = cylinder_best_vi
+    #   clampY = [0.25, 0.5]
+    # if not returnplt:
+    #   print 'No. users', len(FP_USERS)
+
+    
+
+    # newrhoana = 'ui_results.p'
+    # times = 'times.p'
+    # corrections = 'corrections.p'
+    # correction_vis = 'correction_vis.p'
+
+    # fp_outputs = []
+    # fp_times = []
+    # fp_corrections = []
+    # fp_vis =[]
+
+    # for i,f in enumerate(FP_USERS):
+    #     if not skipoutput:
+    #       with open(DATADIR+FP_USERS[i]+'/'+newrhoana, 'rb') as f:
+    #           fp_newrhoana = pickle.load(f)
+    #           fp_outputs.append(fp_newrhoana)
+    #     with open(DATADIR+FP_USERS[i]+'/'+times, 'rb') as f:
+    #         fp_time = pickle.load(f)
+    #         fp_time = [int(v) for v in fp_time]
+    #         fp_times.append(fp_time)
+    #     with open(DATADIR+FP_USERS[i]+'/'+corrections, 'rb') as f:
+    #         fp_correction = pickle.load(f)       
+    #         fp_corrections.append(fp_correction)
+    #     with open(DATADIR+FP_USERS[i]+'/'+correction_vis, 'rb') as f:
+    #         fp_correction_vis = pickle.load(f) 
+    #         fp_vis.append(fp_correction_vis[1:])
+
+    # # return None, None, fp_vis
+
+    # fp_times_mean = []
+    # for t in fp_times:
+    #     fp_times_mean.append(np.mean(t))
+    # if not returnplt:
+    #   print 'Avg. correction time',np.mean(fp_times_mean)
+
+    # fp_corrections_mean = []
+    # fp_accepted_corrections = []
+
+    # for c in fp_corrections:
+    #     fp_corrections_mean.append(len(c))
+    #     a_counter = 0
+    #     for d in c:
+    #         if d[1] == '1':
+    #             # user accepted
+    #             a_counter +=1
+    #     fp_accepted_corrections.append(a_counter)
+    # if not returnplt:    
+    #   print 'Avg. corrections',np.mean(fp_corrections_mean)
+    #   print 'Avg. accepted', np.mean(fp_accepted_corrections)
+
+    # fp_vi_per_c_per_user = []
+    # merge_vi_per_c_per_user = []
+    # split_vi_per_c_per_user = []
+    # first_split_vis = []
+    # last_split_vis = []
+    # for k,v in enumerate(fp_corrections):
+
+    #     vis = [init_median_vi]
+    #     merge_vis = [init_median_vi]
+    #     split_vis = [init_median_vi]
+    #     correctionindex = 0
+    #     stored_first_split_vi = False
+    #     for j,c in enumerate(v):
+    #         # if c[0] == 'merge':
+    #         #     vi = fp_vis[k][correctionindex]
+    #         #     merge_vis.append(np.median(vi))
+    #         # elif c[0] == 'split':
+    #         #     vi = fp_vis[k][correctionindex]
+    #         #     merge_vis.append(np.median(vi))
+
+    #         if not stored_first_split_vi and c[0] == 'split' and c[1] == '1':
+    #           # store the VI for the first split
+    #           vi = fp_vis[k][correctionindex]
+    #           first_split_vis.append(vi)
+
+    #           stored_first_split_vi = True
+
+    #         if c[1] == '1':
+    #             # user accepted correction, now look up the vi
+    #             # print fp_vis[k]
+    #             print k, correctionindex, len(fp_vis)
+    #             vi = fp_vis[k][correctionindex]
+    #             correctionindex += 1    
+
+    #             vis.append(np.median(vi))
+
+
+    #             if c[0] == 'merge':
+    #               merge_vis.append(vi)
+    #             elif c[0] == 'split':
+    #               split_vis.append(vi)
+    #         else:
+    #             vis.append(vis[-1])
+
+    #             if c[0] == 'merge':
+    #               merge_vis.append(vis[-1])
+    #             elif c[0] == 'split':
+    #               split_vis.append(vis[-1])
+
+    # #         print fp_corrections[k][j]
+    # #         if fp_corrections[k][j][1] == '1':
+    # # #             print 'a'
+    # #             vi_per_c = np.median(c)
+    # #         else:
+    # #             vi_per_c = vis[-1]
+    # #         vis.append(vi_per_c)
+    #     #print len(vis)
+        
+    #     fp_vi_per_c_per_user.append(vis)
+    #     # print vis[-1]
+    #     merge_vi_per_c_per_user.append(merge_vis)
+    #     split_vi_per_c_per_user.append(split_vis)
+
+    # #return fp_vi_per_c_per_user, merge_vis, split_vis, None
+
+    # # fig = plt.figure(figsize=(10,7))
+    # # fig, ax = plt.subplots()
+    # if clampY:
+    #     plt.ylim(clampY[0],clampY[1])
+    #     plt.yticks(np.arange(clampY[0], clampY[1], 0.1))
+    # if clampX:
+    #   plt.xlim(0,clampX)
+
+    
+
+
+    # plt.axhline(y=init_median_vi, color='gray', linestyle=':', linewidth=4, label='Initial Segmentation')
+    # plt.axhline(y=best_vi, color='gray', linestyle='--', linewidth=4, label='Best Possible')
+    # if hline!=-1:
+    #   plt.axvline(x=hline, color='red', ymin=0, ymax=.357, linewidth=4)
+    # if clabel:
+    #   plt.xlabel('Correction')
+    # if vilabel:
+    #   plt.ylabel('Variation of Information')
+    # ax = plt.gca()
+    # if hideXlabels:
+    #   ax.set_xticks([])
+    # else:
+    #   plt.xticks(np.arange(0, clampX+1, 1000))
+    # if hideYlabels:
+    #   ax.set_yticks([])
+
+    # if showlegend:
+    #   legend = ax.legend(loc='upper right')
+
+    # font = {'family' : 'sans-serif',
+    #         'weight' : 'normal',
+    #         'size'   : 46}
+
+    # plt.rc('font', **font)
+    # plt.rc('legend',**{'fontsize':46})
+
+    # for u in fp_vi_per_c_per_user:
+    #     plt.plot(u, linewidth=4)
+
+    # if oracle:
+    #   plt.plot(oracle, linewidth=4, linestyle=':')
+
+    # # if filename:
+    # #   plt.savefig(filename)
+    # # plt.show()
+
+    
+    # fp_vi_per_slice_per_user = []
+    # fp_vi_per_slice = [0]*len(gold)
+    # if not skipoutput:
+    #   for o in fp_outputs:
+    #       fp_vi_per_slice_per_user.append(VI(gold, o)[2])
+    #       last_split_vis.append(VI(gold, o)[2])
+    #   for u in fp_vi_per_slice_per_user:
+    #       for z,v in enumerate(u):
+    #           fp_vi_per_slice[z] += v
+    #   for z in range(len(gold)):
+    #       fp_vi_per_slice[z] /= len(fp_outputs)
+
+    # # # pass
+    # # # return fig
+
+    # return fp_vi_per_slice, first_split_vis, last_split_vis,fp_vis#, last_split_vis#merge_vi_per_c_per_user, split_vi_per_c_per_user
 
 
   @staticmethod
