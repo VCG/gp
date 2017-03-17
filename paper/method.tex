@@ -33,7 +33,7 @@ Dilation of the segment prior to watershed is motivated by our observation that 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{gfx/merge_error_v6.pdf}
-\caption{Merge error detection: Potential borders are generated on inverted images by randomly placing watershed seeds (green) on the boundary of a dilated segment. The best ranked seeds and border (both in red) result in the shown error correction.}
+\caption{Merge error detection: Potential borders are generated using inverted images by randomly placing watershed seeds (green) on the boundary of a dilated segment. The best ranked seeds and border (both in red) result in the shown error correction.}
 %Merge errors are identified by generating randomly-seeded watershed borders within a dilated label segment. Then, each border is individually rated using the split error CNN by inverting the probability score. A confident rating for a correct split most likely indicates the missing border of the merge error, and can be used to correct the labeling.}
 \label{fig:merge_error}
 \end{figure}
