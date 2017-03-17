@@ -5,47 +5,54 @@ Please note that additional plots are available as supplemental material due to 
 
 \subsection{Precision and Recall}
 
-\paragraph{L.~Cylinder.} Evaluation was performed on previously unseen sections of the mouse cortex volume from Kasthuri~\etal~\cite{kasthuri2015saturated}. We generated an unbalanced dataset of 81,184 correct and 8,780 split error patches with respect to the ground truth labeling. Then, we ranked each patch by using focused proofreading and guided proofreading, and compare precision/recall (Table \ref{tab:prcyl}). Our method exhibits higher precision and recall for correct and erroneous patches.
+\paragraph{L.~Cylinder.} Evaluation was performed on previously unseen sections of the mouse cortex volume from Kasthuri~\etal~\cite{kasthuri2015saturated}. We generated an unbalanced dataset of 81,184 correct and 8,780 split error patches with respect to the ground truth labeling. Then, we ranked each patch by using focused proofreading and guided proofreading, and compare precision/recall (Fig. \ref{fig:pr}). Our method exhibits higher precision and recall.% for correct and erroneous patches.
 
-\begin{table}[t]
-\caption{Classifier comparison on an unbalanced test set of the L.~Cylinder volume.}%While the training of our classifier is more expensive, testing accuracy is superior. }
-\resizebox{\linewidth}{!}{
-\begin{tabular}{lrrrr}
-\toprule
- & Precision & Recall & F1 score & Test \# \\ 
-\midrule
-\emph{Focused Proofreading} & ~ & ~ & ~ & ~ \\ 
-~~Correct & 0.93 & 0.31 & 0.47 & 81,184 \\ 
-~~Split error & 0.11 & 0.78 & 0.19 & 8,780 \\ 
-\emph{Guided Proofreading} & ~ & ~ & ~ & ~ \\ 
-~~Correct & 1.00 & 0.93 & 0.96 & 81,184 \\ 
-~~Split error & 0.61 & 0.96 & 0.74 & 8,780 \\ 
-\bottomrule
-\end{tabular} 
-}
-\label{tab:prcyl}
-\end{table}
+%\begin{table}[t]
+%\caption{Classifier comparison on an unbalanced test set of the L.~Cylinder volume.}%While the training of our classifier is more expensive, testing accuracy is superior. }
+%\resizebox{\linewidth}{!}{
+%\begin{tabular}{lrrrr}
+%\toprule
+% & Precision & Recall & F1 score & Test \# \\ 
+%\midrule
+%\emph{Focused Proofreading} & ~ & ~ & ~ & ~ \\ 
+%~~Correct & 0.93 & 0.31 & 0.47 & 81,184 \\ 
+%~~Split error & 0.11 & 0.78 & 0.19 & 8,780 \\ 
+%\emph{Guided Proofreading} & ~ & ~ & ~ & ~ \\ 
+%~~Correct & 1.00 & 0.93 & 0.96 & 81,184 \\ 
+%~~Split error & 0.61 & 0.96 & 0.74 & 8,780 \\ 
+%\bottomrule
+%\end{tabular} 
+%}
+%\label{tab:prcyl}
+%\end{table}
 
-\paragraph{AC4 subvolume.} We generated 3,488 correct and 332 error patches (10 merge errors, 322 split errors). Guided proofreading achieves better precision/recall scores (Table \ref{tab:prac4}).
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{gfx/precisionrecall.pdf}
+\caption{Precision-recall curves comparing focused proofreading (FP) and our guided proofreading (GP) classifiers. We evaluate on unbalanced tests sets of the AC4 subvolume (darker colors) and the L. Cylinder volume (lighter colors). GP performs better.}
+\label{fig:pr}
+\end{figure}
 
-\begin{table}[t]
-\caption{Classifier comparison on correct and split error patches of the AC4 subvolume.}%While the training of our classifier is more expensive, testing accuracy is superior. }
-\resizebox{\linewidth}{!}{
-\begin{tabular}{lrrrr}
-\toprule
-& Precision & Recall & F1 score & Test \# \\ 
-\midrule
-\emph{Focused Proofreading} & ~ & ~ & ~ & ~ \\ 
-~~Correct & 0.94 & 0.69 & 0.80 & 3,488 \\ 
-~~Split error & 0.14 & 0.51 & 0.21 & 332 \\ 
-\emph{Guided Proofreading} & ~ & ~ & ~ & ~ \\ 
-~~Correct & 1.00 & 0.92 & 0.96 & 3,488 \\ 
-~~Split error & 0.54 & 0.95 & 0.69 & 332 \\ 
-\bottomrule
-\end{tabular} 
-}
-\label{tab:prac4}
-\end{table}
+\paragraph{AC4 subvolume.} We generated 3,488 correct and 332 error patches (10 merge errors, 322 split errors). Guided proofreading achieves better precision/recall scores (Fig. \ref{fig:pr}).
+
+%\begin{table}[t]
+%\caption{Classifier comparison on correct and split error patches of the AC4 subvolume.}%While the training of our classifier is more expensive, testing accuracy is superior. }
+%\resizebox{\linewidth}{!}{
+%\begin{tabular}{lrrrr}
+%\toprule
+%& Precision & Recall & F1 score & Test \# \\ 
+%\midrule
+%\emph{Focused Proofreading} & ~ & ~ & ~ & ~ \\ 
+%~~Correct & 0.94 & 0.69 & 0.80 & 3,488 \\ 
+%~~Split error & 0.14 & 0.51 & 0.21 & 332 \\ 
+%\emph{Guided Proofreading} & ~ & ~ & ~ & ~ \\ 
+%~~Correct & 1.00 & 0.92 & 0.96 & 3,488 \\ 
+%~~Split error & 0.54 & 0.95 & 0.69 & 332 \\ 
+%\bottomrule
+%\end{tabular} 
+%}
+%\label{tab:prac4}
+%\end{table}
 
 \begin{figure}[t]
 \centering
