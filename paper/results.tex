@@ -71,11 +71,11 @@ Participants using guided proofreading were able to reduce the median VI to $0.4
 While three users of focused proofreading made the initial segmentation worse, all participants using guided proofreading were able to improve it. In comparison to the results of Haehn~\etal, focused and guided proofreading outperform interactive proofreading with Dojo (median VI $0.535$, $SD=0.055$). The slope of VI score per correction (Fig.~\ref{fig:ac4trails}) and average timings (Tab.~\ref{tab:correctiontimes}) show that guided proofreading enables improvements with fewer corrections than the other tools. Interestingly, novice performance decreases after approximately $300$ corrections. There are two explanations for this: user fatigue, and increasing uncertainty during error suggestion from the classifier. %Regarding fatigue, we suggest that future experiments include short breaks after every ten minutes.
 
 \begin{table}[h]
-\caption{Average proofreading speed for users of Dojo, Focused Proofreading (FP) and our Guided Proofreading (GP). Our system achieves significantly higher VI reduction per minute (7.5$\times$) over state-of-the-art FP, while being slightly slower per correction.}%While the training of our classifier is more expensive, testing accuracy is superior. }
+\caption{Average proofreading speed for novice users of Dojo, Focused Proofreading (FP) and our Guided Proofreading (GP). Our system achieves significantly higher VI reduction per minute (7.5$\times$) over state-of-the-art FP, while being slightly slower per correction.}%While the training of our classifier is more expensive, testing accuracy is superior. }
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
-Approach & \makecell{Time Per\\Correction (s)} & \makecell{VI Reduction\\Per Minute} & \makecell{Improvement} \\
+\makecell{Approach\\(Novice)} & \makecell{Time Per\\Correction (s)} & \makecell{VI Reduction\\Per Minute} & \makecell{Improvement} \\
 \midrule
 \emph{Dojo} & 30.5 & -0.00200 & $-8.7\times$ \\
 %\emph{Dojo Expert?} & xxx & xxx \\
@@ -87,7 +87,7 @@ Approach & \makecell{Time Per\\Correction (s)} & \makecell{VI Reduction\\Per Min
 \label{tab:correctiontimes}
 \end{table}
 
-\paragraph{Expert performance.} Domain experts were able to improve the initial segmentation in all cases. With focused proofreading, the median VI of the automatic segmentation was $0.439$ ($SD=0.084$). With guided proofreading, the median VI was $0.396$ ($SD=0.032$, Fig.~\ref{fig:ac4boxplot}).
+\paragraph{Expert performance.} Domain experts were able to improve the initial segmentation. With focused proofreading, the median VI of the automatic segmentation was $0.439$ ($SD=0.084$). With guided proofreading, the median VI was $0.396$ ($SD=0.032$, Fig.~\ref{fig:ac4boxplot}).
 
 \paragraph{Subjective responses.} We used the NASA-TLX workload index to record subjective responses. Mental, physical, and temporal demands were reported slightly higher for participants using focused proofreading. However, these differences were not statistically significant. This is unsurprising as the user interface was the same for both groups.
 
