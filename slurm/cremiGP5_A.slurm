@@ -17,8 +17,11 @@ source new-modules.sh
 module load Anaconda/2.5.0-fasrc01
 module load gcc/4.9.0-fasrc01
 
-module load cuda/7.5-fasrc01
-module load cudnn/7.0-fasrc01
+#module load cuda/7.5-fasrc01
+#module load cudnn/7.0-fasrc01
+
+module load cuda/8.0-fasrc01
+module load cudnn/5.1-fasrc02
 
 module load opencv/3.0.0-fasrc04
 
