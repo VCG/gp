@@ -45,9 +45,13 @@ if os.path.exists(merge_error_file):
   print 'Loading merge errors from file..'
   with open(merge_error_file, 'rb') as f:
     merge_errors = pickle.load(f)
+else:
+  print 'Finding Top 5 merge errors..'
+  merge_errors = gp.Legacy.get_top5_merge_errors(cnn, input_image, input_prob, input_rhoana)
+  with open(merge_error_file, 'wb') as f:
+    pickle.dump(merge_errors, f)
 
 print len(merge_errors), ' merge errors found.'
-
 
 
 
@@ -56,12 +60,11 @@ if os.path.exists(bigM_cremi_file):
   print 'loading bigM'
   with open(bigM_cremi_file, 'rb') as f:
     bigM = pickle.load(f)
-    bigM = bigM[0:5]
-# else:
-#   print 'creating bigM'
-#   bigM = gp.Legacy.create_bigM_without_mask(cnn, input_image, input_prob, input_rhoana, verbose=True, max=1000000)
-#   with open(bigM_cremi_file, 'wb') as f:
-#     pickle.dump(bigM, f)  
+else:
+  print 'creating bigM'
+  bigM = gp.Legacy.create_bigM_without_mask(cnn, input_image, input_prob, input_rhoana, verbose=True, max=1000000)
+  with open(bigM_cremi_file, 'wb') as f:
+    pickle.dump(bigM, f)  
 
 
 
