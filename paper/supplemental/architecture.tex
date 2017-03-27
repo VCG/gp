@@ -90,13 +90,13 @@ Mini-Batchsize:
 \end{table}
 
 \subsection{Automatic Method Threshold $p_t$}
-For automatic selection, we observed a threshold $p_t=0.95$ as stable when evaluating on previously unseen testing data (Mouse S1 AC3 Open Connectome Project dataset). This means that automatic selection stops once all borders with $p_t\geq0.95$ were proofread. Figure~\ref{fig:cylboxplot} shows split error classification on three randomly selected subvolumes ($700\times700\times2$ voxels) of AC3. In all cases, the threshold $p_t=0.95$ reduces VI.
+For automatic selection, we observed a threshold $p_t=0.95$ as stable when evaluating on previously unseen testing data (Mouse S1 AC3 Open Connectome Project dataset). This means that automatic selection stops once all borders with $p_t\geq0.95$ were proofread. Figure~\ref{fig:thresh} shows split error classification on three randomly selected subvolumes ($700\times700\times2$ voxels) of AC3. In all cases, the threshold $p_t=0.95$ reduces VI.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{gfx/ptplot.pdf}
 \caption{Observations of probability thresholds $p_t$ during automatic selection on three different subvolumes of previously unseen testing data. The dashed lines show when $p_t=0.95$ is reached.}
-\label{fig:cylboxplot}
+\label{fig:thresh}
 \end{figure}
 
 \subsection{Merge Error Detection Pseudo Code}

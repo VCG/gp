@@ -67,7 +67,7 @@ class Stats(object):
       clampY = [1.35,1.96]
     else:
       best_vi = cylinder_best_vi
-      clampY = [0.25, 0.5]
+      clampY = [0.25, 0.51]
     if not returnplt:
       print 'No. users', len(FP_USERS)
 
@@ -215,6 +215,7 @@ class Stats(object):
             fp_correction_vis = pickle.load(f) 
             fp_vis.append(fp_correction_vis)
 
+
     # return None, None, fp_vis
 
     fp_times_mean = []
@@ -266,13 +267,23 @@ class Stats(object):
               stored_first_split_vi = True
 
             if c[1] == '1':
+
+
+
                 # user accepted correction, now look up the vi
                 # print fp_vis[k]
                 #print k, correctionindex, len(fp_vis)
                 vi = fp_vis[k][correctionindex]
+
+                # if len(vi.shape)==0:
+                #   # this is a bug
+                #   continue
+
                 correctionindex += 1    
 
                 vis.append(np.median(vi))
+
+
 
 
                 if c[0] == 'merge':
@@ -310,8 +321,16 @@ class Stats(object):
     # fig, ax = plt.subplots()
     if clampY:
         plt.ylim(clampY[0],clampY[1])
-        #plt.yticks(np.arange(clampY[0], clampY[1], 0.05))
-        plt.yticks(np.arange(0.35, 0.57, 0.05))
+
+        if data == 'dojo':
+          plt.yticks(np.arange(0.35, 0.57, 0.05)) # 0.35 looks better for dojo
+        elif data =='cremiA':
+          plt.yticks(np.arange(clampY[0], clampY[1], 0.05))
+        elif data=='cremiB':
+          plt.yticks(np.arange(clampY[0], clampY[1], 0.1))
+        elif data=='cyl':
+          plt.yticks(np.arange(clampY[0], clampY[1], 0.05))
+
     if clampX:
       plt.xlim(0,clampX)
 
@@ -329,7 +348,19 @@ class Stats(object):
       legend = ax.legend(loc='upper right')
 
     if hline!=-1:
-      plt.axvline(x=hline, color='green', ymin=0, ymax=.357, linewidth=4)
+
+      if data=='dojo':
+        ymax = .357
+      elif data == 'cremiA':
+        ymax = .55
+      elif data == 'cremiB':
+        ymax = .37
+      elif data == 'cremiC':
+        ymax = .35
+      elif data == 'cyl':
+        ymax = .40
+
+      plt.axvline(x=hline, color='green', ymin=0, ymax=ymax, linewidth=4)
     if clabel:
       plt.xlabel('Correction')
     if vilabel:
@@ -338,7 +369,12 @@ class Stats(object):
     if hideXlabels:
       ax.set_xticks([])
     else:
-      plt.xticks(np.arange(0, clampX+1, 500))
+      x_step = 500
+      if data == 'cremiA' or data =='cremiB' or data =='cremiC':
+        x_step = 1000
+      if data == 'cyl':
+        x_step = 5000
+      plt.xticks(np.arange(0, clampX+1, x_step))
 
     if hideYlabels:
 
@@ -358,19 +394,87 @@ class Stats(object):
     if showlegend:
 
       for u in fp_vi_per_c_per_user:
+
+          # somehow the DOJO VI got into there.. just a little bug because of merge errors
+
+          xxx = 1
+          if data == 'cremiA' and u1[0].endswith('_simuserFP'):
+            xxx = 5
+          elif data == 'cremiB' and u1[0].endswith('_simuserFP'):
+            xxx = 4
+          elif data == 'cremiC' and u1[0].endswith('_simuserFP'):
+            xxx = 15
+
+          u = [u[0]] + u[xxx:]
+
+
+          # print u1[0], u[0:10]
+
           plt.plot(u, linewidth=6, color='#ca0020', label='Focused Proofreading')
 
       for u in fp_vi_per_c_per_user2:
+
+
+          # somehow the DOJO VI got into there.. just a little bug because of merge errors
+
+          xxx = 1
+          if data == 'cremiA' and u1[0].endswith('_simuserGP'):
+            xxx = 2
+          elif data == 'cremiB' and u1[0].endswith('_simuserGP'):
+            xxx = 3
+          elif data == 'cremiC' and u1[0].endswith('_simuserGP'):
+            xxx = 3
+
+          u = [u[0]] + u[xxx:]
+
+          # print u2[0], u[0:10]
+
+
           plt.plot(u, linewidth=6, color='#0571b0', label='Guided Proofreading')
 
-      legend = ax.legend(bbox_to_anchor=(-0.28,1.5), loc='upper right', ncol=2)
+      if data == 'dojo':
+        anc = (-0.28,1.5) # looks good for four plots
+      else:
+        anc = (0.75, 1.5)
+
+      legend = ax.legend(bbox_to_anchor=anc, loc='upper right', ncol=2)
 
     else:
 
       for u in fp_vi_per_c_per_user:
+
+          # somehow the DOJO VI got into there.. just a little bug
+
+          xxx = 1
+          if data == 'cremiA' and u1[0].endswith('_autoFP'):
+            xxx = 2
+          elif data == 'cremiB' and u1[0].endswith('_autoFP'):
+            xxx = 2
+          elif data == 'cremiC' and u1[0].endswith('_autoFP'):
+            xxx = 2
+
+          u = [u[0]] + u[xxx:]
+
+          # print u1[0], u[0:10]
+
           plt.plot(u, linewidth=6, color='#ca0020')
 
       for u in fp_vi_per_c_per_user2:
+
+          # somehow the DOJO VI got into there.. just a little bug
+
+          xxx = 1
+          if data == 'cremiA' and u1[0].endswith('_autoGP'):
+            xxx = 2
+          elif data == 'cremiC' and u1[0].endswith('_autoGP'):
+            xxx = 2
+          elif data == 'cremiC' and u1[0].endswith('_autoGP'):
+            xxx = 2
+
+          u = [u[0]] + u[xxx:]
+
+          # print u2[0], u[0:10]
+
           plt.plot(u, linewidth=6, color='#0571b0')
 
 
