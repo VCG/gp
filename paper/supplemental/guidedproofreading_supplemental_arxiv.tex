@@ -1,0 +1,73 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%\usepackage{cvpr}
+\usepackage{iccv}
+\usepackage{microtype}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{floatrow}
+\usepackage{makecell}
+\usepackage{authblk}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,linkcolor=blue,citecolor=blue,bookmarks=false]{hyperref}
+
+\newcommand{\JT}[1]{\textcolor{blue}{JT: #1}}
+\newcommand{\HP}[1]{\textcolor{red}{HP: #1}}
+\newcommand{\DFH}[1]{\textcolor{red}{DH: #1}}
+
+\iccvfinalcopy % *** Uncomment this line for the final submission
+
+%\def\cvprPaperID{0947} % *** Enter the CVPR Paper ID here
+\def\iccvPaperID{0922}
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+\ificcvfinal\pagestyle{empty}\fi
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Guided Proofreading of Automatic Segmentations for Connectomics\\~\\\textit{Supplemental Material}}
+
+\author[1,2]{Daniel Haehn\thanks{Corresponding author,  \url{haehn@seas.harvard.edu}}}
+\author[1,2]{Verena Kaynig}
+\author[3]{James Tompkin}
+\author[2]{Jeff W. Lichtman}
+\author[1,2]{Hanspeter Pfister}
+\affil[1]{Harvard Paulson School of Engineering and Applied Sciences, Cambridge, MA 02138, USA}
+\affil[2]{Harvard Brain Science Center, Cambridge, MA 02138, USA}
+\affil[3]{Brown University, Providence, RI 02912, USA}
+
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+
+%%%%%%%%% BODY TEXT
+
+\input{architecture}
+\input{leftcylinder}
+\input{cremi}
+\input{userstudy}
+
+\newpage
+{\small
+\bibliographystyle{ieee}
+\bibliography{connectomics}
+}
+
+\end{document}

@@ -1,0 +1,211 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{isbi_challenge}
+{IEEE ISBI challenge: SNEMI3D} - {3D} segmentation of neurites in {EM} images.
+\newblock \url{http://brainiac2.mit.edu/SNEMI3D}, 2013.
+\newblock Accessed on 11/01/2016.
+
+\bibitem{neuroproof2013}
+Neuroproof: Flyem tool, hhmi / janelia farm research campus.
+\newblock \url{https://github.com/janelia-flyem/NeuroProof}, 2013.
+\newblock Accessed on 03/15/2106.
+
+\bibitem{Neuroblocks}
+A.~K. Al-Awami, J.~Beyer, D.~Haehn, N.~Kasthuri, J.~W. Lichtman, H.~Pfister,
+  and M.~Hadwiger.
+\newblock Neuroblocks - visual tracking of segmentation and proofreading for
+  large connectomics projects.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics},
+  22(1):738--746, Jan 2016.
+
+\bibitem{anderson2011}
+J.~Anderson, S.~Mohammed, B.~Grimm, B.~Jones, P.~Koshevoy, T.~Tasdizen,
+  R.~Whitaker, and R.~Marc.
+\newblock The {V}iking {V}iewer for connectomics: Scalable multi-user
+  annotation and summarization of large volume data sets.
+\newblock {\em Journal of Microscopy}, 241(1):13--28, 2011.
+
+\bibitem{BogovicHJ13}
+J.~A. Bogovic, G.~B. Huang, and V.~Jain.
+\newblock Learned versus hand-designed feature representations for 3d
+  agglomeration.
+\newblock {\em International Conference on Learning Representations (ICLR)},
+  2014.
+
+\bibitem{chklovskii2010}
+D.~B. Chklovskii, S.~Vitaladevuni, and L.~K. Scheffer.
+\newblock Semi-automated reconstruction of neural circuits using electron
+  microscopy.
+\newblock {\em Current Opinion in Neurobiology}, 20(5):667 -- 675, 2010.
+\newblock Neuronal and glial cell biology – New technologies.
+
+\bibitem{samplesize1}
+L.~Faulkner.
+\newblock Beyond the five-user assumption: Benefits of increased sample sizes
+  in usability testing.
+\newblock {\em Behavior Research Methods, Instruments, \& Computers},
+  35(3):379--383, 2003.
+
+\bibitem{Giuly2013DP2}
+R.~J. Giuly, K.-Y. Kim, and M.~H. Ellisman.
+\newblock {DP2: Distributed 3D image segmentation using micro-labor workforce}.
+\newblock {\em Bioinformatics}, 29(10):1359--1360, 2013.
+
+\bibitem{haehn_dojo_2014}
+D.~Haehn, S.~Knowles-Barley, M.~Roberts, J.~Beyer, N.~Kasthuri, J.~Lichtman,
+  and H.~Pfister.
+\newblock Design and evaluation of interactive proofreading tools for
+  connectomics.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics (Proc.
+  IEEE SciVis 2014)}, 20(12):2466--2475, 2014.
+
+\bibitem{NASATLX}
+S.~G. Hart and L.~E. Staveland.
+\newblock Development of {NASA-TLX (Task Load Index)}: Results of empirical and
+  theoretical research.
+\newblock In {\em Human Mental Workload}, volume~52 of {\em Advances in
+  Psychology}, pages 139 -- 183. 1988.
+
+\bibitem{resnet}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em The IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, June 2016.
+
+\bibitem{samplesize2}
+W.~Hwang and G.~Salvendy.
+\newblock Number of people required for usability evaluation: The 10+-2 rule.
+\newblock {\em Commun. ACM}, 53(5):130--133, May 2010.
+
+\bibitem{jain2010}
+V.~Jain, B.~Bollmann, M.~Richardson, D.~Berger, M.~Helmst{\"a}dter,
+  K.~Briggman, W.~Denk, J.~Bowden, J.~Mendenhall, W.~Abraham, K.~Harris,
+  N.~Kasthuri, K.~Hayworth, R.~Schalek, J.~Tapia, J.~Lichtman, and S.~Seung.
+\newblock Boundary learning by optimization with topological constraints.
+\newblock In {\em Proc. IEEE CVPR 2010}, pages 2488--2495, 2010.
+
+\bibitem{raveler}
+{Janelia Farm}.
+\newblock Raveler.
+\newblock \url{https://openwiki.janelia.org/wiki/display/flyem/Raveler}, 2014.
+\newblock Accessed on 11/01/2016.
+
+\bibitem{karimov_guided_volume_editing}
+A.~Karimov, G.~Mistelbauer, T.~Auzinger, and S.~Bruckner.
+\newblock Guided volume editing based on histogram dissimilarity.
+\newblock {\em Computer Graphics Forum}, 34(3):91--100, May 2015.
+
+\bibitem{kasthuri2015saturated}
+N.~Kasthuri, K.~J. Hayworth, D.~R. Berger, R.~L. Schalek, J.~A. Conchello,
+  S.~Knowles-Barley, D.~Lee, A.~V{\'a}zquez-Reina, V.~Kaynig, T.~R. Jones,
+  et~al.
+\newblock Saturated reconstruction of a volume of neocortex.
+\newblock {\em Cell}, 162(3):648--661, 2015.
+
+\bibitem{kaynig10}
+V.~Kaynig, T.~Fuchs, and J.~Buhmann.
+\newblock Neuron geometry extraction by perceptual grouping in sstem images.
+\newblock In {\em Proc. IEEE CVPR}, pages 2902--2909, 2010.
+
+\bibitem{kaynig2015large}
+V.~Kaynig, A.~Vazquez-Reina, S.~Knowles-Barley, M.~Roberts, T.~R. Jones,
+  N.~Kasthuri, E.~Miller, J.~Lichtman, and H.~Pfister.
+\newblock Large-scale automatic reconstruction of neuronal processes from
+  electron microscopy images.
+\newblock {\em Medical image analysis}, 22(1):77--88, 2015.
+
+\bibitem{eyewire_nature}
+J.~S. Kim, M.~J. Greene, A.~Zlateski, K.~Lee, M.~Richardson, S.~C. Turaga,
+  M.~Purcaro, M.~Balkam, A.~Robinson, B.~F. Behabadi, M.~Campos, W.~Denk, H.~S.
+  Seung, and {EyeWirers}.
+\newblock Space-time wiring specificity supports direction selectivity in the
+  retina.
+\newblock {\em Nature}, 509(7500):331—336, May 2014.
+
+\bibitem{mojo2}
+S.~Knowles-Barley, M.~Roberts, N.~Kasthuri, D.~Lee, H.~Pfister, and J.~W.
+  Lichtman.
+\newblock Mojo 2.0: Connectome annotation tool.
+\newblock {\em Frontiers in Neuroinformatics}, (60), 2013.
+
+\bibitem{lee2015recursive}
+K.~Lee, A.~Zlateski, A.~Vishwanathan, and H.~S. Seung.
+\newblock Recursive training of 2d-3d convolutional networks for neuronal
+  boundary detection.
+\newblock {\em arXiv preprint arXiv:1508.04843}, 2015.
+
+\bibitem{Liu2014}
+T.~Liu, C.~Jones, M.~Seyedhosseini, and T.~Tasdizen.
+\newblock A modular hierarchical approach to {3D} electron microscopy image
+  segmentation.
+\newblock {\em Journal of Neuroscience Methods}, 226(0):88 -- 102, 2014.
+
+\bibitem{nesterov}
+Y.~Nesterov.
+\newblock A method for unconstrained convex minimization problem with the rate
+  of convergence o (1/k2).
+\newblock In {\em Doklady an SSSR}, volume 269, pages 543--547, 1983.
+
+\bibitem{NunezIglesias2013Machine}
+J.~Nunez-Iglesias, R.~Kennedy, T.~Parag, J.~Shi, and D.~B. Chklovskii.
+\newblock Machine learning of hierarchical clustering to segment {2D} and {3D}
+  images.
+\newblock {\em PLoS ONE}, 8(8):e71715+, 2013.
+
+\bibitem{GALA2014}
+J.~Nunez-Iglesias, R.~Kennedy, S.~M. Plaza, A.~Chakraborty, and W.~T. Katz.
+\newblock Graph-based active learning of agglomeration {(GALA)}: A python
+  library to segment {2D} and {3D} neuroimages.
+\newblock {\em Frontiers in Neuroinformatics}, 8(34), 2014.
+
+\bibitem{nunez2014graph}
+J.~Nunez-Iglesias, R.~Kennedy, S.~M. Plaza, A.~Chakraborty, and W.~T. Katz.
+\newblock Graph-based active learning of agglomeration (gala): a python library
+  to segment 2d and 3d neuroimages.
+\newblock {\em Frontiers in neuroinformatics}, 8, 2014.
+
+\bibitem{proofreading_bottleneck}
+H.~Peng, F.~Long, T.~Zhao, and E.~Myers.
+\newblock Proof-editing is the bottleneck of {3D} neuron reconstruction: The
+  problem and solutions.
+\newblock {\em Neuroinformatics}, 9(2-3):103--105, 2011.
+
+\bibitem{focused_proofreading}
+S.~M. Plaza.
+\newblock {\em Focused Proofreading to Reconstruct Neural Connectomes from EM
+  Images at Scale}, pages 249--258.
+\newblock Springer International Publishing, Cham, 2016.
+
+\bibitem{RonnebergerFB15}
+O.~Ronneberger, P.Fischer, and T.~Brox.
+\newblock U-net: Convolutional networks for biomedical image segmentation.
+\newblock In {\em Medical Image Computing and Computer-Assisted Intervention
+  (MICCAI)}, volume 9351 of {\em LNCS}, pages 234--241. Springer, 2015.
+\newblock (available on arXiv:1505.04597 [cs.CV]).
+
+\bibitem{saalfeld09}
+S.~Saalfeld, A.~Cardona, V.~Hartenstein, and P.~Toman\v{c}\'{a}k.
+\newblock {CATMAID}: collaborative annotation toolkit for massive amounts of
+  image data.
+\newblock {\em Bioinformatics}, 25(15):1984--1986, 2009.
+
+\bibitem{markus_proofreading}
+R.~Sicat, M.~Hadwiger, and N.~J. Mitra.
+\newblock Graph abstraction for simplified proofreading of slice-based volume
+  segmentation.
+\newblock In {\em EUROGRAPHICS Short Paper}, 2013.
+
+\bibitem{uzunbas}
+M.~G. Uzunbas, C.~Chen, and D.~Metaxas.
+\newblock An efficient conditional random field approach for automatic and
+  interactive neuron segmentation.
+\newblock {\em Medical Image Analysis}, 27:31 -- 44, 2016.
+\newblock Discrete Graphical Models in Biomedical Image Analysis.
+
+\bibitem{amelio_segmentation}
+A.~V\'azquez-Reina, M.~Gelbart, D.~Huang, J.~Lichtman, E.~Miller, and
+  H.~Pfister.
+\newblock Segmentation fusion for connectomics.
+\newblock In {\em Proc. IEEE ICCV}, pages 177--184, Nov 2011.
+
+\end{thebibliography}

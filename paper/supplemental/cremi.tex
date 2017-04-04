@@ -5,6 +5,15 @@
 
 \paragraph{Retraining.} Since the CREMI data is a different species, we simply retrain our split error classifier as well as focused proofreading by Plaza~\cite{focused_proofreading}. For this, we use the first 100 sections of each of the three CREMI datasets combined as training data. All parameters are unchanged and left as reported in the paper. 
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{gfx/cremi_roc_separate_small.pdf}
+\caption{Receiver Operating Characteristic curves comparing focused proofreading and guided proofreading automatic correction on the CREMI A/B/C fruit fly subvolumes. Guided proofreading performs better on all three datasets.}
+\label{fig:cremi_performance}
+\end{figure}
+
+\paragraph{Classification Performance.} Figure~\ref{fig:cremi_performance} compares the  focused proofreading and guided proofreading classifiers on the CREMI A/B/C datasets. Our method exhibits higher sensitivity and lower fall-out.
+
 %\paragraph{Error correction.} In all three datasets merge error detection found over 300 merge errors. Unfortunately, merge error correction crashed because of a software error on our part. Therefore, we only evaluate split error detection and correction on subvolumes of CREMI A/B/C with the dimensions $1250\times1250\times5$ voxels. The subvolumes were cut from the last 25 sections of each of the three datasets and unseen during training. We compare focused proofreading and guided proofreading with automatic selection ($p_t=0.95$) and selection oracle.
 
 \subsection{CREMI A}
