@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0790)https://mail-attachment.googleusercontent.com/attachment/u/1/?ui=2&ik=cd63a0a423&view=att&th=15d561e06026c251&attid=0.2&disp=inline&realattid=f_j59ogx101&safe=1&zw&saddbat=ANGjdJ9o2Pbwfj5xA7l4aXNBMpVrbVcsa_0QEHrDcIt-krWGcagm79FzwZAHy5qwBSClr9qaOvMdOipRIUeKEHFDCC-HW6O1w0Xmvsqvdk-swQn8NPAvsavLMvdzzrOuOVLI2BKKqZmgQDJX4Ok9FvLyikpGZp6ncdr8fSv15_kEW4GJ3-XSKkakGth8_fIIKpI7_cCfrvfSFPH07OmwJelL-oU7LbuNWnfjjuEYoeNubmBtUOGoW1UPi39Edp_7uFsHuntoSrRdXflSWUaFhzJHla-4vgBGQHBHxmnoAZJd8gQ4V_YOzTq6FLTtSRMJg-IJc2KjGk5Bv_stPMPcg9M68gbzlMitPu9Za14CTOzI1hIauuxD8krL9pOJg8YWmY2UNPDqyX9T5ViezvXfyvx909GQ_TvH30_GS1ghbQyBNfn91y4ga8-Vrcts0YMCoGiql8KYB9k1c4YgzTMqu_PQDxpeMebHy11yaLl9N2jv7_OVxFnEL3K2zKSr42syjx-yd8F6TPvg65E86UTMRsnx-snAIxSOeEhyKwcXKOuENGaVrUfeQgXhWE-p5Y08q0gLmmHviRQDLwbNKUKSWT_V8-sCBuVPUjvfInFV8Q -->
+<html><script>(function main() {
+    // Create enabled event
+    function fireEnabledEvent() {
+        // If gli exists, then we are already present and shouldn't do anything
+        if (!window.gli) {
+            setTimeout(function () {
+                var enabledEvent = document.createEvent("Event");
+                enabledEvent.initEvent("WebGLEnabledEvent", true, true);
+                document.dispatchEvent(enabledEvent);
+            }, 0);
+        } else {
+            //console.log("WebGL Inspector already embedded on the page - disabling extension");
+        }
+    };
+
+    // Grab the path root from the extension
+    document.addEventListener("WebGLInspectorReadyEvent", function (e) {
+        var pathElement = document.getElementById("__webglpathroot");
+        if (window["gliloader"]) {
+            gliloader.pathRoot = pathElement.innerText;
+        } else {
+            // TODO: more?
+            window.gliCssUrl = pathElement.innerText + "gli.all.css";
+        }
+    }, false);
+
+    // Rewrite getContext to snoop for webgl
+    var originalGetContext = HTMLCanvasElement.prototype.getContext;
+    if (!HTMLCanvasElement.prototype.getContextRaw) {
+        HTMLCanvasElement.prototype.getContextRaw = originalGetContext;
+    }
+    HTMLCanvasElement.prototype.getContext = function () {
+        var ignoreCanvas = this.internalInspectorSurface;
+        if (ignoreCanvas) {
+            return originalGetContext.apply(this, arguments);
+        }
+
+        var result = originalGetContext.apply(this, arguments);
+        if (result == null) {
+            return null;
+        }
+
+        var contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
+        var requestingWebGL = contextNames.indexOf(arguments[0]) != -1;
+        if (requestingWebGL) {
+            // Page is requesting a WebGL context!
+            fireEnabledEvent(this);
+
+            // If we are injected, inspect this context
+            if (window.gli) {
+                if (gli.host.inspectContext) {
+                    // TODO: pull options from extension
+                    result = gli.host.inspectContext(this, result);
+                    // NOTE: execute in a timeout so that if the dom is not yet
+                    // loaded this won't error out.
+                    window.setTimeout(function() {
+                        var hostUI = new gli.host.HostUI(result);
+                        result.hostUI = hostUI; // just so we can access it later for debugging
+                    }, 0);
+                }
+            }
+        }
+
+        return result;
+    };
+})();</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="chromesniffer" id="chromesniffer_meta" content="{&quot;SPDY&quot;:-1}"><script type="text/javascript" src="chrome-extension://homgcnaoacgigpkkljjjekpignblkeae/detector.js"></script></head><body>
+
+
+
+
+
+<div>
+<form name="0.2_aspnetForm" method="post" action="http://./ViewMetaReviewsForPaper.aspx?paperId=922" target="_blank" onsubmit="try {return window.confirm(&quot;You are submitting information to an external page.\nAre you sure?&quot;);} catch (e) {return false;}">
+<div>
+<input type="hidden" name="__VIEWSTATE" value="/wEPDwUKMTAxNDM4ODU3Ng9kFgJmD2QWAgIDD2QWAmYPZBYCAgUPDxYCHgdWaXNpYmxlZ2QWBgIBD2QWAmYPZBYCZg9kFgQCAQ9kFgICAQ9kFgJmDw8WAh4EVGV4dAUDOTIyZGQCAg9kFgICAQ9kFgJmDw8WAh8BBT9HdWlkZWQgUHJvb2ZyZWFkaW5nIG9mIEF1dG9tYXRpYyBTZWdtZW50YXRpb25zIGZvciBDb25uZWN0b21pY3NkZAIDDw8WAh8AaGRkAgUPFgIeC18hSXRlbUNvdW50AgIWBGYPZBYGAgMPZBYCZg8VAQ9NZXRhX1Jldmlld2VyXzJkAgcPPCsAEQMADxYEHgtfIURhdGFCb3VuZGcfAgIDZAEQFgAWABYADBQrAAAWAmYPZBYIAgEPZBYEZg8PFgIfAQUMRWFybHkgcmVqZWN0ZGQCAQ9kFgJmDxUBAk5vZAICD2QWBGYPDxYCHwEF/gFDb25zb2xpZGF0aW9uIFJlcG9ydC4gUGxlYXNlIHN1bW1hcml6ZSB0byB0aGUgYXV0aG9ycyBhbmQgeW91ciBmZWxsb3cgQUNzIHRoZSByYXRpb25hbGUgYmVoaW5kIHlvdXIgcmVjb21tZW5kYXRpb24uIFBsZWFzZSBwcm92aWRlIHN1ZmZpY2llbnQgZGV0YWlsIGZvciB5b3VyIGZlbGxvdyBBQ3MgdG8gdW5kZXJzdGFuZCB5b3VyIHBvaW50IG9mIHZpZXcuIFBsZWFzZSBhbHNvIHJlbWVtYmVyIHRvIGJlIHBvbGl0ZSBhbmQgY29uc3RydWN0aXZlLmRkAgEPZBYCZg8VAYUKSW5pdGlhbGx5LCB0aGUgcGFwZXIgcmVjZWl2ZWQgMSBib3JkZXJsaW5lLCAxIHdlYWsgcmVqZWN0IGFuZCAxIHdlYWsgYWNjZXB0LiBUaGUgbWFpbiBjcml0aXF1ZXMgd2VyZSBhYm91dCB0aGUgbm92ZWx0eSwgdGhlIGNsYXJpdHkgb2Ygc29tZSBwYXJ0cyBvZiB0aGUgbWV0aG9kb2xvZ3ksIGFuZCB0aGUgcHJvcGVyIGZpdHRpbmcgb2YgdGhlIHBhcGVyIGZvciBJQ0NWIHNpbmNlIGl0IGFkZHJlc3NlcyBhIHNwZWNpZmljIGJpb21lZGljYWwgZG9tYWluLiBUaGUgcmVidXR0YWwgYWRkcmVzc2VkIHRoZSByYWlzZWQgY29uY2VybiBidXQgcmV2aWV3ZXJzIHJlbWFpbmVkIGVzc2VudGlhbGx5IG9uIHRoZSBzYW1lIHBvc2l0aW9ucy4gUjIgcG9zdGVkIGEgbmVnYXRpdmUgZXZhbHVhdGlvbiwgYW5kIFIzIGlzIHZlcnkgcG9zaXRpdmUuIFIxIGdhdmUgbm8gZmluYWwgYW5zd2VyLCBidXQgaGUgcHJvdmlkZWQgKGluIGRlbGF5KSBhIGZpbmFsIHBvc2l0aXZlIGFzc2Vzc21lbnQgd2l0aG91dCBjb21tZW50cy4gVGhlIEFDIHRoaW5rcyB0aGF0IHRoZSBiaW9tZWRpY2FsIGRvbWFpbiBpcyBpbiBzY29wZSB3aXRoIElDQ1YsIGJ1dCB3b3JrcyBpbiB0aGlzIGFyZWEgc2hvdWxkIHByZXNlbnQgcmVhbGx5IG5vdmVsIG1ldGhvZG9sb2dpZXMgc2hvd2luZyBhIHdpZGVyIGFwcGxpY2FiaWxpdHkgaW4gb3RoZXIgQ1YgZG9tYWlucyB0b28uIFRoaXMgd29yayBhcHBlYXJzIGFzIGFuIGludGVyYWN0aXZlIG1ldGhvZCBmb3IgaW1hZ2Ugc2VnbWVudGF0aW9uLCB3aGljaCBpcyBkaWZmaWN1bHQgaW4gdGhlIGNhc2Ugb2YgdGhlIHR5cGUgb2YgaW1hZ2VzIGNvbnNpZGVyZWQsIGJ1dCBub3QgY2xlYXJseSB1c2VmdWwgdG8gb3RoZXIgZG9tYWlucy4gTW9yZW92ZXIsIHByZXNlbnRpbmcgYSBzZW1pLWF1dG9tYXRpYyBhcHByb2FjaCB3aGVuIGZ1bGx5IGF1dG9tYXRpYyBtZXRob2RzIGFyZSBub3dhZGF5cyBwcmVzZW50IGluIHRoZSBsaXRlcmF0dXJlLCB3aGljaCBhcmUgYWN0dWFsbHkgdmVyeSBlZmZlY3RpdmUsIGFsc28gdW5kZXJtaW5lcyBhIGZ1bGx5IHBvc2l0aXZlIGFzc2Vzc21lbnQgb2YgdGhpcyBtZXRob2QgaW4gdGhlIElDQ1YgY29udGV4dCAoYnV0IHN0aWxsIHJlbWFpbnMgdmFsaWQgZm9yIHRoZSBiaW9tZWRpY2FsIGFyZWEgb2YgY291cnNlKS4gVGhlIEFDcyBoYXZlIGRpc2N1c3NlZCBhbmQgcmVhY2hlZCB0aGUgY29uc2Vuc3VzIHRoYXQgdGhlIHBhcGVyIGlzIG5vdCBhY2NlcHRhYmxlLCBidXQgdGhleSdkIGxpa2UgdG8gaGF2ZSBhIDNyZCBvcGluaW9uLmQCAw9kFgRmDw8WAh8BBcQCUGFwZXIgUmF0aW5nLiBQbGVhc2UgcmF0ZSB0aGUgcGFwZXIgYWNjb3JkaW5nIHRvIHRoZSBjaG9pY2VzIGJlbG93LiBJZiB5b3UgYW5kIHlvdXIgYnVkZHkgQUMgYWdyZWUgb24g4oCcb3JhbOKAnSwg4oCccG9zdGVy4oCdLCBvciDigJxyZWplY3TigJ0gKGVpdGhlciB3ZWFrIG9yIHN0cm9uZyksIHRoZSBkZWNpc2lvbiB3aWxsIGJlIGZpbmFsIGFuZCBib3RoIGNvbnNvbGlkYXRpb24gcmVwb3J0cyB3aWxsIGJlIHBhc3NlZCB0byB0aGUgYXV0aG9ycy4gT3RoZXJ3aXNlLCB0aGUgZGlzY3Vzc2lvbiBiZXR3ZWVuIHRoZSB0d28gb2YgeW91IHdpbGwgYmUgaW5pdGlhdGVkZGQCAQ9kFgJmDxUBC1dlYWsgUmVqZWN0ZAIEDw8WAh8AaGRkAggPFQEAZAIBD2QWBgIDD2QWAmYPFQEPTWV0YV9SZXZpZXdlcl8zZAIHDzwrABEDAA8WBB8DZx8CAgNkARAWABYAFgAMFCsAABYCZg9kFggCAQ9kFgRmDw8WAh8BBQxFYXJseSByZWplY3RkZAIBD2QWAmYPFQECTm9kAgIPZBYEZg8PFgIfAQX+AUNvbnNvbGlkYXRpb24gUmVwb3J0LiBQbGVhc2Ugc3VtbWFyaXplIHRvIHRoZSBhdXRob3JzIGFuZCB5b3VyIGZlbGxvdyBBQ3MgdGhlIHJhdGlvbmFsZSBiZWhpbmQgeW91ciByZWNvbW1lbmRhdGlvbi4gUGxlYXNlIHByb3ZpZGUgc3VmZmljaWVudCBkZXRhaWwgZm9yIHlvdXIgZmVsbG93IEFDcyB0byB1bmRlcnN0YW5kIHlvdXIgcG9pbnQgb2Ygdmlldy4gUGxlYXNlIGFsc28gcmVtZW1iZXIgdG8gYmUgcG9saXRlIGFuZCBjb25zdHJ1Y3RpdmUuZGQCAQ9kFgJmDxUBtwdJbml0aWFsbHksIHRoaXMgcGFwZXIgcmVjZWl2ZWQgYSBib3JkZXJsaW5lLCBhIHdlYWsgcmVqZWN0LCBhbmQgYSB3ZWFrIGFjY2VwdC4gVGhlIHJldmlld2VycyBhcHByZWNpYXRlZCB0aGF0IHRoZSBwYXBlciBhZGRyZXNzZXMgYSByZWFsIHByb2JsZW0gd2l0aCBwcmFjdGljYWwgdmFsdWUgYW5kIHRoYXQgdGhlIGV4cGVyaW1lbnRzIGFyZSBleHRlbnNpdmUsIGJ1dCBub3RlZCB0aGF0IHRoZSBwYXBlciBoYXMgbGltaXRlZCBub3ZlbHR5LCB0aGF0IGl0IG1heSBiZSBtb3JlIHN1aXRhYmxlIGZvciBtZWRpY2FsIGltYWdpbmcgdGhhbiBmb3IgY29tcHV0ZXIgdmlzaW9uLCBhbmQgdGhhdCB0aGUgbWVyZ2UgZXJyb3IgZGV0ZWN0aW9uIGV4cGVyaW1lbnRzIGFyZSBjb25mdXNpbmcuIFRoZSByZWJ1dHRhbCBjbGFyaWZpZWQgbW9zdCBvZiB0aGUgaXNzdWVzIGFuZCB0d28gcmV2aWV3ZXJzIHJlY29tbWVuZCBwb3N0ZXIuIEhvd2V2ZXIsIHRoZSBuZWdhdGl2ZSByZXZpZXdlciBtYWludGFpbmVkIGhpcy9oZXIgcmF0aW5nIGJlY2F1c2Ugb2YgdGhlIGxpbWl0ZWQgbm92ZWx0eSBhbmQgc3VpdGFiaWxpdHkgdG8gSUNDVi4gSSB0aGluayB0aGUgaXNzdWUgb2Ygc3VpdGFiaWxpdHkgaXMgd2VsbCBhZGRyZXNzZWQgYnkgdGhlIHJlYnV0dGFsLiBCdXQgdGhlIGlzc3VlIG9mIG5vdmVsdHkgcmFpc2VkIGJ5IHR3byByZXZpZXdlcnMgaXMgbmV2ZXIgYWRkcmVzc2VkLiBTbywgdWx0aW1hdGVseSB3ZSBoYXZlIHRoZSBjaG9pY2UgYmV0d2VlbiBhIHBvdGVudGlhbGx5IHZlcnkgdXNlZnVsIHN5c3RlbSB3aXRoIHByYWN0aWNhbCBpbXBhY3QgYW5kIHNvbGlkbHkgZXZhbHVhdGVkLCBidXQgd2hpY2ggaXMgdmVyeSBsaW1pdGVkIGluIG5vdmVsdHkuICBJIHdpc2hlZCB0aGUgYXV0aG9ycyBoYWQgcmVzcG9uZGVkIHRvIHRoZSBpc3N1ZSBvZiBub3ZlbHR5IGluIHRoZSByZWJ1dHRhbC5kAgMPZBYEZg8PFgIfAQXEAlBhcGVyIFJhdGluZy4gUGxlYXNlIHJhdGUgdGhlIHBhcGVyIGFjY29yZGluZyB0byB0aGUgY2hvaWNlcyBiZWxvdy4gSWYgeW91IGFuZCB5b3VyIGJ1ZGR5IEFDIGFncmVlIG9uIOKAnG9yYWzigJ0sIOKAnHBvc3RlcuKAnSwgb3Ig4oCccmVqZWN04oCdIChlaXRoZXIgd2VhayBvciBzdHJvbmcpLCB0aGUgZGVjaXNpb24gd2lsbCBiZSBmaW5hbCBhbmQgYm90aCBjb25zb2xpZGF0aW9uIHJlcG9ydHMgd2lsbCBiZSBwYXNzZWQgdG8gdGhlIGF1dGhvcnMuIE90aGVyd2lzZSwgdGhlIGRpc2N1c3Npb24gYmV0d2VlbiB0aGUgdHdvIG9mIHlvdSB3aWxsIGJlIGluaXRpYXRlZGRkAgEPZBYCZg8VAQtXZWFrIFJlamVjdGQCBA8PFgIfAGhkZAIIDxUBAGQYAgUfY3RsMDAkY3BoJGd2UmV2aWV3cyRjdGwwMSRjdGwwMA88KwAMAQgCAWQFH2N0bDAwJGNwaCRndlJldmlld3MkY3RsMDAkY3RsMDAPPCsADAEIAgFkv9sCi9K3hFCsmju2aLywNSzSzD0=">
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" value="7CEDBE6C">
+</div>
+<table>
+<tbody><tr>
+<td width="100%"><a href="http://iccv2017.thecvf.com/" target="_blank">ICCV 2017</a><br><b>International Conference on Computer Vision 2017</b><br>Oct 22, 2017 - Oct 29, 2017, Venice, Italy</td>
+</tr>
+<tr>
+    <td style="height:5px"></td>
+</tr>
+</tbody></table>
+<table><tbody><tr><td>&nbsp;</td><td>
+<span style="font-size:Small;font-weight:bold">Meta-Reviews For Paper</span>
+<span style="font-size:Small"></span>
+<div>
+	
+    <span style="font-size:Small"><table style="text-align:left;width:100%">
+		<tbody><tr>
+			<td width="100px"><b>Paper ID</b></td>
+			<td><span style="font-size:Small">922</span></td>
+		</tr>
+		<tr>
+			<td><b>Title</b></td>
+			<td><span style="font-size:Small">Guided Proofreading of Automatic Segmentations for Connectomics</span></td>
+		</tr>
+	</tbody></table>
+	</span>
+    
+    
+            <hr>
+            <table>
+                <tbody><tr>
+                    <td>
+                        <span style="font-size:Small;font-weight:bold">Masked Meta-Reviewer ID:</span>
+                    </td>
+                    <td>
+                        <span style="font-size:Small">Meta_Reviewer_2</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="font-size:Small;font-weight:bold">Meta-Reviews:</span>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody></table>
+            <div>
+		<table cellspacing="0" cellpadding="4" rules="all" border="1" style="color:#333333;border-width:1px;border-style:None;font-family:Verdana;font-size:Small;border-collapse:collapse">
+			<tbody><tr style="color:White;background-color:#5d7b9d;font-weight:bold">
+				<th scope="col">Question</th><th scope="col">&nbsp;</th>
+			</tr><tr style="color:#333333;background-color:#f7f6f3">
+				<td style="width:20%">Early reject</td><td style="width:80%">
+                            No
+                        </td>
+			</tr><tr style="color:#284775;background-color:White">
+				<td style="width:20%">Consolidation Report. Please summarize to the authors and your fellow ACs the rationale behind your recommendation. Please provide sufficient detail for your fellow ACs to understand your point of view. Please also remember to be polite and constructive.</td><td style="width:80%">
+                            Initially, the paper received 1 borderline, 1 weak reject and 1 weak accept. The main critiques were about the novelty, the clarity of some parts of the methodology, and the proper fitting of the paper for ICCV since it addresses a specific biomedical domain. The rebuttal addressed the raised concern but reviewers remained essentially on the same positions. R2 posted a negative evaluation, and R3 is very positive. R1 gave no final answer, but he provided (in delay) a final positive assessment without comments. The AC thinks that the biomedical domain is in scope with ICCV, but works in this area should present really novel methodologies showing a wider applicability in other CV domains too. This work appears as an interactive method for image segmentation, which is difficult in the case of the type of images considered, but not clearly useful to other domains. Moreover, presenting a semi-automatic approach when fully automatic methods are nowadays present in the literature, which are actually very effective, also undermines a fully positive assessment of this method in the ICCV context (but still remains valid for the biomedical area of course). The ACs have discussed and reached the consensus that the paper is not acceptable, but they'd like to have a 3rd opinion.
+                        </td>
+			</tr><tr style="color:#333333;background-color:#f7f6f3">
+				<td style="width:20%">Paper Rating. Please rate the paper according to the choices below. If you and your buddy AC agree on “oral”, “poster”, or “reject” (either weak or strong), the decision will be final and both consolidation reports will be passed to the authors. Otherwise, the discussion between the two of you will be initiated</td><td style="width:80%">
+                            Weak Reject
+                        </td>
+			</tr>
+		</tbody></table>
+	</div>
+            
+        
+            <hr>
+            <table>
+                <tbody><tr>
+                    <td>
+                        <span style="font-size:Small;font-weight:bold">Masked Meta-Reviewer ID:</span>
+                    </td>
+                    <td>
+                        <span style="font-size:Small">Meta_Reviewer_3</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="font-size:Small;font-weight:bold">Meta-Reviews:</span>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody></table>
+            <div>
+		<table cellspacing="0" cellpadding="4" rules="all" border="1" style="color:#333333;border-width:1px;border-style:None;font-family:Verdana;font-size:Small;border-collapse:collapse">
+			<tbody><tr style="color:White;background-color:#5d7b9d;font-weight:bold">
+				<th scope="col">Question</th><th scope="col">&nbsp;</th>
+			</tr><tr style="color:#333333;background-color:#f7f6f3">
+				<td style="width:20%">Early reject</td><td style="width:80%">
+                            No
+                        </td>
+			</tr><tr style="color:#284775;background-color:White">
+				<td style="width:20%">Consolidation Report. Please summarize to the authors and your fellow ACs the rationale behind your recommendation. Please provide sufficient detail for your fellow ACs to understand your point of view. Please also remember to be polite and constructive.</td><td style="width:80%">
+                            Initially, this paper received a borderline, a weak reject, and a weak accept. The reviewers appreciated that the paper addresses a real problem with practical value and that the experiments are extensive, but noted that the paper has limited novelty, that it may be more suitable for medical imaging than for computer vision, and that the merge error detection experiments are confusing. The rebuttal clarified most of the issues and two reviewers recommend poster. However, the negative reviewer maintained his/her rating because of the limited novelty and suitability to ICCV. I think the issue of suitability is well addressed by the rebuttal. But the issue of novelty raised by two reviewers is never addressed. So, ultimately we have the choice between a potentially very useful system with practical impact and solidly evaluated, but which is very limited in novelty.  I wished the authors had responded to the issue of novelty in the rebuttal.
+                        </td>
+			</tr><tr style="color:#333333;background-color:#f7f6f3">
+				<td style="width:20%">Paper Rating. Please rate the paper according to the choices below. If you and your buddy AC agree on “oral”, “poster”, or “reject” (either weak or strong), the decision will be final and both consolidation reports will be passed to the authors. Otherwise, the discussion between the two of you will be initiated</td><td style="width:80%">
+                            Weak Reject
+                        </td>
+			</tr>
+		</tbody></table>
+	</div>
+            
+        
+    <br>
+    <br>
+
+</div>
+</td><td>&nbsp;</td></tr></tbody></table>
+</form>
+</div>
+
+<script src="./meta_reviews_files/50_c211e.js"></script></body></html>

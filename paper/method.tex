@@ -26,9 +26,20 @@ Similar to Bogovic~\etal~\cite{BogovicHJ13}, we use grayscale image data, corres
 
 \subsection{Merge Error Detection}
 
-Identification and correction of merge errors is more challenging than finding and fixing split errors, because we must look inside segmentation regions for missing or incomplete boundaries and then propose the correct boundary. However, we can reuse the same trained CNN for this task. Similar to guided volume editing by Karimov~\etal~\cite{karimov_guided_volume_editing}, we generate potential borders within a segment. For each segmentation label, we dilate the label by 20 pixel and generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. We perform watershed on the inverted grayscale EM image. This yields 50 candidate splits.
+Identification and correction of merge errors is more challenging than finding and fixing split errors, because we must look inside segmentation regions for missing or incomplete boundaries and then propose the correct boundary. However, we can reuse the same trained CNN for this task. 
 
-Dilation of the segment prior to watershed is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier. For this, we invert the probability score such that a correct split (previously encoded as $p=0$) is most likely a candidate for a merge error (now encoded as $p=1$). In other words, if a generated boundary is ranked as correct, it probably should be in the segmentation. Fig. \ref{fig:merge_error} illustrates this procedure. Pseudo code is available as supplemental material to promote understanding.
+\CHANGED{To find merge errors, we generate candidate splits within a label segment and use our split error classifier to rate them. If the classifier yields a result close to 0, meaning the candidate split is actually likely to be a correct one, then we assume that the label has been merged in error and that this candidate split will fix the merge error.}
+
+%Similar to guided volume editing by Karimov~\etal~\cite{karimov_guided_volume_editing}, we generate potential borders within a segment. 
+
+%For each segmentation label, we dilate the label by 20 pixel and generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. We perform watershed on the inverted grayscale EM image. This yields 50 candidate splits.
+\CHANGED{For each segmentation label, we generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. As preprocessing, we dilate the label by 20 pixel which is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier.}
+
+%We perform watershed on the inverted grayscale EM image. This yields 50 candidate splits. Prior to watershed, we dilate the label by 20 pixel which is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier. 
+
+\CHANGED{Fig. \ref{fig:merge_error} illustrates this procedure. Pseudo code is available as supplemental material to promote understanding.}
+
+%For this, we invert the probability score such that a correct split (previously encoded as $p=0$) is most likely a candidate for a merge error (now encoded as $p=1$). In other words, if a generated boundary is ranked as correct, it probably should be in the segmentation. Fig. \ref{fig:merge_error} illustrates this procedure. Pseudo code is available as supplemental material to promote understanding.
 
 \begin{figure}[t]
 \centering

@@ -1,0 +1,481 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	Reviews For Paper
+</title>
+<style>
+body
+{
+	font-family:verdana,arial,helvetica;
+}
+#header
+{
+    width: 100%;
+    font-size: small;
+    background-color:#F7F7F7;
+}
+.headerSeparator
+{
+    background-color: #105586;
+}
+.printThemeText
+{
+    font-size:small;
+}
+.printThemeTable td
+{
+    vertical-align:top;
+}
+.printThemeGrid th
+{
+    color:white;
+    background:#5D7B9D;
+    font-weight:bold;
+}
+.printThemeGrid
+{
+    border-collapse:collapse;
+}
+.printThemeGrid td, .printThemeGrid th
+{
+    border:solid 1px #D6D3CE;
+    padding:4px 4px 4px 4px;
+}
+.printThemeGrid .row
+{ 
+    background-color:#F7F6F3;
+    color:#333333;
+    vertical-align:top;
+}
+.printThemeGrid .altrow
+{ 
+    background-color:White;
+    color:#284775;
+    vertical-align:top;
+}
+.cellprompt
+{
+	font-weight:bold;
+	white-space:nowrap;
+    width:100px;	
+}
+.paperHeader
+{
+    background-color:#dee3e7;
+    margin:5px 5px 15px 0px;
+    width:99%;
+    font-family:Verdana;
+    font-size:medium;
+    font-weight:bold;
+}
+.sectionHeader
+{
+    background-color:#dee3e7;
+    padding:5px 5px 5px 0px;
+    width:99%;
+    text-decoration:underline;
+    font-family:Verdana;
+    font-size:small;
+    font-weight:bold;
+}
+.underlineheader
+{
+    text-decoration:underline;
+    font-weight:bold;
+    padding:5px 0px;
+}
+.response
+{
+    padding:5px 0px;
+}
+.reviewerlabel
+{
+    padding-right:20px;
+}
+.pageTitle
+{
+    background-color:#dee3e7;
+    padding:5px 5px 5px 5px;
+    margin-top:10px;
+    width:99%;
+    font-family:Verdana;
+    font-size:medium;
+    font-weight:bold;
+}
+.submissionDetailsView
+{
+}
+.submissionDetailsView tr
+{
+    vertical-align:top;
+}
+.submissionDetailsView td.prompt
+{
+    font-weight:bold;
+}
+.submissionDetailsView tr.sectionSeparator
+{
+
+}
+.submissionDetailsView tr.sectionSeparator td
+{
+    background-color:#dee3e7;
+    padding:5px 5px 5px 5px;
+    font-family:Verdana;
+    font-size:small;
+    font-weight:bold;
+    color:Navy;
+}
+/*CSS Grid View General Definitions*/
+.CssGridView
+{
+    font-size:small; 
+}
+
+.CssGridView td, .CssGridView th
+{
+    padding:4px 4px 4px 4px;
+}
+
+/*CSS Compact Grid View General Definitions*/
+.CssGridViewCompact img
+{
+    border-style:none;
+    border-width:0px;
+}
+
+.CssGridViewCompact
+{
+    font-size:1em;
+    border-style:solid;
+    border-color:#D6D3CE;
+    border-width:1px;
+}
+
+.CssGridViewCompact .hrow a
+{
+    font-size:1em;
+}
+
+.CssGridViewCompact .row a, .CssGridViewCompact .altrow a
+{
+    font-size:0.8em;
+}
+
+.CssGridViewCompact .row .normal a, .CssGridViewCompact .row .normal, .CssGridViewCompact .altrow .normal a, .CssGridViewCompact .altrow .normal
+{
+    font-size:1em;
+}
+
+/*CSS Grid View Header Styles*/
+.CssGridView .hrow, .CssGridViewCompact .hrow
+{ 
+    background-color:#5D7B9D;
+    font-weight:bold;
+    color:White;
+}
+
+
+.CssGridViewCompact .hrow td
+{ 
+    border-bottom-width:0px;
+}
+
+.CssGridViewCompact .hrow th
+{ 
+    border-top-width:0px;
+    font-size:0.8em;
+    vertical-align:top;
+    border-left-width:0px;
+    border-right-width:0px;
+}
+
+.CssGridViewCompact .smaller
+{
+    font-size:0.8em;
+}
+
+/*CSS Grid View Row Styles*/
+.CssGridViewCompact .row, .CssGridViewCompact .altrow
+{
+    border-top-style:solid;
+    border-top-color:#D6D3CE;
+    border-top-width:1px;
+    border-bottom-style:solid;
+    border-bottom-color:#D6D3CE;
+    border-bottom-width:1px;
+}
+
+/*CSS Grid View Header Styles*/
+.CssGridViewCompact .hrow .leftborder, .CssGridViewCompact .row .leftborder, .CssGridViewCompact .altrow .leftborder
+{
+    border-left-width:1px;
+    border-left-color:#D6D3CE;
+    border-left-style:solid;
+}
+
+.CssGridViewCompact .hrow .rightborder, .CssGridViewCompact .row .rightborder, .CssGridViewCompact .altrow .rightborder
+{
+    border-right-width:1px;
+    border-right-color:#D6D3CE;
+    border-right-style:solid;
+}
+
+.CssGridView .hrow a, .CssGridViewCompact .hrow a
+{ 
+    color:White;
+}
+ 
+.CssGridView .row, .CssGridViewCompact .row
+{ 
+    background-color:#F7F6F3;
+    color:#333333;
+    vertical-align:top;
+}
+
+.CssGridView .altrow, .CssGridViewCompact .altrow
+{ 
+    vertical-align:top;
+}
+
+.CssGridViewCompact .row td
+{ 
+    border-left-width:0px;
+    border-right-width:0px;
+}
+ 
+.CssGridViewCompact .altrow
+{ 
+    background-color:White;
+    color:#284775;
+    vertical-align:top;
+}
+
+.CssGridView .altrow tr, .CssGridViewCompact .altrow tr, .CssGridView .row tr, .CssGridViewCompact .row tr
+{ 
+    vertical-align:top;
+}
+</style>
+</head>
+<body>
+<form name="aspnetForm" method="post" action="./ViewReviewsForPaper.aspx?paperId=922" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTAxNDM4ODU3Ng9kFgJmD2QWAgIDD2QWAmYPZBYCAgUPDxYCHgdWaXNpYmxlZ2QWBgIBD2QWAmYPZBYCZg9kFgQCAQ9kFgICAQ9kFgJmDw8WAh4EVGV4dAUDOTIyZGQCAg9kFgICAQ9kFgJmDw8WAh8BBT9HdWlkZWQgUHJvb2ZyZWFkaW5nIG9mIEF1dG9tYXRpYyBTZWdtZW50YXRpb25zIGZvciBDb25uZWN0b21pY3NkZAIDDw8WAh8AaGRkAgUPFgIeC18hSXRlbUNvdW50AgMWBmYPZBYGAgMPZBYCZg8VARNBc3NpZ25lZF9SZXZpZXdlcl8xZAIHDzwrABEDAA8WBB4LXyFEYXRhQm91bmRnHwICCGQBEBYAFgAWAAwUKwAAFgJmD2QWEgIBD2QWBGYPDxYCHwEFSlBhcGVyIFN1bW1hcnkuIFBsZWFzZSBzdW1tYXJpemUgaW4geW91ciBvd24gd29yZHMgd2hhdCB0aGUgcGFwZXIgaXMgYWJvdXQuZGQCAQ9kFgJmDxUB6QFUaGlzIHBhcGVyIHByb3Bvc2VkIGEgZ3VpZGVkIHByb29mcmVhZGluZyBmcmFtZXdvcmsgZm9yIGNvbm5lY3RvbWljcyBzZWdtZW50YXRpb24uIEl0IGlzIGJhc2VkIG9uIHRoZSB0cmFpbmluZyBvZiBhIENOTiB0aGF0IGRldGVjdHMgc3BsaXQgZXJyb3JzIGFuZCBtZXJnZSBlcnJvcnMuIEV4dGVuc2l2ZSBleHBlcmltZW50cyBoYXZlIGJlZW4gZG9uZSB0byBldmFsdWF0ZSB0aGUgcHJvcG9zZWQgbWV0aG9kLmQCAg9kFgRmDw8WAh8BBZMCUGFwZXIgU3RyZW5ndGhzLiBQb3NpdGl2ZSBhc3BlY3RzIG9mIHRoZSBwYXBlci4gQmUgc3VyZSB0byBjb21tZW50IG9uIHRoZSBwYXBlciYjMzk7cyBub3ZlbHR5LCB0ZWNobmljYWwgY29ycmVjdG5lc3MsIGNsYXJpdHkgYW5kIGV4cGVyaW1lbnRhbCBldmFsdWF0aW9uLiBOb3RpY2UgdGhhdCBkaWZmZXJlbnQgcGFwZXJzIG1heSBuZWVkIGRpZmZlcmVudCBsZXZlbHMgb2YgZXZhbHVhdGlvbjogZS5nLiwgYSB0aGVvcmV0aWNhbCBwYXBlciB2cy4gYW4gYXBwbGljYXRpb24gcGFwZXJkZAIBD2QWAmYPFQHOAlRoZSBhdXRob3JzIHByb3Bvc2VkIGEgZmFzdCBpbXBsZW1lbnRhdGlvbiB0aGF0IGZvY3VzZWQgb24gdGhlIGNlbGwgYm91bmRhcmllcywgaW5zdGVhZCBvZiB3b3JraW5nIG9uIGFsbCBwaXhlbHMsIHRvIHJlZHVjZSBjb21wdXRhdGlvbmFsIGJ1cmRlbi4gVGhpcyBtZXRob2Qgd29ya2VkIHdlbGwgb24gZGV0ZWN0aW5nIGJvdW5kYXJpZXMgd2l0aCBzcGxpdCBlcnJvcnMuIDxiciAvPjxiciAvPlRoZSBhdXRob3JzIHBlcmZvcm1lZCBleHRlbnNpdmUgZXhwZXJpbWVudHMgdG8gZXZhbHVhdGUgdGhlaXIgbWV0aG9kLCB3aGljaCBpcyB2ZXJ5IG5pY2UgZm9yIGEgc3lzdGVtIHBhcGVyLiBkAgMPZBYEZg8PFgIfAQX9AVBhcGVyIFdlYWtuZXNzZXMuIERpc2N1c3MgdGhlIG5lZ2F0aXZlIGFzcGVjdHM6IGxhY2sgb2Ygbm92ZWx0eSBvciBjbGFyaXR5LCB0ZWNobmljYWwgZXJyb3JzLCBpbnN1ZmZpY2llbnQgZXhwZXJpbWVudGFsIGV2YWx1YXRpb24sIGV0Yy4gUGxlYXNlIGp1c3RpZnkgeW91ciBjb21tZW50cyBpbiBncmVhdCBkZXRhaWwuIElmIHlvdSB0aGluayB0aGUgcGFwZXIgaXMgbm90IG5vdmVsLCBleHBsYWluIHdoeSBhbmQgcHJvdmlkZSBldmlkZW5jZXNkZAIBD2QWAmYPFQGkBEZvciBtZXRob2RvbG9naWNhbCBkZXZlbG9wbWVudCwgdGhpcyBwYXBlciBsYWNrcyBub3ZlbHR5LjxiciAvPjxiciAvPlRoZSBtZXRob2QgZm9yIG1lcmdlIGVycm9yIGRldGVjdGlvbiB1c2luZyB0aGUgaW52ZXJ0ZWQgaW1hZ2VzIHdhcyBub3QgY2xlYXIgdG8gbWUuIEluIGFkZGl0aW9uLCB0aGUgcGVyZm9ybWFuY2Ugb2YgbWVyZ2UgZXJyb3IgZGV0ZWN0aW9uIGlzIHNvIHBvb3IgdGhhdCBpdCBzaG91bGQgbm90IGJlIGluY2x1ZGVkIGluIHRoZSBwYXBlci4gVGhpcyBwb29yIHBlcmZvcm1hbmNlIHN1Z2dlc3RlZCB0aGUgbWV0aG9kIG1pZ2h0IG5vdCBiZSByaWdodC4gVGhpcyBhbHNvIG1ha2VzIHRoZSB0aXRsZSBvZiB0aGUgcGFwZXIgb3ZlcnN0YXRlZC4gSSB3b3VsZCBzdWdnZXN0IGNoYW5naW5nIHRoZSB0aXRsZSB0byAiZ3VpZGVkIHByb29mcmVhZGluZyBvZiBzcGxpdCBlcnJvcnMgaW4gYXV0b21hdGVkIHNlZ21lbnRhdGlvbiBmb3IgY29ubmVjdG9taWNzIiwgYW5kIHJlbW92aW5nIHRoZSBtZXJnZSBlcnJvciBkZXRlY3Rpb24gcGFydC4gPGJyIC8+ZAIED2QWBGYPDxYCHwEFElByZWxpbWluYXJ5IFJhdGluZ2RkAgEPZBYCZg8VAQpCb3JkZXJsaW5lZAIFD2QWBGYPDxYCHwEF+QFQcmVsaW1pbmFyeSBFdmFsdWF0aW9uLiBQbGVhc2UgaW5kaWNhdGUgdG8gdGhlIEFDLCB5b3VyIGZlbGxvdyByZXZpZXdlcnMsIGFuZCB0aGUgYXV0aG9ycyB5b3VyIGN1cnJlbnQgb3BpbmlvbiBvbiB0aGUgcGFwZXIuIFBsZWFzZSBzdW1tYXJpemUgdGhlIGtleSB0aGluZ3MgeW91IHdvdWxkIGxpa2UgdGhlIGF1dGhvcnMgdG8gaW5jbHVkZSBpbiB0aGVpciByZWJ1dHRhbHMgdG8gZmFjaWxpdGF0ZSB5b3VyIGRlY2lzaW9uIG1ha2luZy5kZAIBD2QWAmYPFQG9AjEuIE1lcmdlIGVycm9yIGRldGVjdGlvbiBpcyBjb25mdXNpbmcsIGFuZCB0aGUgcmVhc29uIG9mIGl0cyBwb29yIHBlcmZvcm1hbmNlIHNob3VsZCBiZSBkaXNjdXNzZWQuIFBsZWFzZSBjb21tZW50IG9uIG92ZXIgc2VnbWVudGF0aW9uIGFzIGEgcHJlLXByb2Nlc3Npbmcgc3RlcC4gIDxiciAvPjIuIEV4cGVyaW1lbnQgaXMgZXh0ZW5zaXZlLiBIb3dldmVyLCBmb3IgVkkgY29tcGFyaXNvbiwgcCB2YWx1ZXMgc2hvdWxkIGJlIHByb3ZpZGVkLiBJdCBzaG91bGQgYmUgc3RhdGVkIGlmIHRoZSBwIHZhbHVlcyBhcmUgc2lnbmlmaWNhbnQuPGJyIC8+PGJyIC8+ZAIGD2QWBGYPDxYCHwEFvQJDb25maWRlbmNlLiBXcml0ZSDigJxWZXJ5IENvbmZpZGVudCZxdW90OyB0byBzdHJlc3MgeW91IGFyZSBhYnNvbHV0ZWx5IHN1cmUgYWJvdXQgeW91ciBjb25jbHVzaW9ucyAoZS5nLiwgeW91IGFyZSBhbiBleHBlcnQgd29ya2luZyBpbiB0aGUgYXJlYSksIOKAnENvbmZpZGVudOKAnSB0byBzdHJlc3MgeW91IGFyZSBtb3N0bHkgc3VyZSBhYm91dCB5b3VyIGNvbmNsdXNpb25zIChlLmcuLCB5b3UgYXJlIG5vdCBhbiBleHBlcnQgYnV0IGFyZSBrbm93bGVkZ2VhYmxlKS4gJnF1b3Q7Tm90IENvbmZpZGVudCZxdW90OyBpbiBhbGwgdGhlIG90aGVyIGNhc2VzLmRkAgEPZBYCZg8VAQlDb25maWRlbnRkAgcPZBYEZg8PFgIfAQX1AUZpbmFsIFJlY29tbWVuZGF0aW9uLiBBZnRlciByZWFkaW5nIHRoZSBhdXRob3ImIzM5O3MgcmVidXR0YWwgYW5kIHRoZSBkaXNjdXNzaW9uLCBwbGVhc2UgZXhwbGFpbiB5b3VyIGZpbmFsIHJlY29tbWVuZGF0aW9uLiBZb3VyIGV4cGxhbmF0aW9uIHdpbGwgYmUgb2YgaGlnaGVzdCBpbXBvcnRhbmNlIGZvciBtYWtpbmcgYWNjZXB0YW5jZSBkZWNpc2lvbnMgYW5kIGZvciBkZWNpZGluZiBiZXR3ZWVuIHBvc3RlcnMgYW5kIG9yYWxzZGQCAQ9kFgJmDxUB4wFBZnRlciByZXZpZXdpbmcgdGhlIGF1dGhvcidzIHJlYnV0dGFsIGFuZCB0aGUgY29tbWVudHMgZnJvbSB0aGUgb3RoZXIgcmV2aWV3ZXJzLCBJIHdvdWxkIGxpa2UgdG8gcmVjb21tZW5kIHRoZSBhY2NlcHRhbmNlIG9mIHRoZSBwYXBlciBhcyBhIHBvc3Rlci4gVGhlIHZhbHVlIG9mIG1lZGljYWwgaW1hZ2luZyByZXNlYXJjaCBjYW5ub3QgYmUgb3ZlcnN0YXRlZCBpbiBjb21wdXRlciB2aXNpb24uIGQCCA9kFgRmDw8WAh8BBW9GaW5hbCByYXRpbmcuIEFmdGVyIHJlYWRpbmcgdGhlIGF1dGhvciYjMzk7cyByZWJ1dHRhbCwgcGxlYXNlIHJhdGUgdGhlIHBhcGVyIGFjY29yZGluZyB0byB0aGUgZm9sbG93aW5nIGNob2ljZXNkZAIBD2QWAmYPFQEGUG9zdGVyZAIJDw8WAh8AaGRkAggPFQEAZAIBD2QWBgIDD2QWAmYPFQETQXNzaWduZWRfUmV2aWV3ZXJfMmQCBw88KwARAwAPFgQfA2cfAgIIZAEQFgAWABYADBQrAAAWAmYPZBYSAgEPZBYEZg8PFgIfAQVKUGFwZXIgU3VtbWFyeS4gUGxlYXNlIHN1bW1hcml6ZSBpbiB5b3VyIG93biB3b3JkcyB3aGF0IHRoZSBwYXBlciBpcyBhYm91dC5kZAIBD2QWAmYPFQGfA1RoZSBwYXBlciBwcmVzZW50cyBhbiBhdXRvbWF0aWMgbWV0aG9kIHRvIGd1aWRlciBhIHVzZXIgdG8gcHJvb2ZyZWFkIGF1dG9tYXRlZCBjZWxsIHNlZ21lbnRhdGlvbiByZXN1bHRzIGluIGNvbm5lY3RvbWljcy4gVGhlcmUgYXJlIHR3byB0eXBlcyBvZiBlcnJvcnM6IG1lcmdlIGFuZCBzcGxpdCBlcnJvcnMuIENOTiBjbGFzc2lmaWVycyBhcmUgdHJhaW5lZCB0byByZWNvbW1lbmQgY2FuZGlkYXRlIG1lcmdlcyBhbmQgc3BsaXRzIHRvIHRoZSB1c2VyIGluIG9yZGVyIHRvIHJlZHVjZSB0aGUgdGltZSBuZWVkZWQgdG8gZmluZCBhbmQgY29ycmVjdCBlcnJvcnMsIHdoaWNoIGlzIGRlbW9uc3RyYXRlZCBieSB0aGUgZXhwZXJpbWVudHMgZXNwLiB3aGVuIGNvbXBhcmVkIHdpdGggb3RoZXIgdHlwZXMgb2YgcHJvb2ZyZWFkaW5nLiBkAgIPZBYEZg8PFgIfAQWTAlBhcGVyIFN0cmVuZ3Rocy4gUG9zaXRpdmUgYXNwZWN0cyBvZiB0aGUgcGFwZXIuIEJlIHN1cmUgdG8gY29tbWVudCBvbiB0aGUgcGFwZXImIzM5O3Mgbm92ZWx0eSwgdGVjaG5pY2FsIGNvcnJlY3RuZXNzLCBjbGFyaXR5IGFuZCBleHBlcmltZW50YWwgZXZhbHVhdGlvbi4gTm90aWNlIHRoYXQgZGlmZmVyZW50IHBhcGVycyBtYXkgbmVlZCBkaWZmZXJlbnQgbGV2ZWxzIG9mIGV2YWx1YXRpb246IGUuZy4sIGEgdGhlb3JldGljYWwgcGFwZXIgdnMuIGFuIGFwcGxpY2F0aW9uIHBhcGVyZGQCAQ9kFgJmDxUBuQFUaGUgcGFwZXIgcHJlc2VudHMgYW4gaW50ZXJlc3RpbmcgcHJvYmxlbSB0aGF0IGhhdmUgcmVhbCBwcmFjdGljYWwgdmFsdWVzLjxiciAvPjxiciAvPlRoZSBleHBlcmltZW50YWwgcmVzdWx0cyBhcmUgcXVpdGUgY29udmluY2luZywgZXNwLiB3aGVuIGNvbXBhcmVkIHdpdGggb3RoZXIgdHlwZXMgb2YgcHJvb2ZyZWFkaW5nLmQCAw9kFgRmDw8WAh8BBf0BUGFwZXIgV2Vha25lc3Nlcy4gRGlzY3VzcyB0aGUgbmVnYXRpdmUgYXNwZWN0czogbGFjayBvZiBub3ZlbHR5IG9yIGNsYXJpdHksIHRlY2huaWNhbCBlcnJvcnMsIGluc3VmZmljaWVudCBleHBlcmltZW50YWwgZXZhbHVhdGlvbiwgZXRjLiBQbGVhc2UganVzdGlmeSB5b3VyIGNvbW1lbnRzIGluIGdyZWF0IGRldGFpbC4gSWYgeW91IHRoaW5rIHRoZSBwYXBlciBpcyBub3Qgbm92ZWwsIGV4cGxhaW4gd2h5IGFuZCBwcm92aWRlIGV2aWRlbmNlc2RkAgEPZBYCZg8VAcIBVGhlIHRlY2huaWNhbCBhcHByb2FjaCBpcyByYXRoZXIgaW5jcmVtZW50YWwgaW4gdGVybXMgb2Ygbm92ZWx0eSBhcyBpdCBzaW1wbHkgdXNlcyBDTk4uIDxiciAvPjxiciAvPlRoZSBhcHBsaWNhdGlvbiBoYXMgcmVhbCB2YWx1ZXMgbm90IGlzIG5vdCBvZiBzdWZmaWNpZW50IGludGVyZXN0IHRvIHRoZSBnZW5lcmFsIENWIGNvbW11bml0eS5kAgQPZBYEZg8PFgIfAQUSUHJlbGltaW5hcnkgUmF0aW5nZGQCAQ9kFgJmDxUBC1dlYWsgUmVqZWN0ZAIFD2QWBGYPDxYCHwEF+QFQcmVsaW1pbmFyeSBFdmFsdWF0aW9uLiBQbGVhc2UgaW5kaWNhdGUgdG8gdGhlIEFDLCB5b3VyIGZlbGxvdyByZXZpZXdlcnMsIGFuZCB0aGUgYXV0aG9ycyB5b3VyIGN1cnJlbnQgb3BpbmlvbiBvbiB0aGUgcGFwZXIuIFBsZWFzZSBzdW1tYXJpemUgdGhlIGtleSB0aGluZ3MgeW91IHdvdWxkIGxpa2UgdGhlIGF1dGhvcnMgdG8gaW5jbHVkZSBpbiB0aGVpciByZWJ1dHRhbHMgdG8gZmFjaWxpdGF0ZSB5b3VyIGRlY2lzaW9uIG1ha2luZy5kZAIBD2QWAmYPFQFUSXQgaXMgcmVjb21tZW5kZWQgdGhhdCB0aGUgYXV0aG9ycyBzdWJtaXQgdGhpcyB3b3JrIHRvIGEgbWVkaWNhbCBpbWFnaW5nIGNvbmZlcmVuY2UuZAIGD2QWBGYPDxYCHwEFvQJDb25maWRlbmNlLiBXcml0ZSDigJxWZXJ5IENvbmZpZGVudCZxdW90OyB0byBzdHJlc3MgeW91IGFyZSBhYnNvbHV0ZWx5IHN1cmUgYWJvdXQgeW91ciBjb25jbHVzaW9ucyAoZS5nLiwgeW91IGFyZSBhbiBleHBlcnQgd29ya2luZyBpbiB0aGUgYXJlYSksIOKAnENvbmZpZGVudOKAnSB0byBzdHJlc3MgeW91IGFyZSBtb3N0bHkgc3VyZSBhYm91dCB5b3VyIGNvbmNsdXNpb25zIChlLmcuLCB5b3UgYXJlIG5vdCBhbiBleHBlcnQgYnV0IGFyZSBrbm93bGVkZ2VhYmxlKS4gJnF1b3Q7Tm90IENvbmZpZGVudCZxdW90OyBpbiBhbGwgdGhlIG90aGVyIGNhc2VzLmRkAgEPZBYCZg8VAQ5WZXJ5IENvbmZpZGVudGQCBw9kFgRmDw8WAh8BBfUBRmluYWwgUmVjb21tZW5kYXRpb24uIEFmdGVyIHJlYWRpbmcgdGhlIGF1dGhvciYjMzk7cyByZWJ1dHRhbCBhbmQgdGhlIGRpc2N1c3Npb24sIHBsZWFzZSBleHBsYWluIHlvdXIgZmluYWwgcmVjb21tZW5kYXRpb24uIFlvdXIgZXhwbGFuYXRpb24gd2lsbCBiZSBvZiBoaWdoZXN0IGltcG9ydGFuY2UgZm9yIG1ha2luZyBhY2NlcHRhbmNlIGRlY2lzaW9ucyBhbmQgZm9yIGRlY2lkaW5mIGJldHdlZW4gcG9zdGVycyBhbmQgb3JhbHNkZAIBD2QWAmYPFQHRAUhhdmluZyByZWFkIHRoZSBvdGhlciByZXZpZXdlcnMnIGNvbW1lbnRzIGFuZCB0aGUgYXV0aG9ycycgcmVidXR0YWwsIEkgd2lsbCBzdGljayB0byBteSBvcmlnaW5hbCBqdWRnZW1lbnQ6IHRoZSB0ZWNobmljYWwgbm92ZWx0eSBpcyBpbmNyZW1lbnRhbCBhbmQgdGhlIHBhcGVyIGlzIGJldHRlciBzdWl0ZWQgZm9yIGEgbWVkaWNhbCBpbWFnaW5nIGNvbmZlcmVuY2UuZAIID2QWBGYPDxYCHwEFb0ZpbmFsIHJhdGluZy4gQWZ0ZXIgcmVhZGluZyB0aGUgYXV0aG9yJiMzOTtzIHJlYnV0dGFsLCBwbGVhc2UgcmF0ZSB0aGUgcGFwZXIgYWNjb3JkaW5nIHRvIHRoZSBmb2xsb3dpbmcgY2hvaWNlc2RkAgEPZBYCZg8VAQtXZWFrIFJlamVjdGQCCQ8PFgIfAGhkZAIIDxUBAGQCAg9kFgYCAw9kFgJmDxUBE0Fzc2lnbmVkX1Jldmlld2VyXzNkAgcPPCsAEQMADxYEHwNnHwICCGQBEBYAFgAWAAwUKwAAFgJmD2QWEgIBD2QWBGYPDxYCHwEFSlBhcGVyIFN1bW1hcnkuIFBsZWFzZSBzdW1tYXJpemUgaW4geW91ciBvd24gd29yZHMgd2hhdCB0aGUgcGFwZXIgaXMgYWJvdXQuZGQCAQ9kFgJmDxUBhgtUaGlzIHdvcmsgcHJlc2VudHMgaW50ZXJhY3RpdmUgYXMgd2VsbCBhcyBhdXRvbWF0aWMgcHJvb2ZyZWFkaW5nIG9wdGlvbnMgdG8gaW1wcm92ZSBvbiB0eXBpY2FsIHNlZ21lbnRhdGlvbiBlcnJvcnMgcHJvZHVjZWQgYnkgYXV0b21hdGljIGNvbm5lY3RvbWljcyBpbWFnZSBzZWdtZW50YXRpb24gbWV0aG9kcy4gVGhlIGFpbSBvZiB0aGUgd29yayBpcyB0byBpZGVudGlmeSBwb3RlbnRpYWwgc3BsaXQgYW5kIG1lcmdlIGVycm9ycyBpbiB0aGUgb3V0cHV0IG9mIGFuIGF1dG9tYXRpYyBzZWdtZW50YXRpb24gYW5kIHRvIGVpdGhlciBwcmVzZW50IHN1Y2ggZXJyb3JzIHRvIGEgdXNlciBmb3Igc2ltcGxlLCBmYXN0IGNvcnJlY3Rpb24sIG9yIHRvIGV2ZW4gY29ycmVjdCBhdXRvbWF0aWNhbGx5IGJ5IHVzaW5nIGFuIGFwcHJvcHJpYXRlIHRocmVzaG9sZCBvbiAiZXJyb3JuZXNzIi1wcm9iYWJpbGl0eS4gVGhlIHByb29mcmVhZCBtZXRob2QgaXMgaW1wbGVtZW50ZWQgYXMgYSBjbGFzc2lmaWVyIHByZWRpY3Rpbmcgc3BsaXQgZXJyb3JzIGluIHByZXNlbnRlZCBwYXRjaGVzLiBUaGUgY2xhc3NpZmllciBpcyBpbXBsZW1lbnRlZCBhcyBhIHN0cmFpZ2h0LWZvcndhcmQgQ05OLCB0cmFpbmVkIG9uIHBhdGNoZXMgd2hlcmUgaW5mb3JtYXRpb24gb24gcGF0Y2hlcyBhYm91dCBjb250YWluaW5nIGEgc3BsaXQgZXJyb3IgaXMgYXZhaWxhYmxlLiBJbnB1dHMgZm9yIHRoZSBjbGFzc2lmaWVyIGFyZSBpbWFnZSBpbmZvcm1hdGlvbiwgYm9yZGVycyBvZiB0aGUgYXV0b21hdGljIHNlZ21lbnRhdGlvbiByZWdpb25zLCBhIGJpbmFyeSBtYXNrIGNvbnRhaW5pbmcgdGhlIHJlZ2lvbiB0byBiZSBhc3Nlc3NlZCBpZiBpdCBzaG91bGQgYmUgc3BsaXQgb3Igbm90IGFuZCBhIGRpbGF0ZWQgYm9yZGVyIG9mIHRoZSBwb3RlbnRpYWwgc3BsaXQuIEEgc2ltcGxlIHByb2NlZHVyZSBpbnZvbHZpbmcgYSBkaWxhdGVkIHNlZ21lbnRhdGlvbiByZWdpb24gYW5kIHNlZWRlZC13YXRlcnNoZWQgZnJvbSBwb2ludHMgcmFuZG9tbHkgaW4gdGhhdCBib3JkZXIgZW5hYmxlcyB0aGF0IHRoZSBzYW1lIHNwbGl0IGVycm9yIGNsYXNzaWZpZXIgY2FuIGJlIHVzZWQgYWZ0ZXIgaW52ZXJzaW9uIG9mIHRoZSBlcnJvciBwcm9iYWJpbGl0eSBmb3IgZGV0ZWN0aW5nIG1lcmdlIGVycm9ycy4gVGhlIHByb3Bvc2VkIG1ldGhvZCBpcyBleHRlbnNpdmVseSBldmFsdWF0ZWQgb24gc2V2ZXJhbCBkYXRhIHNldHMsIGFuZCBjb21wYXJpc29uIHRvIHN0YXRlIG9mIHRoZSBhcnQgbWV0aG9kcyB1c2luZyBub3ZpY2UgYW5kIGV4cGVydCB1c2VyIGludGVyYWN0aW9ucyBhcyB3ZWxsIGFzIGF1dG9tYXRpYyBwcm9wb3NhbHMgYXJlIHBlcmZvcm1lZCwgc2hvd2luZyBmYXZvcmFibGUgcmVzdWx0cyBvZiB0aGUgbm92ZWwgYXBwcm9hY2guZAICD2QWBGYPDxYCHwEFkwJQYXBlciBTdHJlbmd0aHMuIFBvc2l0aXZlIGFzcGVjdHMgb2YgdGhlIHBhcGVyLiBCZSBzdXJlIHRvIGNvbW1lbnQgb24gdGhlIHBhcGVyJiMzOTtzIG5vdmVsdHksIHRlY2huaWNhbCBjb3JyZWN0bmVzcywgY2xhcml0eSBhbmQgZXhwZXJpbWVudGFsIGV2YWx1YXRpb24uIE5vdGljZSB0aGF0IGRpZmZlcmVudCBwYXBlcnMgbWF5IG5lZWQgZGlmZmVyZW50IGxldmVscyBvZiBldmFsdWF0aW9uOiBlLmcuLCBhIHRoZW9yZXRpY2FsIHBhcGVyIHZzLiBhbiBhcHBsaWNhdGlvbiBwYXBlcmRkAgEPZBYCZg8VAfoMVGhlIHBhcGVyIGFkZHJlc3NlcyBhIHZlcnkgaW1wb3J0YW50IHJlc2VhcmNoIHF1ZXN0aW9uIGluIGNvbm5lY3RvbWljcywgc2luY2UgZXZlbiB3aXRoIHZlcnkgZ29vZCBhdXRvbWF0aWMgc2VnbWVudGF0aW9uIG1ldGhvZHMsIGl0IGlzIHVuYXZvaWRhYmxlIHRoYXQgc2VnbWVudGF0aW9uIGVycm9ycyB3aWxsIG9jY3VyLiBEdWUgdG8gdGhlIGV4dHJlbWVseSBsYXJnZSBkYXRhIHNldHMgaW52b2x2ZWQgaW4gY29ubmVjdG9taWNzLCB0aGVzZSBlcnJvcnMgYXJlIHN0aWxsIHJlcXVpcmluZyBhIGh1Z2UgYW1vdW50IG9mIHByb29mcmVhZGluZyBlZmZvcnQuIEZ1cnRoZXJtb3JlLCBwcm92aWRpbmcgcHVyZWx5IG1hbnVhbCBleHBlcnQgYW5ub3RhdGlvbnMgZm9yIHRyYWluaW5nIHBpeGVsd2lzZSBzZWdtZW50YXRpb24gY2xhc3NpZmllcnMgaXMgYSB0ZWRpb3VzIGFuZCBleHBlbnNpdmUgcHJvY2Vzcy4gVGhlIHBhcGVyIGRlYWxzIHdpdGggYm90aCBpc3N1ZXMgYW5kIHByZXNlbnRzIGFuIGludGVyZXN0aW5nIGFuZCByZWxldmFudCBub3ZlbCBjb250cmlidXRpb24uIExlYXJuaW5nIHRoZSBzcGxpdCBlcnJvcnMgYW5kIHJldXNpbmcgdGhlIGNsYXNzaWZpZXIgZm9yIGFsc28gc2VsZWN0aW5nIG1lcmdlIGVycm9yIHByb3Bvc2l0aW9ucyBpcyBhIG5lYXQgaWRlYSwgYW5kIC0gZGVzcGl0ZSBzdGlsbCBzaG93aW5nIGxpbWl0YXRpb25zIGluIHRoaXMgd29yayAtIGlzIGEgZ29vZCBzdGFydGluZyBwb2ludCB0byBidWlsZCB1cG9uIGluIGZ1dHVyZSB3b3JrLiBUaGUgbWV0aG9kb2xvZ2ljYWwgY29udHJpYnV0aW9uIGluIHRlcm1zIG9mIHB1dHRpbmcgdGhlIGV4cGVydCBpbnRvIHRoZSBwcm9vZnJlYWRpbmcgbG9vcCBpcyByZWxldmFudCBmb3IgYmVpbmcgcHJlc2VudGVkIGF0IElDQ1YuIENob2ljZSBvZiBpbXBsZW1lbnRhdGlvbiBvZiB0aGUgc3BsaXQgZXJyb3IgY2xhc3NpZmllciBhcyBhIHN0cmFpZ2h0LWZvcndhcmQgQ05OIGlzIHdlbGwganVzdGlmaWVkIGFuZCByZWFzb25hYmxlLCBlc3BlY2lhbGx5IGdpdmVuIHRoZSBmb3VyIGlucHV0IGZlYXR1cmUgY2hhbm5lbHMsIHRoYXQgZWZmZWN0aXZlbHkgY29tYmluZXMgYWxsIHJlbGV2YW50IGluZm9ybWF0aW9uIGZvciBsZWFybmluZyB0aGUgc3BsaXQgZXJyb3IgY2xhc3NpZmllci4gVGhlIHBhcGVyIGlzIHZlcnkgd2VsbCB3cml0dGVuIGFuZCBlYXN5IHRvIGZvbGxvdy4gVGhlIGF1dGhvcnMgcHJvdmlkZSB2ZXJ5IGV4dGVuc2l2ZSBldmFsdWF0aW9uIG9mIHRoZWlyIHdvcmssIGludm9sdmluZyB1c2VyIHN0dWRpZXMgdXNpbmcgYSBzaW1wbGUgdXNlciBpbnRlcmZhY2UgdG8gZGVjaWRlIGJldHdlZW4gY29ycmVjdGlvbiBvcHRpb25zIGJ5IGEgc2luZ2xlIGNsaWNrIHdpdGggbm92aWNlIGFuZCBleHBlcnQgdXNlcnMgYXMgd2VsbCBhcyBhbiBhdXRvbWF0aWMgcHJvcG9zYWwgZm9yIGNvcnJlY3Rpb25zLiBJdCBpcyB2ZXJ5IGludGVyZXN0aW5nIHRoYXQgdGhlaXIgYXV0b21hdGVkIG1ldGhvZCBwZXJmb3JtcyB2ZXJ5IHdlbGwgY29tcGFyZWQgdG8gZXhwZXJ0IHVzZXJzLiBUaGUgcHJvbWlzZSB0byByZWxlYXNlIHRoaXMgd29yayB0byB0aGUgcHVibGljIGNvdWxkIGJlIGEgbGFyZ2UgYmVuZWZpdCBmb3IgdGhlIHJlc2VhcmNoIGNvbW11bml0eS5kAgMPZBYEZg8PFgIfAQX9AVBhcGVyIFdlYWtuZXNzZXMuIERpc2N1c3MgdGhlIG5lZ2F0aXZlIGFzcGVjdHM6IGxhY2sgb2Ygbm92ZWx0eSBvciBjbGFyaXR5LCB0ZWNobmljYWwgZXJyb3JzLCBpbnN1ZmZpY2llbnQgZXhwZXJpbWVudGFsIGV2YWx1YXRpb24sIGV0Yy4gUGxlYXNlIGp1c3RpZnkgeW91ciBjb21tZW50cyBpbiBncmVhdCBkZXRhaWwuIElmIHlvdSB0aGluayB0aGUgcGFwZXIgaXMgbm90IG5vdmVsLCBleHBsYWluIHdoeSBhbmQgcHJvdmlkZSBldmlkZW5jZXNkZAIBD2QWAmYPFQEZTm8gd2Vha25lc3NlcyB3ZXJlIGZvdW5kLmQCBA9kFgRmDw8WAh8BBRJQcmVsaW1pbmFyeSBSYXRpbmdkZAIBD2QWAmYPFQELV2VhayBBY2NlcHRkAgUPZBYEZg8PFgIfAQX5AVByZWxpbWluYXJ5IEV2YWx1YXRpb24uIFBsZWFzZSBpbmRpY2F0ZSB0byB0aGUgQUMsIHlvdXIgZmVsbG93IHJldmlld2VycywgYW5kIHRoZSBhdXRob3JzIHlvdXIgY3VycmVudCBvcGluaW9uIG9uIHRoZSBwYXBlci4gUGxlYXNlIHN1bW1hcml6ZSB0aGUga2V5IHRoaW5ncyB5b3Ugd291bGQgbGlrZSB0aGUgYXV0aG9ycyB0byBpbmNsdWRlIGluIHRoZWlyIHJlYnV0dGFscyB0byBmYWNpbGl0YXRlIHlvdXIgZGVjaXNpb24gbWFraW5nLmRkAgEPZBYCZg8VAagCVGhpcyBwYXBlciBpcyBhbiBleGNlbGxlbnQgd29yayBhbmQgaW4gbXkgb3BpbmlvbiBzaG91bGQgYmUgYWNjZXB0ZWQgZm9yIHB1YmxpY2F0aW9uIGFzIGlzLiBNeSBkZWNpc2lvbiB0byB2b3RlIGZvciB3ZWFrIGFjY2VwdCBpcyBkdWUgdG8gdGhlIGZhY3QsIHRoYXQgdGhlIG1haW4gdG9waWMgb2YgdGhlIHBhcGVyIGlzIG5vdCBhIGNvcmUgdG9waWMgZm9yIElDQ1YsIHN1Y2ggdGhhdCB0aGUgcHJvcG9zZWQgbWV0aG9kIGlzIHByb2JhYmx5IHRvbyBzcGVjaWZpYyB0byBqdXN0aWZ5IG9yYWwgcHJlc2VudGF0aW9uLiBkAgYPZBYEZg8PFgIfAQW9AkNvbmZpZGVuY2UuIFdyaXRlIOKAnFZlcnkgQ29uZmlkZW50JnF1b3Q7IHRvIHN0cmVzcyB5b3UgYXJlIGFic29sdXRlbHkgc3VyZSBhYm91dCB5b3VyIGNvbmNsdXNpb25zIChlLmcuLCB5b3UgYXJlIGFuIGV4cGVydCB3b3JraW5nIGluIHRoZSBhcmVhKSwg4oCcQ29uZmlkZW504oCdIHRvIHN0cmVzcyB5b3UgYXJlIG1vc3RseSBzdXJlIGFib3V0IHlvdXIgY29uY2x1c2lvbnMgKGUuZy4sIHlvdSBhcmUgbm90IGFuIGV4cGVydCBidXQgYXJlIGtub3dsZWRnZWFibGUpLiAmcXVvdDtOb3QgQ29uZmlkZW50JnF1b3Q7IGluIGFsbCB0aGUgb3RoZXIgY2FzZXMuZGQCAQ9kFgJmDxUBDlZlcnkgQ29uZmlkZW50ZAIHD2QWBGYPDxYCHwEF9QFGaW5hbCBSZWNvbW1lbmRhdGlvbi4gQWZ0ZXIgcmVhZGluZyB0aGUgYXV0aG9yJiMzOTtzIHJlYnV0dGFsIGFuZCB0aGUgZGlzY3Vzc2lvbiwgcGxlYXNlIGV4cGxhaW4geW91ciBmaW5hbCByZWNvbW1lbmRhdGlvbi4gWW91ciBleHBsYW5hdGlvbiB3aWxsIGJlIG9mIGhpZ2hlc3QgaW1wb3J0YW5jZSBmb3IgbWFraW5nIGFjY2VwdGFuY2UgZGVjaXNpb25zIGFuZCBmb3IgZGVjaWRpbmYgYmV0d2VlbiBwb3N0ZXJzIGFuZCBvcmFsc2RkAgEPZBYCZg8VAU1NeSBvcGluaW9uIGFib3V0IHRoaXMgcGFwZXIgcmVtYWlucyB1bmNoYW5nZWQgYWZ0ZXIgcmVidXR0YWwgYW5kIGRpc2N1c3Npb24uIGQCCA9kFgRmDw8WAh8BBW9GaW5hbCByYXRpbmcuIEFmdGVyIHJlYWRpbmcgdGhlIGF1dGhvciYjMzk7cyByZWJ1dHRhbCwgcGxlYXNlIHJhdGUgdGhlIHBhcGVyIGFjY29yZGluZyB0byB0aGUgZm9sbG93aW5nIGNob2ljZXNkZAIBD2QWAmYPFQEGUG9zdGVyZAIJDw8WAh8AaGRkAggPFQEAZBgDBR9jdGwwMCRjcGgkZ3ZSZXZpZXdzJGN0bDAyJGN0bDAwDzwrAAwBCAIBZAUfY3RsMDAkY3BoJGd2UmV2aWV3cyRjdGwwMSRjdGwwMA88KwAMAQgCAWQFH2N0bDAwJGNwaCRndlJldmlld3MkY3RsMDAkY3RsMDAPPCsADAEIAgFkz5y0o1F+tu/zYOJpBhUjNc6Mn5U=" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="DCCEC959" />
+</div>
+<table id="header">
+<tr>
+<td width="100%"><a href='http&#58;&#47;&#47;iccv2017.thecvf.com&#47;' target='_blank'>ICCV 2017</a><br /><b>International Conference on Computer Vision 2017</b><br />Oct 22, 2017 - Oct 29, 2017, Venice, Italy</td>
+</tr>
+<tr class='headerSeparator'>
+    <td style='height:5px'></td>
+</tr>
+</table>
+<table id="content"><tr><td class='contentBorder'>&nbsp;</td><td class="contentContainer">
+<span id="ctl00_cph_Label4" style="font-size:Small;font-weight:bold;">Reviews For Paper</span>
+<span id="ctl00_cph_lblErrorMessage" class="error" style="font-size:Small;"></span>
+<div id="ctl00_cph_pnlReviews">
+	
+    <span style="font-size:Small;"><table id="ctl00_cph_infoSubmission_tblInfo" class="nicetable2" style="text-align:left; width: 100%;">
+		<tr>
+			<td width="100px"><b>Paper ID</b></td>
+			<td><span id="ctl00_cph_infoSubmission_lblPaperId" style="font-size:Small;">922</span></td>
+		</tr>
+		<tr>
+			<td><b>Title</b></td>
+			<td><span id="ctl00_cph_infoSubmission_lblPaperTitle" style="font-size:Small;">Guided Proofreading of Automatic Segmentations for Connectomics</span></td>
+		</tr>
+	</table>
+	</span>
+    
+    
+            <hr />
+            <table>
+                <tr>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl00_Label2" style="font-size:Small;font-weight:bold;">Masked Reviewer ID:</span>
+                    </td>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl00_Label1" style="font-size:Small;">Assigned_Reviewer_1</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl00_Label3" style="font-size:Small;font-weight:bold;">Review:</span>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <div>
+		<table cellspacing="0" cellpadding="4" rules="all" border="1" style="color:#333333;border-width:1px;border-style:None;font-family:Verdana;font-size:Small;border-collapse:collapse;">
+			<tr style="color:White;background-color:#5D7B9D;font-weight:bold;">
+				<th scope="col">Question</th><th scope="col">&nbsp;</th>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Paper Summary. Please summarize in your own words what the paper is about.</td><td style="width:80%;">
+                            This paper proposed a guided proofreading framework for connectomics segmentation. It is based on the training of a CNN that detects split errors and merge errors. Extensive experiments have been done to evaluate the proposed method.
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Paper Strengths. Positive aspects of the paper. Be sure to comment on the paper&#39;s novelty, technical correctness, clarity and experimental evaluation. Notice that different papers may need different levels of evaluation: e.g., a theoretical paper vs. an application paper</td><td style="width:80%;">
+                            The authors proposed a fast implementation that focused on the cell boundaries, instead of working on all pixels, to reduce computational burden. This method worked well on detecting boundaries with split errors. <br /><br />The authors performed extensive experiments to evaluate their method, which is very nice for a system paper. 
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Paper Weaknesses. Discuss the negative aspects: lack of novelty or clarity, technical errors, insufficient experimental evaluation, etc. Please justify your comments in great detail. If you think the paper is not novel, explain why and provide evidences</td><td style="width:80%;">
+                            For methodological development, this paper lacks novelty.<br /><br />The method for merge error detection using the inverted images was not clear to me. In addition, the performance of merge error detection is so poor that it should not be included in the paper. This poor performance suggested the method might not be right. This also makes the title of the paper overstated. I would suggest changing the title to "guided proofreading of split errors in automated segmentation for connectomics", and removing the merge error detection part. <br />
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Preliminary Rating</td><td style="width:80%;">
+                            Borderline
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Preliminary Evaluation. Please indicate to the AC, your fellow reviewers, and the authors your current opinion on the paper. Please summarize the key things you would like the authors to include in their rebuttals to facilitate your decision making.</td><td style="width:80%;">
+                            1. Merge error detection is confusing, and the reason of its poor performance should be discussed. Please comment on over segmentation as a pre-processing step.  <br />2. Experiment is extensive. However, for VI comparison, p values should be provided. It should be stated if the p values are significant.<br /><br />
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Confidence. Write “Very Confident&quot; to stress you are absolutely sure about your conclusions (e.g., you are an expert working in the area), “Confident” to stress you are mostly sure about your conclusions (e.g., you are not an expert but are knowledgeable). &quot;Not Confident&quot; in all the other cases.</td><td style="width:80%;">
+                            Confident
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Final Recommendation. After reading the author&#39;s rebuttal and the discussion, please explain your final recommendation. Your explanation will be of highest importance for making acceptance decisions and for decidinf between posters and orals</td><td style="width:80%;">
+                            After reviewing the author's rebuttal and the comments from the other reviewers, I would like to recommend the acceptance of the paper as a poster. The value of medical imaging research cannot be overstated in computer vision. 
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Final rating. After reading the author&#39;s rebuttal, please rate the paper according to the following choices</td><td style="width:80%;">
+                            Poster
+                        </td>
+			</tr>
+		</table>
+	</div>
+            
+        
+            <hr />
+            <table>
+                <tr>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl01_Label2" style="font-size:Small;font-weight:bold;">Masked Reviewer ID:</span>
+                    </td>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl01_Label1" style="font-size:Small;">Assigned_Reviewer_2</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl01_Label3" style="font-size:Small;font-weight:bold;">Review:</span>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <div>
+		<table cellspacing="0" cellpadding="4" rules="all" border="1" style="color:#333333;border-width:1px;border-style:None;font-family:Verdana;font-size:Small;border-collapse:collapse;">
+			<tr style="color:White;background-color:#5D7B9D;font-weight:bold;">
+				<th scope="col">Question</th><th scope="col">&nbsp;</th>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Paper Summary. Please summarize in your own words what the paper is about.</td><td style="width:80%;">
+                            The paper presents an automatic method to guider a user to proofread automated cell segmentation results in connectomics. There are two types of errors: merge and split errors. CNN classifiers are trained to recommend candidate merges and splits to the user in order to reduce the time needed to find and correct errors, which is demonstrated by the experiments esp. when compared with other types of proofreading. 
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Paper Strengths. Positive aspects of the paper. Be sure to comment on the paper&#39;s novelty, technical correctness, clarity and experimental evaluation. Notice that different papers may need different levels of evaluation: e.g., a theoretical paper vs. an application paper</td><td style="width:80%;">
+                            The paper presents an interesting problem that have real practical values.<br /><br />The experimental results are quite convincing, esp. when compared with other types of proofreading.
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Paper Weaknesses. Discuss the negative aspects: lack of novelty or clarity, technical errors, insufficient experimental evaluation, etc. Please justify your comments in great detail. If you think the paper is not novel, explain why and provide evidences</td><td style="width:80%;">
+                            The technical approach is rather incremental in terms of novelty as it simply uses CNN. <br /><br />The application has real values not is not of sufficient interest to the general CV community.
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Preliminary Rating</td><td style="width:80%;">
+                            Weak Reject
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Preliminary Evaluation. Please indicate to the AC, your fellow reviewers, and the authors your current opinion on the paper. Please summarize the key things you would like the authors to include in their rebuttals to facilitate your decision making.</td><td style="width:80%;">
+                            It is recommended that the authors submit this work to a medical imaging conference.
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Confidence. Write “Very Confident&quot; to stress you are absolutely sure about your conclusions (e.g., you are an expert working in the area), “Confident” to stress you are mostly sure about your conclusions (e.g., you are not an expert but are knowledgeable). &quot;Not Confident&quot; in all the other cases.</td><td style="width:80%;">
+                            Very Confident
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Final Recommendation. After reading the author&#39;s rebuttal and the discussion, please explain your final recommendation. Your explanation will be of highest importance for making acceptance decisions and for decidinf between posters and orals</td><td style="width:80%;">
+                            Having read the other reviewers' comments and the authors' rebuttal, I will stick to my original judgement: the technical novelty is incremental and the paper is better suited for a medical imaging conference.
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Final rating. After reading the author&#39;s rebuttal, please rate the paper according to the following choices</td><td style="width:80%;">
+                            Weak Reject
+                        </td>
+			</tr>
+		</table>
+	</div>
+            
+        
+            <hr />
+            <table>
+                <tr>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl02_Label2" style="font-size:Small;font-weight:bold;">Masked Reviewer ID:</span>
+                    </td>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl02_Label1" style="font-size:Small;">Assigned_Reviewer_3</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span id="ctl00_cph_gvReviews_ctl02_Label3" style="font-size:Small;font-weight:bold;">Review:</span>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <div>
+		<table cellspacing="0" cellpadding="4" rules="all" border="1" style="color:#333333;border-width:1px;border-style:None;font-family:Verdana;font-size:Small;border-collapse:collapse;">
+			<tr style="color:White;background-color:#5D7B9D;font-weight:bold;">
+				<th scope="col">Question</th><th scope="col">&nbsp;</th>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Paper Summary. Please summarize in your own words what the paper is about.</td><td style="width:80%;">
+                            This work presents interactive as well as automatic proofreading options to improve on typical segmentation errors produced by automatic connectomics image segmentation methods. The aim of the work is to identify potential split and merge errors in the output of an automatic segmentation and to either present such errors to a user for simple, fast correction, or to even correct automatically by using an appropriate threshold on "errorness"-probability. The proofread method is implemented as a classifier predicting split errors in presented patches. The classifier is implemented as a straight-forward CNN, trained on patches where information on patches about containing a split error is available. Inputs for the classifier are image information, borders of the automatic segmentation regions, a binary mask containing the region to be assessed if it should be split or not and a dilated border of the potential split. A simple procedure involving a dilated segmentation region and seeded-watershed from points randomly in that border enables that the same split error classifier can be used after inversion of the error probability for detecting merge errors. The proposed method is extensively evaluated on several data sets, and comparison to state of the art methods using novice and expert user interactions as well as automatic proposals are performed, showing favorable results of the novel approach.
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Paper Strengths. Positive aspects of the paper. Be sure to comment on the paper&#39;s novelty, technical correctness, clarity and experimental evaluation. Notice that different papers may need different levels of evaluation: e.g., a theoretical paper vs. an application paper</td><td style="width:80%;">
+                            The paper addresses a very important research question in connectomics, since even with very good automatic segmentation methods, it is unavoidable that segmentation errors will occur. Due to the extremely large data sets involved in connectomics, these errors are still requiring a huge amount of proofreading effort. Furthermore, providing purely manual expert annotations for training pixelwise segmentation classifiers is a tedious and expensive process. The paper deals with both issues and presents an interesting and relevant novel contribution. Learning the split errors and reusing the classifier for also selecting merge error propositions is a neat idea, and - despite still showing limitations in this work - is a good starting point to build upon in future work. The methodological contribution in terms of putting the expert into the proofreading loop is relevant for being presented at ICCV. Choice of implementation of the split error classifier as a straight-forward CNN is well justified and reasonable, especially given the four input feature channels, that effectively combines all relevant information for learning the split error classifier. The paper is very well written and easy to follow. The authors provide very extensive evaluation of their work, involving user studies using a simple user interface to decide between correction options by a single click with novice and expert users as well as an automatic proposal for corrections. It is very interesting that their automated method performs very well compared to expert users. The promise to release this work to the public could be a large benefit for the research community.
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Paper Weaknesses. Discuss the negative aspects: lack of novelty or clarity, technical errors, insufficient experimental evaluation, etc. Please justify your comments in great detail. If you think the paper is not novel, explain why and provide evidences</td><td style="width:80%;">
+                            No weaknesses were found.
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Preliminary Rating</td><td style="width:80%;">
+                            Weak Accept
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Preliminary Evaluation. Please indicate to the AC, your fellow reviewers, and the authors your current opinion on the paper. Please summarize the key things you would like the authors to include in their rebuttals to facilitate your decision making.</td><td style="width:80%;">
+                            This paper is an excellent work and in my opinion should be accepted for publication as is. My decision to vote for weak accept is due to the fact, that the main topic of the paper is not a core topic for ICCV, such that the proposed method is probably too specific to justify oral presentation. 
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Confidence. Write “Very Confident&quot; to stress you are absolutely sure about your conclusions (e.g., you are an expert working in the area), “Confident” to stress you are mostly sure about your conclusions (e.g., you are not an expert but are knowledgeable). &quot;Not Confident&quot; in all the other cases.</td><td style="width:80%;">
+                            Very Confident
+                        </td>
+			</tr><tr style="color:#333333;background-color:#F7F6F3;">
+				<td style="width:20%;">Final Recommendation. After reading the author&#39;s rebuttal and the discussion, please explain your final recommendation. Your explanation will be of highest importance for making acceptance decisions and for decidinf between posters and orals</td><td style="width:80%;">
+                            My opinion about this paper remains unchanged after rebuttal and discussion. 
+                        </td>
+			</tr><tr style="color:#284775;background-color:White;">
+				<td style="width:20%;">Final rating. After reading the author&#39;s rebuttal, please rate the paper according to the following choices</td><td style="width:80%;">
+                            Poster
+                        </td>
+			</tr>
+		</table>
+	</div>
+            
+        
+    <br />
+    <br />
+
+</div>
+</td><td class='contentBorder'>&nbsp;</td></tr></table>
+</form>
+</body>
+</html>
