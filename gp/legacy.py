@@ -410,7 +410,7 @@ class Legacy(object):
 
 
   @staticmethod
-  def get_merge_error_image(input_image, input_rhoana, label, border):
+  def get_merge_error_image(input_image, input_rhoana, label, border, returnbb=False):
 
     binary = Util.threshold(input_rhoana, label)
     binary_dilated = mh.dilate(binary.astype(np.bool))
@@ -491,11 +491,15 @@ class Legacy(object):
 
     sliceoverview = e    
 
+
+    if returnbb:
+      return cropped_image, cropped_binary_border, cropped_combined_border, cropped_border_only, cropped_result, result, sliceoverview, cropped_binary, cropped_fusion, cropped_slice_overview, binary_bbox
+
     return cropped_image, cropped_binary_border, cropped_combined_border, cropped_border_only, cropped_result, result, sliceoverview, cropped_binary, cropped_fusion, cropped_slice_overview
 
 
   @staticmethod
-  def get_split_error_image(input_image, input_rhoana, labels):
+  def get_split_error_image(input_image, input_rhoana, labels, returnbb=False):
 
     if not isinstance(labels, list):
       labels = [labels]
@@ -567,7 +571,12 @@ class Legacy(object):
 
     slice_overview = e    
 
-    return cropped_image, cropped_labels, cropped_borders, cropped_binary_border, cropped_binary_labels, slice_overview, cropped_slice_overview
+    if returnbb:
+      return cropped_image, cropped_labels, cropped_borders, cropped_binary_border, cropped_binary_labels, slice_overview, cropped_slice_overview, cropped_rhoana_bbox
+
+    else:
+      return cropped_image, cropped_labels, cropped_borders, cropped_binary_border, cropped_binary_labels, slice_overview, cropped_slice_overview
+
 
 
 
@@ -580,7 +589,7 @@ class Legacy(object):
     label_sizes = Util.get_histogram(e)
 
     if len(label_sizes) < 2:
-      print 'weird'
+      #print 'weird'
       return e
 
     # we only want to keep the two largest labels

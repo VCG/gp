@@ -23,11 +23,11 @@ class Manager(object):
 
     self._mode = 'GP'
 
-  def start( self, mode ):
+  def start( self, mode, cnn_path='../nets/IPMLB_FULL.p', verbose=True ):
     '''
     '''
 
-    self._cnn = UITools.load_cnn()
+    self._cnn = UITools.load_cnn(cnn_path)
 
     self._mode = mode
 
@@ -45,7 +45,8 @@ class Manager(object):
 
 
     elif self._mode == 'GP':
-        print 'Using GP proper'
+        if verbose:
+            print 'Using GP proper'
 
         self._merge_errors = self.load_merge_errors()
         self._bigM = self.load_split_errors()
@@ -82,8 +83,9 @@ class Manager(object):
     self._input_rhoana = input_rhoana
     self._dojo_bbox = dojo_bbox
 
-    print 'VI at start:', UITools.VI(self._input_gold, self._input_rhoana)[1]
-    print 'aRE at start:', UITools.adaptedRandError(self._input_rhoana, self._input_gold)[1]
+    if verbose:
+        print 'VI at start:', UITools.VI(self._input_gold, self._input_rhoana)[1]
+        print 'aRE at start:', UITools.adaptedRandError(self._input_rhoana, self._input_gold)[1]
 
 
   def gen_active_label_features(self):
@@ -229,7 +231,7 @@ class Manager(object):
     input_rhoana = self._input_rhoana
 
 
-    a,b,c,d,e,f,g,h,i,j = gp.Legacy.get_merge_error_image(input_image[z], input_rhoana[z], label, border)
+    a,b,c,d,e,f,g,h,i,j,k = gp.Legacy.get_merge_error_image(input_image[z], input_rhoana[z], label, border, returnbb=True)
 
     border_before = b
     labels_before = h
@@ -237,8 +239,9 @@ class Manager(object):
     labels_after = i
     slice_overview = g
     cropped_slice_overview = j
+    bbox = k
 
-    return border_before, border_after, labels_before, labels_after, slice_overview, cropped_slice_overview
+    return border_before, border_after, labels_before, labels_after, slice_overview, cropped_slice_overview, bbox
     
   def get_split_error_image(self, split_error, number=1):
 
@@ -249,7 +252,7 @@ class Manager(object):
     input_prob = self._input_prob
     input_rhoana = self._input_rhoana
 
-    a,b,c,d,e,f,g = gp.Legacy.get_split_error_image(input_image[z], input_rhoana[z], labels)
+    a,b,c,d,e,f,g,h = gp.Legacy.get_split_error_image(input_image[z], input_rhoana[z], labels, returnbb=True)
 
     labels_before = b
     borders_before = c
@@ -257,14 +260,49 @@ class Manager(object):
     labels_after = e
     slice_overview = f
     cropped_slice_overview = g
+    bbox = h
 
-    return borders_before, borders_after, labels_before, labels_after, slice_overview, cropped_slice_overview
+    return borders_before, borders_after, labels_before, labels_after, slice_overview, cropped_slice_overview, bbox
 
-  def correct_merge(self, clicked_correction):
+  def correct_merge(self, clicked_correction, do_oracle=False, do_GT=False):
 
     input_image = self._input_image
     input_prob = self._input_prob
     input_rhoana = self._input_rhoana
+
+
+    #
+    # 
+    #
+    oracle_choice = ''
+    delta_vi = -1
+    if do_oracle:
+
+        # lets check what the oracle would do
+        merge_error = self._merge_errors[0]
+        number = 0
+        border = merge_error[3][number][1]
+        z = merge_error[0]
+        label = merge_error[1]
+
+        a,b,c,d,e,f,g,h,i,j = gp.Legacy.get_merge_error_image(input_image[z], input_rhoana[z], label, border)
+
+        oracle_rhoana = f
+
+        # check VI delta
+        old_vi = gp.Util.vi(self._input_gold[z], self._input_rhoana[z])
+        new_vi = gp.Util.vi(self._input_gold[z], oracle_rhoana)
+        delta_vi = old_vi - new_vi
+
+        if delta_vi > 0:
+
+            oracle_choice = '1'
+
+        else:
+
+            oracle_choice = 'current'
+
+
 
     if not clicked_correction == 'current':
         clicked_correction = int(clicked_correction)-1
@@ -285,7 +323,7 @@ class Manager(object):
         self._input_rhoana[z] = new_rhoana
 
         vi = UITools.VI(self._input_gold, input_rhoana)
-        print 'New global VI', vi[0]
+        #print 'New global VI', vi[0]
         self._correction_vis.append(vi[2])        
 
         #
@@ -318,9 +356,9 @@ class Manager(object):
 
         mode = 'split'
 
-    return mode
+    return mode, oracle_choice, delta_vi
 
-  def correct_split(self, clicked_correction):
+  def correct_split(self, clicked_correction, do_oracle=False):
 
     input_image = self._input_image
     input_prob = self._input_prob
@@ -331,6 +369,32 @@ class Manager(object):
     z = split_error[0]
     labels = split_error[1]
     m = self._bigM[z]
+
+
+    #
+    # 
+    #
+    oracle_choice = ''
+    delta_vi = -1
+    if do_oracle:
+
+        oracle_m, oracle_rhoana = UITools.correct_split(self._cnn, m, self._mode, input_image[z], input_prob[z], input_rhoana[z], labels[0], labels[1], oversampling=False)
+
+        # check VI delta
+        old_vi = gp.Util.vi(self._input_gold[z], self._input_rhoana[z])
+        new_vi = gp.Util.vi(self._input_gold[z], oracle_rhoana)
+        delta_vi = old_vi - new_vi
+
+        if delta_vi > 0:
+
+            oracle_choice = '1'
+
+        else:
+
+            oracle_choice = 'current'
+
+
+
 
     if clicked_correction == 'current':
         # we skip this split
@@ -349,12 +413,12 @@ class Manager(object):
         # vi = gp.Util.vi(self._input_gold[z], self._input_rhoana[z])
         # print 'New VI', vi[0]
         vi = UITools.VI(self._input_gold, self._input_rhoana)
-        print 'New global VI', vi[0]
+        #print 'New global VI', vi[0]
         self._correction_vis.append(vi[2])
 
         # self.finish()
         
-    return 'split'
+    return 'split', oracle_choice, delta_vi
 
 
   def store(self):

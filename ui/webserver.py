@@ -115,7 +115,7 @@ class WebServer:
       time_used = splitted_request[4]
       self._manager._corrections.append([splitted_request[1], clicked_correction])
       self._manager._correction_times.append(time_used)
-      new_mode = correction_function(clicked_correction)
+      new_mode, oracle_choice, delta_vi, bbox = correction_function(clicked_correction)
 
       # print self._manager._corrections
       # print self._manager._correction_times

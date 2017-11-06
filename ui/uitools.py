@@ -13,9 +13,9 @@ import cPickle as pickle
 class UITools(object):
 
   @staticmethod
-  def load_cnn():
+  def load_cnn(path='../nets/IPMLB_FULL.p'):
 
-    with open('../nets/IPMLB_FULL.p', 'rb') as f:
+    with open(path, 'rb') as f:
         cnn = pickle.load(f)
 
     cnn.uuid = 'IPMLB'
