@@ -1,7 +1,7 @@
 \section{Results and Discussion}
 
 %We measure the performance of proofreading quantitatively by comparing VI scores of segmentations against ground truth labelings. Lower VI scores indicate less distance to the ground truth and a better segmentation. For all experiments, we report the VI score of the initial segmentation followed by the VI score of the proofreading output.
-Additional plots are available as supplemental material due to limited space. 
+Additional plots and confirmatory data analysis are available as supplemental material due to limited space. 
 
 \subsection{Classification Performance}
 
@@ -84,13 +84,6 @@ While three users of focused proofreading made the initial segmentation worse, a
 
 \paragraph{Expert performance.} Domain experts were able to improve the initial segmentation. With focused proofreading, the median VI of the automatic segmentation was $0.439$ ($SD=0.084$). With guided proofreading, the median VI was $0.396$ ($SD=0.032$, Fig.~\ref{fig:ac4boxplot}).
 
-\CHANGED{\paragraph{Confirmatory Data Analysis.} We use a single factor between-subject design with the factor being the proofreading method (GP, FP, or Dojo). Our hypothesis is that VI reduction is significantly better with GP than with other tools. For this, we treat VI as a continuous variable and use analysis of variance (ANOVA) followed by parametric tests (Welch's t-test).}
-
-\CHANGED{\emph{AC4 subvolume.} For novice performance, we observe a significant effect ($\alpha = 0.05$) of which proofreading tool is used for the three conditions GP, FP, and Dojo [$F(2,27) = 6.446, p = 0.005$] when comparing the mean VI outcome. Post hoc comparisons (after Bonferroni correction) indicate that the mean VI for GP is significantly lower than for FP [$t_{27} = -2.7696, p = 0.0168$], and that the mean VI for GP is significantly lower than for Dojo [$t_{27} = -4.407, p < 0.001$]. This means that novices using GP perform significantly better than using FP and Dojo. 
-A similar trend is visible when comparing the expert performance between GP and FP as the change in mean VI of GP is significantly better ([$F(1,18) = 7.054, p = 0.016$] and [$t_{18} = -2.6559, p = 0.0216$]). For automatic selection with threshold, the difference in mean VI is very large and GP also performs significantly better ([$F(1,18) = 89.902, p < 0.001$] and [$t_{18} = 9.482, p < 0.001$]). The final VI scores of the selection oracle with GP and FP are very similar and the difference between them is not significant [$F(1,18) = 0.795, p = 0.384$]. However, the VI reduction rate of GP is much higher as seen in Fig.~\ref{fig:ac4trails} (right).}
-
-\CHANGED{\emph{L. Cylinder.} The automatic selection with threshold yields similar results as on the other dataset and we observe a significant improvement when using GP instead of FP ([$F(1,98) = 26.676, p < 0.001$], post hoc comparison [$t_{98} = 5.1648, p < 0.001$]). The selection oracles of GP and FP result in very similar final VI scores and the difference is not significant [$F(1,98) = 0.071, p = 0.790$], but GP reaches minimum VI faster in $10,000$ corrections versus FP in $26,170$ corrections.}
-
 \paragraph{Subjective responses.} We used the NASA-TLX workload index to record subjective responses. Mental, physical, and temporal demands were reported slightly higher for participants using focused proofreading. However, these differences were not statistically significant. This is unsurprising as the user interface was the same for both groups.
 
 
@@ -108,6 +101,10 @@ A similar trend is visible when comparing the expert performance between GP and 
 \paragraph{Automatic selection with threshold.} Focused proofreading was not designed to run automatically. This explains the poor performance on the AC4 subvolume (VI of $1.9$, $SD=0.496$) and on the L.~Cylinder dataset (VI of $2.75$, $SD=0.789$). For guided proofreading, we set $p_t=0.95$ for both datasets. This reduces median VI in the AC4 subvolume to $0.398$ ($SD=0.068$). This result is comparable to expert performance. Guided proofreading also reduces VI in the L.~Cylinder data to $0.352$ ($SD=0.087$).
 
 \paragraph{Merge Error Detection.} Guided proofreading performs merge error detection prior to split error detection. The classifier found 10 merge errors in the AC4 subvolume, of which 4 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 of these errors (Prec./Recall 0.87/0.80, F1-score 0.80). This was not captured in median VI, but resulted in a mean VI reduction from $0.512$ ($SD=0.09$) to $0.509$ ($SD=0.086$). The selection oracle reduced mean VI with only merge errors to $0.508$ ($SD=0.086$). In the forced choice user study, novices marked 1.9 merge errors for correction and reduced mean VI to $0.502$ (experts marked 2, VI $0.503$, $SD=0.086$). This shows how hard it is to identify merge errors. In 50 sections of the L.~Cylinder dataset, 151 merge errors were automatically found of which 17 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 true VI-reducing errors and 30 VI-increasing ones (Prec./Recall 0.82/0.73, F1-score 0.77) to negligible VI effect. 
+
+\subsection{Proofreading in Connectomics Benchmark}
+
+\CHANGED{We present the first proofreading benchmark for the field of connectomics as an open research platform. We include representative connectomics data with ground truth labels, all results and participant demographics from the interactive experiments by Haehn~\etal~\cite{haehn_dojo_2014}, our complete results from this paper, as well as standardized metrics for comparing different proofreading approaches at (link omitted for review). We hope that this framework facilitates future developments and allows comparisons for conquering the important proofreading problem in connectomics.}
 
 %\subsection{Limitations}
 %Guided proofreading works on 2D image sections. This enables error correction without a computationally expensive alignment process. However, the output requires an additional (block-)merging step prior to 3D  analysis.
