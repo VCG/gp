@@ -21,13 +21,13 @@ We report experiments and results on the L.~Cylinder dataset in the paper. Figur
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{gfx/cylboxplot.pdf}
-\caption{VI distributions of guided proofreading (GP) and focused proofreading (FP) output across slices of the L.~Cylinder dataset, with different error correction approaches. The variation resulting from performance of FP with automatic selection is $7.8\times$ higher than GP (as indicated by the arrow), with median VI of $2.75$ and $SD=0.789$.}
+\caption{VI distributions of guided proofreading (GP) and focused proofreading (FP) output across slices of the L.~Cylinder dataset, with different error correction approaches. The variation resulting from performance of FP with automatic selection is $7.8\times$ higher than GP (\protect\includegraphics[width=0.2cm]{gfx/arrow.pdf}), with median VI of $2.75$ and $SD=0.789$.}
 \label{fig:cylboxplot}
 \end{figure}
 
 \section{Confirmatory Data Analysis} 
 
-\CHANGED{In the paper, we use a single factor between-subject design with the factor being the proofreading method (GP, FP, or Dojo). Our hypothesis is that VI reduction is significantly better with GP than with other tools. For this, we treat VI as a continuous variable and use analysis of variance (ANOVA) followed by parametric tests (Welch's t-test).}
+\CHANGED{We use a single factor between-subject design with the factor being the proofreading method (GP, FP, or Dojo). Our hypothesis is that VI reduction is significantly better with GP than with other tools. For this, we treat VI as a continuous variable and use analysis of variance (ANOVA~\cite{shaffer1995}) followed by parametric tests (Welch's t-test~\cite{welch}).}
 
 \CHANGED{\paragraph{AC4 subvolume.} For novice performance, we observe a significant effect ($\alpha = 0.05$) of which proofreading tool is used for the three conditions GP, FP, and Dojo [$F(2,27) = 6.446, p = 0.005$] when comparing the mean VI outcome. Post hoc comparisons (after Bonferroni correction) indicate that the mean VI for GP is significantly lower than for FP [$t_{27} = -2.7696, p = 0.0168$], and that the mean VI for GP is significantly lower than for Dojo [$t_{27} = -4.407, p < 0.001$]. This means that novices using GP perform significantly better than using FP and Dojo.
 A similar trend is visible when comparing the expert performance between GP and FP as the change in mean VI of GP is significantly better ([$F(1,18) = 7.054, p = 0.016$] and [$t_{18} = -2.6559, p = 0.0216$]). For automatic selection with threshold, the difference in mean VI is very large and GP also performs significantly better ([$F(1,18) = 89.902, p < 0.001$] and [$t_{18} = 9.482, p < 0.001$]). The final VI scores of the selection oracle with GP and FP are very similar and the difference between them is not significant [$F(1,18) = 0.795, p = 0.384$]. However, the VI reduction rate of GP is much higher as seen in Fig.~\ref{fig:ac4trails} (right).}
