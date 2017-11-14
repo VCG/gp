@@ -30,14 +30,14 @@ Identification and correction of merge errors is more challenging than finding a
 
 \CHANGED{To find merge errors, we generate candidate splits within a label segment and use our split error classifier to rate them. 
 %If the classifier yields a result close to 0, meaning the candidate split is actually likely to be a correct one, then we assume that the label has been merged in error and that this candidate split will fix the merge error.
-If the classifier yields a result close to 0, the candidate split is likely to be correct. Then, we use it to fix the merge error.}
+If the classifier yields a result close to 0, the candidate split is likely to be correct and we have found a potential correction.}
 
 %Similar to guided volume editing by Karimov~\etal~\cite{karimov_guided_volume_editing}, we generate potential borders within a segment. 
 
 %For each segmentation label, we dilate the label by 20 pixel and generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. We perform watershed on the inverted grayscale EM image. This yields 50 candidate splits.
 To generate candidate splits for each segmentation label, we create 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary.
-\CHANGED{%For each segmentation label, we generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. 
-As preprocessing, we dilate the label by 20 pixels. This is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier (Fig.~\ref{fig:merge_error}).  Pseudo code is available in supplemental material.}
+%For each segmentation label, we generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. 
+\CHANGED{We observed that correct splits tend to include label boundaries, and so we promote their inclusion by we dilating the label by 20 pixels. This lets the watershed algorithm `pick up' the boundary more successfully. These boundaries are then individually rated using our split error classifier (Fig.~\ref{fig:merge_error}; pseudo code in supplemental).}
 
 %We perform watershed on the inverted grayscale EM image. This yields 50 candidate splits. Prior to watershed, we dilate the label by 20 pixel which is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier. 
 
