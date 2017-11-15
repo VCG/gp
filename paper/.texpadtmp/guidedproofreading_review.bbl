@@ -3,12 +3,12 @@
 \bibitem{isbi_challenge}
 {IEEE ISBI challenge: SNEMI3D} - {3D} segmentation of neurites in {EM} images.
 \newblock \url{http://brainiac2.mit.edu/SNEMI3D}, 2013.
-\newblock Accessed on 11/01/2016.
+\newblock Accessed on 11/11/2017.
 
 \bibitem{neuroproof2013}
 Neuroproof: Flyem tool, hhmi / janelia farm research campus.
 \newblock \url{https://github.com/janelia-flyem/NeuroProof}, 2013.
-\newblock Accessed on 03/15/2106.
+\newblock Accessed on 11/11/2017.
 
 \bibitem{Neuroblocks}
 A.~K. Al-Awami, J.~Beyer, D.~Haehn, N.~Kasthuri, J.~W. Lichtman, H.~Pfister,
@@ -88,7 +88,7 @@ V.~Jain, B.~Bollmann, M.~Richardson, D.~Berger, M.~Helmst{\"a}dter,
 {Janelia Farm}.
 \newblock Raveler.
 \newblock \url{https://openwiki.janelia.org/wiki/display/flyem/Raveler}, 2014.
-\newblock Accessed on 11/01/2016.
+\newblock Accessed on 11/11/2017.
 
 \bibitem{karimov_guided_volume_editing}
 A.~Karimov, G.~Mistelbauer, T.~Auzinger, and S.~Bruckner.
