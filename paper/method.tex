@@ -28,16 +28,16 @@ Similar to Bogovic~\etal~\cite{BogovicHJ13}, we use grayscale image data, corres
 
 Identification and correction of merge errors is more challenging than finding and fixing split errors, because we must look inside segmentation regions for missing or incomplete boundaries and then propose the correct boundary. However, we can reuse the same trained CNN for this task. 
 
-\CHANGED{To find merge errors, we generate candidate splits within a label segment and use our split error classifier to rate them. 
+To find merge errors, we generate candidate splits within a label segment and use our split error classifier to rate them. 
 %If the classifier yields a result close to 0, meaning the candidate split is actually likely to be a correct one, then we assume that the label has been merged in error and that this candidate split will fix the merge error.
-If the classifier yields a result close to 0, the candidate split is likely to be correct and we have found a potential correction.}
+If the classifier yields a result close to 0, the candidate split is likely to be correct and we have found a potential correction.
 
 %Similar to guided volume editing by Karimov~\etal~\cite{karimov_guided_volume_editing}, we generate potential borders within a segment. 
 
 %For each segmentation label, we dilate the label by 20 pixel and generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. We perform watershed on the inverted grayscale EM image. This yields 50 candidate splits.
 To generate candidate splits for each segmentation label, we create 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary.
 %For each segmentation label, we generate 50 potential boundaries through the region by randomly placing watershed seed points at opposite sides of the label boundary. 
-\CHANGED{We observed that correct splits tend to include label boundaries, and so we promote their inclusion by we dilating the label by 20 pixels. This lets the watershed algorithm `pick up' the boundary more successfully. These boundaries are then individually rated using our split error classifier (Fig.~\ref{fig:merge_error}; pseudo code in supplemental).}
+We observed that correct splits tend to include label boundaries, and so we promote their inclusion by dilating the label 20 pixels. This lets the watershed algorithm `pick up' the boundary more successfully. These boundaries are then individually rated using our split error classifier (Fig.~\ref{fig:merge_error}, pseudo code in supplemental).
 
 %We perform watershed on the inverted grayscale EM image. This yields 50 candidate splits. Prior to watershed, we dilate the label by 20 pixel which is motivated by our observation that the generated splits tend to attach to real membrane boundaries. These boundaries are then individually rated using our split error classifier. 
 
@@ -61,13 +61,13 @@ discarded. This is guided proofreading with a perfect user, and allows us to ass
 
 \paragraph{Automatic selection with threshold.} The decision whether to accept or reject a potential correction is taken by comparing rankings to a threshold $p_t$. If the inverted score $1-p$ of a merge error is higher than a threshold $1-p_t$, the correction is accepted. Similarly, a correction is accepted for a split error if the ranking $p$ is higher than $p_t$. Our experiments have shown that the threshold $p_t$ is the same for merge and split errors for a balanced classifier that has been trained on equal numbers of correct and error patches.
 
-\paragraph{Forced choice setting.} We present a user with the choice to accept or reject a correction. All potential split errors are seen. Inspecting all merge errors is not possible for users due to the sheer amount of generated borders. Therefore, we only present merge errors that have a probability threshold higher than $1-p_t$. \CHANGED{Fig.~\ref{fig:ui} shows an example correction using the forced choice setting within our framework.}
+\paragraph{Forced choice setting.} We present a user with the choice to accept or reject a correction. All potential split errors are seen. Inspecting all merge errors is not possible for users due to the sheer amount of generated borders. Therefore, we only present merge errors that have a probability threshold higher than $1-p_t$. Fig.~\ref{fig:ui} shows an example correction using the forced choice setting within our framework.
 
 \noindent \newline In all cases, a decision has to be made to advance to the next possible erroneous region. If a merge error correction was accepted, the newly found boundary is added to the segmentation data. This partially updates the merge error and split error ranking with respect to the new segment. If a split error correction was accepted, two segments are merged in the segmentation data and the disappearing segment is removed from all error rankings. Then, we perform merge error detection on the now larger segment and update the ranking. We also update the split error rankings to include all new neighbors, and re-sort. The error with the next highest ranking then forces a choice.
 
 \begin{figure}[t]
 \includegraphics[width=\linewidth]{gfx/user_interface_split.pdf}
-\caption{\CHANGED{Example error correction within the forced choice setting.} A candidate error region is shown on the left. The user must choose between the region being a split error which needs correcting (center) or not (right). Confirming the choice advances to the next potential error.} % Hovering highlights the current selection with a blue border, and a}
+\caption{Example error correction within the forced choice setting. A candidate error region is shown on the left. The user must choose between the region being a split error which needs correcting (center) or not (right). Confirming the choice advances to the next potential error.} % Hovering highlights the current selection with a blue border, and a}
 \label{fig:ui}
 \end{figure}
 

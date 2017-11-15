@@ -1,7 +1,7 @@
 \section{Results and Discussion}
 
 %We measure the performance of proofreading quantitatively by comparing VI scores of segmentations against ground truth labelings. Lower VI scores indicate less distance to the ground truth and a better segmentation. For all experiments, we report the VI score of the initial segmentation followed by the VI score of the proofreading output.
-Additional plots \CHANGED{and confirmatory data analysis} are available as supplemental material due to limited space. 
+Additional plots and confirmatory data analysis are available as supplemental material due to limited space. 
 
 \subsection{Classification Performance}
 
@@ -57,7 +57,7 @@ Additional plots \CHANGED{and confirmatory data analysis} are available as suppl
 \subsection{Forced Choice User Experiment}
 We performed a user study to evaluate the forced choice error correction method among novices and experts. To be comparable to Haehn~\etal's Dojo user study~\cite{haehn_dojo_2014}, participants were asked to proofread the AC4 subvolume for 30 minutes. We counted 10 merge errors and 322 split errors by computing the maximum overlap of the initial segmentation with respect to the ground truth labeling (provided in \cite{haehn_dojo_2014}). For evaluation, we measure the performance of proofreading quantitatively by comparing VI scores of segmentations. 
 %\CHANGED{Our hypothesis is that VI reduction is significantly better with GP than with other tools. For this, we treat VI as a continuous variable and use analysis of variance (ANOVA) followed by parametric tests (Welch's t-test).}
-\CHANGED{The initial segmentation yields a} median VI $=0.476$ ($SD=0.089$), with mean VI $=0.512$ ($SD=0.09$). Most novices and all experts were able to improve upon this score with both focused proofreading and guided proofreading (Fig.~\ref{fig:ac4trails}).
+The initial segmentation yields a median VI $=0.476$ ($SD=0.089$), with mean VI $=0.512$ ($SD=0.09$). Most novices and all experts were able to improve upon this score with both focused proofreading and guided proofreading (Fig.~\ref{fig:ac4trails}).
 
 \paragraph{Novice performance.} Participants using focused proofreading were able to reduce the median VI of the automatic segmentation to $0.469$ ($SD=0.87$). On average, users viewed $423.4$ corrections and accepted $45.8$.
 %, with an average time of $4.9$ seconds per correction. 
@@ -102,7 +102,7 @@ While three users of focused proofreading made the initial segmentation worse, a
 
 \subsection{Proofreading in Connectomics Benchmark}
 
-\CHANGED{Along with our classifier code, we also present this evaluation scenario to the community as the first benchmark for proofreading in connectomics. We include representative connectomics data with ground truth labels, all participant results and demographics from the interactive experiments, our complete results from this paper, and standardized metrics for comparing different proofreading approaches. This framework will facilitate further comparisons to help make progress in connectomics (link omitted for review).}
+Along with our classifier code, we also present this evaluation scenario to the community as the first benchmark for proofreading in connectomics. We include representative connectomics data with ground truth labels, all participant results and demographics from the interactive experiments, our complete results from this paper, and standardized metrics for comparing different proofreading approaches. This framework will facilitate further comparisons to help make progress in connectomics (link omitted for review).
 
 %\subsection{Limitations}
 %Guided proofreading works on 2D image sections. This enables error correction without a computationally expensive alignment process. However, the output requires an additional (block-)merging step prior to 3D  analysis.

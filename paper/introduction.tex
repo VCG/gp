@@ -77,10 +77,9 @@ This paper makes the following contributions.
 First, we present a CNN-based boundary classifier for split errors, plus a merge
 error classifier that inverts the split error classifier. This proposes merge error corrections, 
 which removes the need to manually draw the missing
-edge. \CHANGED{These classifiers automatically reduce error with little training data,} which is
-expensive to collect for connectomics data.
+edge. These classifiers automatically reduce error with little training data, which is expensive to collect for connectomics data.
 %
-Second, we develop a \CHANGED{human-}guided proofreading approach to correcting segmentation
+Second, we develop a human-guided proofreading approach to correcting segmentation
 volumes, and compare forced-choice interaction with
 automatic and oracle proofreading.
 %
@@ -89,10 +88,10 @@ guided proofreading. Our method is able to reduce segmentation
 error faster than state-of-the-art semi-automatic tools for both novice and
 expert users.
 %
-\CHANGED{Fourth, we present the first connectomics proofreading benchmark, with image, label, and human interaction data, and evaluation code.}
+Fourth, we present the first connectomics proofreading benchmark, with image, label, and human interaction data, and evaluation code.
 
 Guided proofreading is applicable to all existing automatic segmentation methods that produce a label map.
-\CHANGED{While we train models based on traditional CNN architectures, we propose an error correction approach with human interaction that works with many classifiers.}
+While we train models based on traditional CNN architectures, we propose an error correction approach with human interaction that works with many classifiers.
 As such, we believe that our approach is a promising direction to proofread segmentations more efficiently and better tackle large volumes of connectomics imagery.
 
 %Our goal is to add automatic detection of split and merge errors to proofreading tools. We design automatic classifiers that detect split and merge errors in segmentations so the user does not need to visually inspect the whole data volume to spot errors. A proofreading tool then recommends regions with a high probability of an error to the user, and suggest corrections to accept or reject. We call this process \textit{guided proofreading}.
