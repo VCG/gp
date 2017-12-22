@@ -1,104 +1,59 @@
 FRAME 1
 Guided Proofreading of Automatic Segmentations for Connectomics
-
-
 FRAME 2
 Connectomics tries to discover the `wiring diagram' of neurons in the mammalian brain
-
-
 FRAME 3
 For this, we take mice..
-
-
 FRAME 4
-..cut out their brain..
-
-
+..cut out their brains..
 FRAME 5
-..slice it extremely thinly..
-
-
+..slice them extremely thinly..
 FRAME 6
-..and then scan it with an electron microscope..
-
+..and then scan them with an electron microscope..
 
 MOVIE SEQUENCE "BOBBY"
 This results in very high resolution image slices showing neurons
-
-
 FRAME 8 
-These image slices are aligned to volumes..
-
-
+These image slices are aligned into volumes..
 FRAME 9
-..and cells are automatically labeled.
-
-
+..and then each cells is labeled automatically by a computer.
 Unfortunately, this automatic labeling is not perfect and introduces errors.
 
 FRAME 10
 For instance, if we zoom in here...
-
-
 FRAME 11
 ..We see labels..
-
-
 FRAME 12
 ..with indicated errors..
-
-
 FRAME 13
 The cell membranes here..
-
-
 FRAME 14
 ..should actually produce a labeling like this.
-
-
 FRAME 15
 So how can we get from the wrong labeling on the left to the correct labeling on the right?
-
-
 FRAME 16
 And the answer is: Proofreading by humans
 
-
 MOVIE SEQUENCE "DOJO"
-This can be done interactively...
-
-...using semi-automatic methods...
-
+This can be completed just with human effort...
+...or using computation to assist with semi-automatic methods...
 ...but is tedious and takes a very long time..
 
-
 FRAME 18
-With our Guided Proofreading approach...
-
-...a classifier finds errors automatically
-
-
+With our Guided Proofreading approach, we propose to improve semi-automatic methods...
+...with a classifier that finds errors automatically,
 FRAME 19
-...and suggests corrections to the proofreader
-
+...and suggests corrections to the proofreader.
 
 MOVIE SEQUENCE "GP"
-
 Here we see the guided proofreading system in action..
-
 ..Our system presents potential errors and and their corrections to the user..
-
 ..and the user chooses to accept or reject them via one click..
-
 ..For demonstration purposes, we show the improvement of variation of information after each correction in the bottom left. This is measured as part of our forced choice user experiment as described in the paper.
-
 ..Using guided proofreading, novices are able to correct automatic segmentations 7.5 times faster than interactively.
 
-
 FRAME 21
-
-Our research and findings are available as free and open source.
-
+Our research code and data are available as free and open source.
 Thank you very much.
 
 
