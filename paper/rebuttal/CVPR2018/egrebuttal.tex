@@ -1,0 +1,59 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+%%%%%%%%% PAPER ID  - PLEASE UPDATE
+\def\cvprPaperID{0125} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+\begin{document}
+
+%%%%%%%%% TITLE - PLEASE UPDATE
+\title{Rebuttal for `Guided Proofreading of Automatic Segmentations for Connectomics'}  % **** Enter the paper title here
+
+\maketitle
+\thispagestyle{empty}
+
+Thank you for your time and feedback.
+
+\paragraph{R2: Venue} R2 writes ``While solid work, the paper is not a perfect fit for CVPR''. Biological and Cell Microscopy Image Analysis is included in the call for papers of CVPR 2018, and the field of connectomics has previously given rise to interesting papers at CVPR (Kumar et al. 2010, Kaynig et al. 2010, Jain et al. 2010, Funke et al. 2012, Pape et al. 2017). We believe our method will also be interesting to researchers working on tasks beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision.
+
+\paragraph{R3: U-Net training data} R3 requests further information regarding the training data of the U-Net membrane probability classifier. Section 2 of the supplemental material includes this information (supplemental material lines 140-161, Table 3). We will modify the manuscript (lines 492-493) to include a direct reference.
+
+\paragraph{R3+R4: Network input channels} R3 is interested in seeing the performance contribution of the different input channels. R4 suggests that the membrane probabilities and the dilated border mask provide more discriminative information than the other two channels. We performed the following experiment.
+
+\paragraph{R4: Dilated mask of the border between two segments} R4 raises the question of whether the dilated mask of the border is a crucial input to our classifier. The dilated border improves classifier performance from X accuracy to Y accuracy (Z accuracy border mask without dilation). We qualitatively describe the intention behind the border mask in lines 315-323 but will add the following table to the supplemental material.
+	All experiments will be reproducible using open source code which will provide further insights into the design of our classifier.
+
+\paragraph{R4: 2D Slices only}
+
+\paragraph{R4: Merge error detection performance} R4 expresses concerns regarding the performance contribution of merge error correction. 
+
+\paragraph{R3: Lack of discussion regarding general semantic segmentation problems}
+
+
+
+%{\small
+%\bibliographystyle{ieee}
+%\bibliography{egbib}
+%}
+
+\end{document}
