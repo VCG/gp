@@ -80,15 +80,16 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % R3 requests further information regarding the training data of the U-Net membrane probability classifier. 
-\paragraph{R3: U-Net training data} Section 2 of the supplemental material includes this information (supplemental material lines 140-161, Table 3). We will modify the manuscript (lines 492-493) to include a direct reference.
+\paragraph{R3: U-Net training data} The supplemental material includes this information (lines 140--161, Table 3). We will add a direct reference to the main paper (lines 492--493).
 
 % R3 wishes for a discussion regarding applicability of GP to general semantic segmentation problems. 
-\paragraph{R3: Generalization to other segmentation problems} We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision. We state mandatory re-training of GP for other datasets as a limitation in the supplemental material (lines 134-138) but will further elaborate on general segmentation problems in this section. \JT{Discuss.}
+\paragraph{R3: Generalization to other segmentation problems} We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision. We state mandatory re-training of GP for other datasets as a limitation in the supplemental material (lines 134--138) but will further elaborate on general segmentation problems in this section. \JT{Discuss.}
 
-\paragraph{R3+R4: Network input channels} R3 is interested in seeing the performance contribution of the different input channels. R4 suggests that the membrane probabilities and the dilated border mask provide more discriminative information than the other two channels. We observe that all four input channels are important to reduce VI (Table~\ref{tab:input_channels}). Similar as identified by Bogovich~\etal, image data adds intracellular structures (e.g. vesicles) to the decision process and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. We then notice, that the label channel provides knowledge about neuron shapes while the border mask covers the gap of extra-cellular space.
+% R3 is interested in seeing the performance contribution of the different input channels. R4 suggests that the membrane probabilities and the dilated border mask provide more discriminative information than the other two channels. 
+\paragraph{R3+R4: Input channel contributions} All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the border mask covers the gap of extra-cellular space. \JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
 
 \begin{table}[h]
-\caption{We evaluate automatic selection on the AC4 subvolume ($p_t=0.95$) using the GP classifier with different input channels and report median VI reduction. The combination of all four channels performs best.}
+\caption{Automatic selection on the AC4 subvolume ($p_t=0.95$) using the GP classifier with different input channels and report median VI reduction. The combination of all four channels performs best.}
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
