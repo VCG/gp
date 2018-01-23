@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}\itemsep=-1pt
+
+\bibitem{superhuman_performance}
+K.~Lee, J.~Zung, P.~Li, V.~Jain, and H.~S. Seung.
+\newblock Superhuman accuracy on the {SNEMI3D} connectomics challenge.
+\newblock {\em CoRR}, abs/1706.00120, 2017.
+
+\bibitem{NunezIglesias2013Machine}
+J.~Nunez-Iglesias, R.~Kennedy, T.~Parag, J.~Shi, and D.~B. Chklovskii.
+\newblock Machine learning of hierarchical clustering to segment {2D} and {3D}
+  images.
+\newblock {\em PLoS ONE}, 8(8):e71715+, 2013.
+
+\end{thebibliography}
