@@ -86,10 +86,10 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 \paragraph{R3: Generalization to other segmentation problems} We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision. We state mandatory re-training of GP for other datasets as a limitation in the supplemental material (lines 134--138) but will further elaborate on general segmentation problems in this section. \JT{Discuss.}
 
 % R3 is interested in seeing the performance contribution of the different input channels. R4 suggests that the membrane probabilities and the dilated border mask provide more discriminative information than the other two channels. 
-\paragraph{R3+R4: Input channel contributions} All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the border mask covers the gap of extra-cellular space. \JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
+\paragraph{R3+R4: Input channel contributions} All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the dilated mask of the border covers the gap of extra-cellular space. \newline \noindent \textbf{R4:} Adding the dilated mask of the border decreases VI. \JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
 
 \begin{table}[h]
-\caption{Automatic selection on the AC4 subvolume ($p_t=0.95$) using the GP classifier with different input channels and report median VI reduction. The combination of all four channels performs best.}
+\caption{Automatic selection on the AC4 subvolume ($p_t=0.95$) using our GP classifier; median VI reduction. The combination of all four input channels performs best.}
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
@@ -102,20 +102,26 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 \bottomrule
 \end{tabular} 
 }
+\vspace{-0.5cm}
 \label{tab:input_channels}
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{R4: Dilated mask of the border between two segments} R4 raises the question of whether the dilated mask of the border is a crucial input to our classifier. The dilated border improves classifier performance measured as VI reduction from $0.038$ to $0.065$ (Table~\ref{tab:input_channels}). We qualitatively describe the intention behind the border mask in lines 315-323 but will add the experiment above to the supplemental material and to the open source repository.
+% R4 raises the question of whether the dilated mask of the border is a crucial input to our classifier. 
+%\paragraph{R4: Dilated mask of the border important?} Yes, please see Table~\ref{tab:input_channels}. We qualitatively describe the intention behind the border mask in lines 315--323 but will add the experiment above to the supplemental material and to the open source repository.
 
-\paragraph{R4: 2D Slices only} R4 observes that GP works in 2D. We report this limitation and a proposed solution in the supplemental material lines 129-133 and will add a direct reference to the manuscript. However, 2D processing enables segmentation and proofreading in parallel to 2D image acquisition prior to any expensive 3D alignment.
+% R4 observes that GP works in 2D. 
+\paragraph{R4: 2D Slices only} We report this limitation and a proposed solution in the supplemental material lines 129--133, but we will add a direct reference back in to the manuscript. 2D processing enables segmentation and proofreading in parallel to any expensive 3D alignment,
 
-\paragraph{R4: Merge error detection performance} R4 expresses concerns regarding the performance contribution of merge error correction. Typical connectomics segmentations begin with an over-segmentation (lines 498-499), in which we attempt to find all possible cell boundary edges. At this stage, some edges are missed due to low contrast - these missing edges cause merge errors. To correct this, we need to imagine where any number of edges might be among empty space, and this is simply a harder visual task than assessing whether an identified edge is correct. This is true even for a human: on the AC4 dataset, our experts only agree with the selection oracle in two thirds of merge error cases.
+% R4 expresses concerns regarding the performance contribution of merge error correction. 
+\paragraph{R4: No benefit from merge error detection?} Only in the automatic case. In the guided proofreading case, the expert is able to judge given the candidate edge we generate. That said, merge correction is simply a harder visual task than split correction. This is true even for a human: on the AC4 dataset, our experts only agree with the selection oracle in two thirds of merge error cases. For this reason, the initial over-segmentation is tuned to try to find all possible cell boundary edges, such that mostly split errors remain.
+
+% Typical connectomics segmentations begin with an over-segmentation (lines 498--499), in which we attempt to find all possible cell boundary edges. At this stage, some edges are missed due to low contrast---these missing edges cause merge errors. To correct this, we need to imagine where any number of edges might be among empty space, and this is simply a harder visual task than assessing whether an identified edge is correct. This is true even for a human: on the AC4 dataset, our experts only agree with the selection oracle in two thirds of merge error cases.
 
 
-{\small
-\bibliographystyle{ieee}
-\bibliography{../../connectomics}
-}
+%{\small
+%\bibliographystyle{ieee}
+%\bibliography{../../connectomics}
+%}
 
 \end{document}
