@@ -87,7 +87,20 @@ class Patch(object):
 
           # pred = cnn.test_patch(p)
 
-          if cnn.uuid.endswith('B'):
+          if cnn.uuid == 'IPLB':
+
+            border_prefix = ''
+            if cnn.uuid.find('LB') != -1:
+              border_prefix = 'larger_'
+
+            rgba_patch = np.zeros((1,3,75,75), dtype=np.float32)
+            rgba_patch[0][0] = p['image'].astype(np.float32)
+            rgba_patch[0][1] = p['prob'].astype(np.float32)
+            rgba_patch[0][2] = p[border_prefix+'border_overlap'].astype(np.float32)
+
+            inputs = rgba_patch
+
+          elif cnn.uuid.endswith('B'):
 
             border_prefix = ''
             if cnn.uuid.find('LB') != -1:
@@ -107,6 +120,13 @@ class Patch(object):
             rgb_patch[0][0] = p['image'].astype(np.float32)
             rgb_patch[0][1] = p['prob'].astype(np.float32)
             rgb_patch[0][2] = p['merged_array'].astype(np.float32)
+            inputs = rgb_patch
+
+          elif cnn.uuid == 'IP':
+
+            rgb_patch = np.zeros((1,2,75,75), dtype=np.float32)
+            rgb_patch[0][0] = p['image'].astype(np.float32)
+            rgb_patch[0][1] = p['prob'].astype(np.float32)
             inputs = rgb_patch
 
           else:
