@@ -42,15 +42,15 @@
 \paragraph{R2: Venue} Biological and Cell Microscopy Image Analysis is included in the call for papers of CVPR 2018, and the field of connectomics has previously given rise to interesting papers at CVPR (Kumar~\etal 2010, Kaynig~\etal 2010, Jain~\etal 2010, Funke~\etal 2012, Pape~\etal 2017). %We believe our method will also be interesting to researchers working on tasks beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision.
 
 % R2 finds that the algorithmic contribution of our work is limited and less innovative. 
-\paragraph{R2: Algorithmic Contribution/Innovation} While we use a traditional CNN architecture, we believe that the GP framework can work with many classifiers and is a promising direction to proofread segmentations more efficiently. % (lines 145-151).
+\paragraph{R2: Algorithmic Contribution/Innovation} Our contribution is a framework for more efficient proofreading driven by a real-world use-case. We hope that GP and the introduced proofreading benchmark are of value to the connectomics community and enable future research.%Rather than proposing algorithmic innovation, our goal is to provide a framework for more efficient proofreading driven by a real-world use-case. We hope that GP and the introduced proofreading benchmark are of value to the connectomics community and enable future research.
+
+%While we use a traditional CNN architecture, we believe that the GP framework can work with many classifiers and is a promising direction to proofread segmentations more efficiently. % (lines 145-151).
 
 %\paragraph{R2: Superhuman Accuracy on the SNEMI3D Challenge}
 % CVPR 2018 review guidelines explicitly state: "It is Not OK to regard arXiv as a standard for the state of the art, because it is not reviewed. This applies *whoever* wrote the arXiv paper." We could push back here if you wanted
-\paragraph{R2: Superhuman Performance} Lee~\etal's arXiv preprint indeed reports fantastic segmentation performance, but as a future direction they still state the need for ``guiding focused human proofreading'' with supervised learning~(Sec.~8.2)---our work is evidence that this idea is viable. \newline \noindent \emph{``Is manual proof-reading competitive with a superhuman automatic method? Is your method able to find mistakes still present in Lee et al.'s segmentation?''} Interesting questions, to which there are no concrete answers yet (we'd be happy to test this if Lee et al.~release their software/segmentation). We can also look at this problem as one of raising the bar for manual proofreading. In their paper, Lee et al.~state that ``human accuracy depends on the procedures and software tools used to perform the reconstruction'' (Sec.~1). Through this lens, we measure by how much our software tool improves performance given consistent human time/effort across skill levels; for this, our tool advantages both novices and experts.
+\paragraph{R2: Superhuman Performance} Lee~\etal's arXiv preprint indeed reports fantastic segmentation performance, but as a future direction they still state the need for ``guiding focused human proofreading'' with supervised learning~(Sec.~8.2)---our work is evidence that this idea is viable. \newline \noindent \emph{``Is manual proof-reading competitive with a superhuman automatic method? Is your method able to find mistakes still present in Lee~\etal's segmentation?''} Interesting questions, to which there are no concrete answers yet (we'd be happy to test this if Lee~\etal release their software/segmentation). We can also look at this problem as one of raising the bar for manual proofreading. In their paper, Lee~\etal state that ``human accuracy depends on the procedures and software tools used to perform the reconstruction'' (Sec.~1). Through this lens, we measure by how much our software tool improves performance given consistent human time/effort across skill levels; for this, our tool advantages both novices and experts.
 
 % These are interesting questions but how can we possibly answer them?!
-
-\paragraph{R2: Generalization beyond the AC4 Subvolume} We agree that this dataset is small; however, it was introduced by Haehn~\etal 2014 for feasible interactive proofreading studies and is representative for the full AC4 dataset with respect to the distribution of object sizes. \JT{Evidence?}
 
 \paragraph{R2: Rand Error} We chose variation of information (VI) to overcome previously reported limitations of aRE \cite[p.~5]{NunezIglesias2013Machine}; however, we include aRE numbers below (Table~\ref{tab:randerror}).
 
@@ -76,17 +76,20 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 \label{tab:randerror}
 \end{table}
 
-
+\paragraph{R2: Generalization beyond the AC4 Subvolume} We agree that this dataset is small; however, it was introduced by Haehn~\etal 2014 for feasible interactive proofreading studies. The volume was quantitatively chosen to be representative for the full AC4 dataset with respect to the distribution of object sizes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % R3 requests further information regarding the training data of the U-Net membrane probability classifier. 
 \paragraph{R3: U-Net training data} The supplemental material includes this information (lines 140--161, Table 3). We will add a direct reference to the main paper (lines 492--493).
 
 % R3 wishes for a discussion regarding applicability of GP to general semantic segmentation problems. 
-\paragraph{R3: Generalization to other segmentation problems} We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision. We state mandatory re-training of GP for other datasets as a limitation in the supplemental material (lines 134--138) but will further elaborate on general segmentation problems in this section. \JT{Discuss.}
+\paragraph{R3: Generalization to other segmentation problems} 
+We believe that our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision. However, edges in natural images are usually softer and not as prominent as in our data; we are optimistic but also have to be careful to not overclaim our contribution.
+%We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision.
+%We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision. We state mandatory re-training of GP for other datasets as a limitation in the supplemental material (lines 134--138) but will further elaborate on general segmentation problems in this section. \JT{Discuss.}
 
 % R3 is interested in seeing the performance contribution of the different input channels. R4 suggests that the membrane probabilities and the dilated border mask provide more discriminative information than the other two channels. 
-\paragraph{R3+R4: Input channel contributions} All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the dilated mask of the border covers the gap of extra-cellular space. \newline \noindent \textbf{R4:} Adding the dilated mask of the border decreases VI. \JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
+\paragraph{R3+R4: Input channel contributions} All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the dilated mask of the border covers the gap of extra-cellular space. \newline \noindent \textbf{R4:} Adding the dilated mask of the border decreases VI. %\JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
 
 \begin{table}[h]
 \caption{Automatic selection on the AC4 subvolume ($p_t=0.95$) using our GP classifier; median VI reduction. The combination of all four input channels performs best.}
@@ -96,6 +99,7 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 \makecell{Input channels} & \makecell{VI reduction} \\
 \midrule
 \emph{Image + Prob.} &  -0.094\\
+\emph{Label + Border} &  TBA\\
 \emph{Image + Prob. + Border} & -0.045\\
 \emph{Image + Prob. + Label} & 0.038\\
 \emph{Image + Prob. + Label + Border} & 0.065\\
@@ -111,6 +115,7 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 %\paragraph{R4: Dilated mask of the border important?} Yes, please see Table~\ref{tab:input_channels}. We qualitatively describe the intention behind the border mask in lines 315--323 but will add the experiment above to the supplemental material and to the open source repository.
 
 % R4 observes that GP works in 2D. 
+
 \paragraph{R4: 2D Slices only} We report this limitation and a proposed solution in the supplemental material lines 129--133, but we will add a direct reference back in to the manuscript. 2D processing enables segmentation and proofreading in parallel to any expensive 3D alignment,
 
 % R4 expresses concerns regarding the performance contribution of merge error correction. 
@@ -119,9 +124,9 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 % Typical connectomics segmentations begin with an over-segmentation (lines 498--499), in which we attempt to find all possible cell boundary edges. At this stage, some edges are missed due to low contrast---these missing edges cause merge errors. To correct this, we need to imagine where any number of edges might be among empty space, and this is simply a harder visual task than assessing whether an identified edge is correct. This is true even for a human: on the AC4 dataset, our experts only agree with the selection oracle in two thirds of merge error cases.
 
 
-%{\small
-%\bibliographystyle{ieee}
-%\bibliography{../../connectomics}
-%}
+{\small
+\bibliographystyle{ieee}
+\bibliography{../../connectomics}
+}
 
 \end{document}
