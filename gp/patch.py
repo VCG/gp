@@ -124,7 +124,18 @@ class Patch(object):
             rgba_patch[0][0] = p['prob'].astype(np.float32)
             rgba_patch[0][1] = p[border_prefix+'border_overlap'].astype(np.float32)
 
-            inputs = rgba_patch            
+            inputs = rgba_patch       
+
+          elif cnn.uuid == 'PMLB':
+
+            border_prefix = ''
+            if cnn.uuid.find('LB') != -1:
+              border_prefix = 'larger_'
+
+            rgba_patch = np.zeros((1,3,75,75), dtype=np.float32)
+            rgba_patch[0][0] = p['prob'].astype(np.float32)
+            rgba_patch[0][1] = p['merged_array'].astype(np.float32)
+            rgba_patch[0][2] = p[border_prefix+'border_overlap'].astype(np.float32)
 
           elif cnn.uuid.endswith('B'):
 
