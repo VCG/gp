@@ -36,13 +36,14 @@
 \maketitle
 \thispagestyle{empty}
 
-\noindent Thank you all for your time and considered feedback.
+\noindent Thank you all for your time and considered feedback---We hope that the open source nature of the GP framework and the introduced proofreading benchmark are of value to the connectomics community and enable future research.
 
-% \emph{``While solid work, the paper is not a perfect fit for CVPR''}. 
-\paragraph{R2: Venue} Biological and Cell Microscopy Image Analysis is included in the call for papers of CVPR 2018, and the field of connectomics has previously given rise to interesting papers at CVPR (Kumar~\etal 2010, Kaynig~\etal 2010, Jain~\etal 2010, Funke~\etal 2012, Pape~\etal 2017). %We believe our method will also be interesting to researchers working on tasks beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision.
-
+%
+%% \emph{``While solid work, the paper is not a perfect fit for CVPR''}. 
+%\paragraph{R2: Venue} Biological and Cell Microscopy Image Analysis is included in the call for papers of CVPR 2018, and the field of connectomics has previously given rise to interesting papers at CVPR (Kumar~\etal 2010, Kaynig~\etal 2010, Jain~\etal 2010, Funke~\etal 2012, Pape~\etal 2017). %We believe our method will also be interesting to researchers working on tasks beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision.
+%
 % R2 finds that the algorithmic contribution of our work is limited and less innovative. 
-\paragraph{R2: Algorithmic Contribution/Innovation} Our contribution is a framework for more efficient proofreading driven by a real-world use-case. We hope that GP and the introduced proofreading benchmark are of value to the connectomics community and enable future research.%Rather than proposing algorithmic innovation, our goal is to provide a framework for more efficient proofreading driven by a real-world use-case. We hope that GP and the introduced proofreading benchmark are of value to the connectomics community and enable future research.
+%\paragraph{R2: Algorithmic Contribution/Innovation} Our contribution is a framework for more efficient proofreading driven by a real-world use-case. We hope that GP and the introduced proofreading benchmark are of value to the connectomics community and enable future research.%Rather than proposing algorithmic innovation, our goal is to provide a framework for more efficient proofreading driven by a real-world use-case. We hope that GP and the introduced proofreading benchmark are of value to the connectomics community and enable future research.
 
 %While we use a traditional CNN architecture, we believe that the GP framework can work with many classifiers and is a promising direction to proofread segmentations more efficiently. % (lines 145-151).
 
@@ -54,7 +55,7 @@
 
 % These are interesting questions but how can we possibly answer them?!
 
-\paragraph{R2: Rand Error} We chose variation of information (VI) to overcome previously reported limitations of aRE \cite[p.~5]{NunezIglesias2013Machine}; however, we include aRE numbers below (Table~\ref{tab:randerror}).
+\paragraph{R2: Rand Error} We chose variation of information (VI) to overcome previously reported limitations of adapted Rand Error (aRE)~\cite[p.~5]{NunezIglesias2013Machine}; however, we include aRE numbers below (Table~\ref{tab:randerror}).
 
 \begin{table}[h]
 \caption{Forced Choice User Experiment in adapted Rand Error (aRE) metric (lower is better). Novices and experts using GP perform better than using FP.}
@@ -96,17 +97,26 @@ We believe that our method will interest researchers working beyond connectomics
 \paragraph{R3+R4: Input channel contributions} All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the dilated mask of the border covers the gap of extra-cellular space. \newline \noindent \textbf{R4:} Adding the dilated mask of the border decreases VI. %\JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
 
 \begin{table}[h]
-\caption{Automatic selection on the AC4 subvolume ($p_t=0.95$) using our GP classifier; median VI reduction. The combination of all four input channels performs best.\vspace{-0.25cm}}
+\caption{Automatic selection on the AC4 subvolume ($p_t=0.95$) using our GP classifier; median VI reduction in ascending order. The combination of all four input channels performs best.\vspace{-0.25cm}}
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrr}
 \toprule
 \makecell{Input channels} & \makecell{VI reduction} \\
 \midrule
-\emph{Prob. + Border (\textbf{R4} request)} & -0.080\\
+%\emph{Prob. + Border (\textbf{R4} request)} & -0.080\\
+%\emph{Prob. + Label + Border (\textbf{R3} request)} &  TBA\\
+%\emph{Label + Border} & -0.008\\
+%\emph{Image + Prob.} &  -0.094\\
+%\emph{Image + Prob. + Border} & -0.045\\
+%\emph{Image + Prob. + Label} & 0.038\\
+%\emph{Image + Prob. + Label + Border} & 0.065\\
+
 \emph{Prob. + Label + Border (\textbf{R3} request)} &  TBA\\
-\emph{Label + Border} & -0.008\\
+
 \emph{Image + Prob.} &  -0.094\\
+\emph{Prob. + Border (\textbf{R4} request)} & -0.080\\
 \emph{Image + Prob. + Border} & -0.045\\
+\emph{Label + Border} & -0.008\\
 \emph{Image + Prob. + Label} & 0.038\\
 \emph{Image + Prob. + Label + Border} & 0.065\\
 \bottomrule
@@ -131,9 +141,9 @@ We believe that our method will interest researchers working beyond connectomics
 
 % Typical connectomics segmentations begin with an over-segmentation (lines 498--499), in which we attempt to find all possible cell boundary edges. At this stage, some edges are missed due to low contrast---these missing edges cause merge errors. To correct this, we need to imagine where any number of edges might be among empty space, and this is simply a harder visual task than assessing whether an identified edge is correct. This is true even for a human: on the AC4 dataset, our experts only agree with the selection oracle in two thirds of merge error cases.
 
-\vspace{.35cm}
+%\vspace{.35cm}
 
-\renewcommand{\section}[2]{}
+%\renewcommand{\section}[2]{}
 
 {\small
 \bibliographystyle{ieee}
