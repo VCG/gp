@@ -90,6 +90,8 @@ We believe that our method will interest researchers working beyond connectomics
 %We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision.
 %We believe our method will interest researchers working beyond connectomics, as segmentation proofreading for labeled dataset collection and correction is widely applicable in computer vision. We state mandatory re-training of GP for other datasets as a limitation in the supplemental material (lines 134--138) but will further elaborate on general segmentation problems in this section. \JT{Discuss.}
 
+%\vspace{-.05cm}
+
 % R3 is interested in seeing the performance contribution of the different input channels. R4 suggests that the membrane probabilities and the dilated border mask provide more discriminative information than the other two channels. 
 \paragraph{R3+R4: Input channel contributions} All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the dilated mask of the border covers the gap of extra-cellular space. \newline \noindent \textbf{R4:} Adding the dilated mask of the border decreases VI. %\JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
 
@@ -102,6 +104,7 @@ We believe that our method will interest researchers working beyond connectomics
 \midrule
 \emph{Prob. + Border (\textbf{R4} request)} & -0.080\\
 \emph{Prob. + Label + Border (\textbf{R3} request)} &  TBA\\
+\emph{Label + Border} & -0.008\\
 \emph{Image + Prob.} &  -0.094\\
 \emph{Image + Prob. + Border} & -0.045\\
 \emph{Image + Prob. + Label} & 0.038\\
@@ -121,11 +124,16 @@ We believe that our method will interest researchers working beyond connectomics
 
 \paragraph{R4: 2D Slices only} We report this limitation and a proposed solution in the supplemental material lines 129--133, but we will add a direct reference back in to the manuscript. 2D processing enables segmentation and proofreading in parallel to any expensive 3D alignment,
 
+%\vspace{-.1cm}
+
 % R4 expresses concerns regarding the performance contribution of merge error correction. 
 \paragraph{R4: No benefit from merge error detection?} Only in the automatic case. In the guided proofreading case, the expert is able to judge given the candidate edge we generate. That said, merge correction is simply a harder visual task than split correction. This is true even for a human: on the AC4 dataset, our experts only agree with the selection oracle in two thirds of merge error cases. For this reason, the initial over-segmentation is tuned to try to find all possible cell boundary edges, such that mostly split errors remain.
 
 % Typical connectomics segmentations begin with an over-segmentation (lines 498--499), in which we attempt to find all possible cell boundary edges. At this stage, some edges are missed due to low contrast---these missing edges cause merge errors. To correct this, we need to imagine where any number of edges might be among empty space, and this is simply a harder visual task than assessing whether an identified edge is correct. This is true even for a human: on the AC4 dataset, our experts only agree with the selection oracle in two thirds of merge error cases.
 
+\vspace{.35cm}
+
+\renewcommand{\section}[2]{}
 
 {\small
 \bibliographystyle{ieee}
