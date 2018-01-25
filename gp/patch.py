@@ -114,6 +114,18 @@ class Patch(object):
 
             inputs = rgba_patch
 
+          elif cnn.uuid == 'PLB':
+
+            border_prefix = ''
+            if cnn.uuid.find('LB') != -1:
+              border_prefix = 'larger_'
+
+            rgba_patch = np.zeros((1,2,75,75), dtype=np.float32)
+            rgba_patch[0][0] = p['prob'].astype(np.float32)
+            rgba_patch[0][1] = p[border_prefix+'border_overlap'].astype(np.float32)
+
+            inputs = rgba_patch            
+
           elif cnn.uuid.endswith('B'):
 
             border_prefix = ''
