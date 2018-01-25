@@ -29,6 +29,8 @@ class Patch(object):
     # .. and n
     binary_n = Util.threshold(segmentation, n)
 
+    #print image.shape, prob.shape, binary_l.shape, binary_n.shape, border.shape, l, n
+
     # analyze both borders
     patches_l = Patch.analyze_border(image, prob, binary_l, binary_n, border, l, n, sample_rate=sample_rate, patch_size=patch_size, oversampling=oversampling, mode=mode)
     patches_n = Patch.analyze_border(image, prob, binary_n, binary_l, border, n, l, sample_rate=sample_rate, patch_size=patch_size, oversampling=oversampling, mode=mode)
@@ -97,6 +99,18 @@ class Patch(object):
             rgba_patch[0][0] = p['image'].astype(np.float32)
             rgba_patch[0][1] = p['prob'].astype(np.float32)
             rgba_patch[0][2] = p[border_prefix+'border_overlap'].astype(np.float32)
+
+            inputs = rgba_patch
+
+          elif cnn.uuid == 'MLB':
+
+            border_prefix = ''
+            if cnn.uuid.find('LB') != -1:
+              border_prefix = 'larger_'
+
+            rgba_patch = np.zeros((1,2,75,75), dtype=np.float32)
+            rgba_patch[0][0] = p['merged_array'].astype(np.float32)
+            rgba_patch[0][1] = p[border_prefix+'border_overlap'].astype(np.float32)
 
             inputs = rgba_patch
 
@@ -222,6 +236,8 @@ class Patch(object):
         continue
 
       neighbors = Util.grab_neighbors(segmentation, l)
+
+      print neighbors, image.shape, prob.shape, segmentation.shape
 
       for n in neighbors:
 
@@ -521,7 +537,7 @@ class Patch(object):
 
 
 
-          isolated_border = cutout_border - merged_array_border
+          isolated_border = cutout_border ^ merged_array_border
           isolated_border[cutout_border==0] = 0          
 
           larger_isolated_border = np.array(isolated_border)  
