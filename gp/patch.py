@@ -137,6 +137,8 @@ class Patch(object):
             rgba_patch[0][1] = p['merged_array'].astype(np.float32)
             rgba_patch[0][2] = p[border_prefix+'border_overlap'].astype(np.float32)
 
+            inputs = rgba_patch       
+
           elif cnn.uuid.endswith('B'):
 
             border_prefix = ''
@@ -260,7 +262,7 @@ class Patch(object):
 
       neighbors = Util.grab_neighbors(segmentation, l)
 
-      print neighbors, image.shape, prob.shape, segmentation.shape
+      #print neighbors, image.shape, prob.shape, segmentation.shape
 
       for n in neighbors:
 
