@@ -58,7 +58,7 @@
 \paragraph{R2: Rand Error} We chose variation of information (VI) to overcome previously reported limitations of adapted Rand Error (aRE)~\cite[p.~5]{NunezIglesias2013Machine}; however, we include aRE numbers below (Table~\ref{tab:randerror}).
 
 \begin{table}[h]
-\caption{Forced Choice User Experiment in adapted Rand Error (aRE) metric (lower is better). Novices and experts using GP perform better than using FP.}
+\caption{Forced Choice User Experiment in adapted Rand Error metric (lower is better). Novices and experts using GP perform better than using FP.}
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lcccccccccc}
 \toprule
@@ -78,6 +78,8 @@ Slice & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 }
 \label{tab:randerror}
 \end{table}
+
+\vspace{-0.3cm}
 
 \paragraph{R2: Generalization beyond the AC4 Subvolume} We agree that this dataset is small; however, it was introduced by Haehn~\etal 2014 for feasible interactive proofreading studies. The volume was quantitatively chosen to be representative for the full AC4 dataset with respect to the distribution of object sizes.
 
@@ -111,13 +113,12 @@ We believe that our method will interest researchers working beyond connectomics
 %\emph{Image + Prob. + Label} & 0.038\\
 %\emph{Image + Prob. + Label + Border} & 0.065\\
 
-\emph{Prob. + Label + Border (\textbf{R3} request)} &  TBA\\
-
 \emph{Image + Prob.} &  -0.094\\
 \emph{Prob. + Border (\textbf{R4} request)} & -0.080\\
 \emph{Image + Prob. + Border} & -0.045\\
 \emph{Label + Border} & -0.008\\
 \emph{Image + Prob. + Label} & 0.038\\
+\emph{Prob. + Label + Border (\textbf{R3} request)} &  0.041\\
 \emph{Image + Prob. + Label + Border} & 0.065\\
 \bottomrule
 \end{tabular} 
