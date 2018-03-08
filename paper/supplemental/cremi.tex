@@ -34,6 +34,8 @@
 
 Figure~\ref{fig:cremiAtrails} and~\ref{fig:cremiAboxplot} compare Plaza's focused proofreading and guided proofreading on the five sections of CREMI A.
 
+\vspace{-4mm}
+
 \paragraph{Selection oracle.} With focused proofreading, the selection oracle reduces median VI to 0.928, $SD=0.043$ from an initial median VI of 1.06 ($SD=0.055$). 532 corrections out of 3707 were accepted. Guided proofreading does not reach the best possible VI, however, reduces VI faster with less corrections to 0.941 ($SD=0.04$). Out of 4463 corrections, 1275 were accepted.
 
 \paragraph{Automatic selection with threshold.} Not surprisingly, focused proofreading performs poorly when ran automatically (VI of 5.32, $SD=0.009$). Guided proofreading is able to reduce VI to 0.989 ($SD=0.043$) with $p_t=0.95$.
@@ -55,7 +57,7 @@ Figure~\ref{fig:cremiBtrails} and~\ref{fig:cremiBboxplot} show the results on th
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{gfx/cremiBboxplot.pdf}
+\includegraphics[width=.9\linewidth]{gfx/cremiBboxplot.pdf}
 \caption{VI distributions of guided proofreading (GP) and focused proofreading (FP) output across 5 sections of the CREMI B dataset. We compare automatic selection and oracle selection. The variation resulting from performance of FP with automatic selection is $3\times$ higher than GP (\protect\includegraphics[width=0.2cm]{gfx/arrow.pdf}), with median VI of $4.25$ and $SD=0.07$.}
 \label{fig:cremiBboxplot}
 \end{figure}

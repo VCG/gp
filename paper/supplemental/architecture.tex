@@ -99,6 +99,40 @@ For automatic selection, we observed a threshold $p_t=0.95$ as stable when evalu
 \label{fig:thresh}
 \end{figure}
 
+
+
+\subsection{Input channel contributions} 
+
+All four input channels help to reduce VI (Table~\ref{tab:input_channels}). As identified by Bogovich~\etal~\cite{BogovicHJ13}, image data adds intracellular structures (e.g., vesicles) to the decision process, and membrane probabilities include global knowledge of the staining protocol to highlight cell membranes. Then, the label channel provides knowledge about neuron shapes while the dilated mask of the border covers the gap of extra-cellular space. Adding the dilated mask of the border decreases VI. %\JT{From the table, it might make sense to test just Label+Border, because the other two decrease VI...}
+
+\begin{table}[h]
+\caption{Automatic selection on the AC4 subvolume with $p_t=0.95$ using the guided proofreading classifier; median VI reduction in ascending order. The combination of all four input channels performs best.}
+\resizebox{.9\linewidth}{!}{
+\begin{tabular}{lrrrr}
+\toprule
+\makecell{Input channels} & \makecell{VI reduction} \\
+\midrule
+%\emph{Prob. + Border (\textbf{R4} request)} & -0.080\\
+%\emph{Prob. + Label + Border (\textbf{R3} request)} &  TBA\\
+%\emph{Label + Border} & -0.008\\
+%\emph{Image + Prob.} &  -0.094\\
+%\emph{Image + Prob. + Border} & -0.045\\
+%\emph{Image + Prob. + Label} & 0.038\\
+%\emph{Image + Prob. + Label + Border} & 0.065\\
+
+\emph{Image + Prob.} &  -0.094\\
+\emph{Prob. + Border} & -0.080\\
+\emph{Image + Prob. + Border} & -0.045\\
+\emph{Label + Border} & -0.008\\
+\emph{Image + Prob. + Label} & 0.038\\
+\emph{Prob. + Label + Border} &  0.041\\
+\emph{Image + Prob. + Label + Border} & 0.065\\
+\bottomrule
+\end{tabular} 
+}
+\label{tab:input_channels}
+\end{table}
+
 \subsection{Merge Error Detection Pseudo Code}
 
 We provide pseudo code on how we detect merge errors to foster understanding of the reported algorithm (Alg.~\ref{code:mergeerror}). In our experiments, we use $N=50$ iterations.

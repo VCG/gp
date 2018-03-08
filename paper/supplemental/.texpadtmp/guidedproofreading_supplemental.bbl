@@ -1,5 +1,12 @@
 \begin{thebibliography}{1}\itemsep=-1pt
 
+\bibitem{BogovicHJ13}
+J.~A. Bogovic, G.~B. Huang, and V.~Jain.
+\newblock Learned versus hand-designed feature representations for 3d
+  agglomeration.
+\newblock {\em International Conference on Learning Representations (ICLR)},
+  2014.
+
 \bibitem{resnet}
 K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \newblock Deep residual learning for image recognition.

@@ -11,12 +11,9 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{booktabs}
-\usepackage{floatrow}
 \usepackage{makecell}
-\usepackage{algorithm}
 \usepackage{authblk}
-\usepackage[noend]{algpseudocode}
-\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+
 % Include other packages here, before hyperref.
 
 % If you comment hyperref and then uncomment it, you should delete
@@ -31,9 +28,8 @@
 
 \cvprfinalcopy % *** Uncomment this line for the final submission
 
-%\def\cvprPaperID{0947} % *** Enter the CVPR Paper ID here
+\def\cvprPaperID{0125} % *** Enter the CVPR Paper ID here
 %\def\iccvPaperID{0922}
-\def\cvprPaperID{0125}
 \def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
 
 % Pages are numbered in submission mode, and unnumbered in camera-ready
@@ -42,11 +38,11 @@
 \begin{document}
 
 %%%%%%%%% TITLE
-\title{Guided Proofreading of Automatic Segmentations for Connectomics\\~\\\textit{Supplemental Material}}
+\title{Guided Proofreading of Automatic Segmentations for Connectomics}
 
 %\author{Daniel Haehn\\
-%Institution1\\
-%Institution1 address\\
+%Harvard Paulson School of Engineering and Applied Sciences\\
+%Cambridge, MA 02138, USA\\
 %{\tt\small haehn@seas.harvard.edu}
 %% For a paper whose authors are all at the same institution,
 %% omit the following lines up until the closing ``}''.
@@ -60,6 +56,7 @@
 %{\tt\small secondauthor@i2.org}
 %}
 
+
 \author[1,2]{Daniel Haehn\thanks{Corresponding author,  \url{haehn@seas.harvard.edu}}}
 \author[1,2]{Verena Kaynig}
 \author[3]{James Tompkin}
@@ -69,19 +66,46 @@
 \affil[2]{Harvard's Center for Brain Science}
 \affil[3]{Brown University}
 
+
 \maketitle
 %\thispagestyle{empty}
 
 %%%%%%%%% ABSTRACT
+\begin{abstract}
+%
+Automatic cell image segmentation methods in connectomics produce merge and
+split errors, which require correction through proofreading. Previous research
+has identified the visual search for these errors as the bottleneck in
+interactive proofreading. To aid error correction, we develop two classifiers
+that automatically recommend candidate merges and splits to the user. These
+classifiers use a convolutional neural network (CNN) that has been trained with
+errors in automatic segmentations against expert-labeled ground truth. Our
+classifiers detect potentially-erroneous regions by considering a large context
+region around a segmentation boundary. Corrections can then be performed by a
+user with yes/no decisions, which reduces variation of information $7.5\times$ faster than previous
+proofreading methods. We also present a fully-automatic mode that uses a
+probability threshold to make merge/split decisions. Extensive experiments using
+the automatic approach and comparing performance of novice and expert users
+demonstrate that our method performs favorably against state-of-the-art
+proofreading methods on different connectomics datasets.
+%
+\vspace{-4mm}
+\end{abstract}
 
 %%%%%%%%% BODY TEXT
+\input{introduction}
 
-\input{architecture}
-\input{leftcylinder}
-\input{cremi}
-\input{userstudy}
+\input{related_work}
 
-%\newpage~\newpage
+\input{method}
+
+\input{evaluation}
+
+\input{results}
+
+\input{conclusion}
+
+
 {\small
 \bibliographystyle{ieee}
 \bibliography{connectomics}
