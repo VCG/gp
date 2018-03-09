@@ -34,7 +34,7 @@ Additional plots and confirmatory data analysis are available as supplemental ma
 \vspace{-4mm}
 \end{figure}
 
-\vspace{-2mm}
+%\vspace{-2mm}
 
 \paragraph{AC4 subvolume.} We generated 3,488 correct and 332 error patches (10 merge errors, 322 split errors). Guided proofreading achieves better classification performance (Fig. \ref{fig:pr}).
 
@@ -62,7 +62,7 @@ We performed a user study to evaluate the forced choice error correction method 
 %\CHANGED{Our hypothesis is that VI reduction is significantly better with GP than with other tools. For this, we treat VI as a continuous variable and use analysis of variance (ANOVA) followed by parametric tests (Welch's t-test).}
 The initial segmentation yields a median VI $=0.476$ ($SD=0.089$), with mean VI $=0.512$ ($SD=0.09$). Most novices and all experts were able to improve upon this score with both focused proofreading and guided proofreading (Fig.~\ref{fig:ac4trails}).
 
-\vspace{-4mm}
+\vspace{-2mm}
 
 \paragraph{Novice performance.} Participants using focused proofreading were able to reduce the median VI of the automatic segmentation to $0.469$ ($SD=0.87$). On average, users viewed $423.4$ corrections and accepted $45.8$.
 %, with an average time of $4.9$ seconds per correction. 
@@ -87,7 +87,7 @@ While three users of focused proofreading made the initial segmentation worse, a
 \label{tab:correctiontimes}
 \end{table}
 
-\vspace{-4mm}
+%\vspace{-4mm}
 
 \paragraph{Expert performance.} Domain experts were able to improve the initial segmentation. With focused proofreading, the median VI of the automatic segmentation was $0.439$ ($SD=0.084$). With guided proofreading, the median VI was $0.396$ ($SD=0.032$, Fig.~\ref{fig:ac4boxplot}).
 
@@ -95,7 +95,7 @@ While three users of focused proofreading made the initial segmentation worse, a
 
 \paragraph{Selection oracle.} As expected, the selection oracle yields the best performance on all datasets. Fig.~\ref{fig:ac4trails} shows VI reduction using the selection oracle on the AC4 subvolume (initial median VI $0.476$, $SD=0.089$). With focused proofreading, the selection oracle reaches a median VI of $0.353$ ($SD=0.037$) after $1600$ corrections. With guided proofreading, the oracle reaches a minimum median VI of $0.342$ ($SD=0.03$) after $800$ corrections. Both results are close to the best possible median VI of $0.334$ (calculated by computing maximum overlap with the ground truth). The slope of the trails in Fig.~\ref{fig:ac4trails} shows that guided proofreading requires fewer corrections to reach a reasonable reduction in VI. Fig.~\ref{fig:ac4boxplot} shows the VI distribution across methods. On the L.~Cylinder dataset (initial VI $0.379$, $SD=0.118$), focused proofreading reduces the median VI to $0.298$ ($SD=0.075$) after $26,170$ corrections ($2,419$ accepted). Guided proofreading reaches the minimum median VI $0.2996$ ($SD=0.073$) after $10,000$ corrections (in total $27,491$, $2,696$ accepted).
 
-\vspace{-4mm}
+%\vspace{-4mm}
 
 \begin{figure}[t]
 \centering
@@ -105,15 +105,15 @@ While three users of focused proofreading made the initial segmentation worse, a
 \vspace{-4mm}
 \end{figure}
 
-\vspace{-.35mm}
+%\vspace{-.35mm}
 
 \paragraph{Automatic selection with threshold.} Focused proofreading was not designed to run automatically. This explains the poor performance on the AC4 subvolume (VI of $1.9$, $SD=0.496$) and on the L.~Cylinder dataset (VI of $2.75$, $SD=0.789$). For guided proofreading, we set $p_t=0.95$ for both datasets. This reduces median VI in the AC4 subvolume to $0.398$ ($SD=0.068$). This result is comparable to expert performance. Guided proofreading also reduces VI in the L.~Cylinder data to $0.352$ ($SD=0.087$).
 
-\vspace{-4mm}
+%\vspace{-4mm}
 
 \paragraph{Merge Error Detection.} Guided proofreading performs merge error detection prior to split error detection. The classifier found 10 merge errors in the AC4 subvolume, of which 4 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 of these errors (Prec./Recall 0.87/0.80, F1-score 0.80). This was not captured in median VI, but resulted in a mean VI reduction from $0.512$ ($SD=0.09$) to $0.509$ ($SD=0.086$). The selection oracle reduced mean VI with only merge errors to $0.508$ ($SD=0.086$). In the forced choice user study, novices marked 1.9 merge errors for correction and reduced mean VI to $0.502$ (experts marked 2, VI $0.503$, $SD=0.086$). This shows how hard it is to identify merge errors. In 50 sections of the L.~Cylinder dataset, 151 merge errors were automatically found of which 17 reduced VI. Automatic selection with $p_t=0.95$ corrected 6 true VI-reducing errors and 30 VI-increasing ones (Prec./Recall 0.82/0.73, F1-score 0.77) to negligible VI effect. 
 
-\vspace{-1mm}
+%\vspace{-1mm}
 
 \subsection{Proofreading in Connectomics Benchmark}
 

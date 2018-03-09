@@ -14,6 +14,10 @@
 \usepackage{makecell}
 \usepackage{authblk}
 
+\makeatletter
+\renewcommand\AB@affilsepx{~~~~~\protect\Affilfont}
+\makeatother
+
 % Include other packages here, before hyperref.
 
 % If you comment hyperref and then uncomment it, you should delete
@@ -57,15 +61,21 @@
 %}
 
 
-\author[1,2]{Daniel Haehn\thanks{Corresponding author,  \url{haehn@seas.harvard.edu}}}
-\author[1,2]{Verena Kaynig}
-\author[3]{James Tompkin}
-\author[2]{Jeff W. Lichtman}
-\author[1,2]{Hanspeter Pfister}
-\affil[1]{Harvard's Paulson School of Engineering and Applied Sciences}
-\affil[2]{Harvard's Center for Brain Science}
-\affil[3]{Brown University}
+%\author[1,2]{Daniel Haehn\thanks{Corresponding author,  \url{haehn@seas.harvard.edu}}}
+%\author[1,2]{Verena Kaynig}
+%\author[3]{James Tompkin}
+%\author[2]{Jeff W. Lichtman}
+%\author[1,2]{Hanspeter Pfister}
+%\affil[1]{Harvard's Paulson School of Engineering and Applied Sciences}
+%\affil[2]{Harvard's Center for Brain Science}
+%\affil[3]{Brown University}
 
+\author[1]{Daniel Haehn\thanks{Corresponding author,  \url{haehn@seas.harvard.edu}}}
+\author[1]{Verena Kaynig}
+\author[2]{James Tompkin}
+\author[1]{Jeff W. Lichtman}
+\author[1]{Hanspeter Pfister}
+\affil[1]{Harvard University}\affil[2]{Brown University}
 
 \maketitle
 %\thispagestyle{empty}

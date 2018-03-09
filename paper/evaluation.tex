@@ -85,20 +85,20 @@ Table~\ref{tab:parameters} lists the final parameters. Our CNN configuration res
 
 \paragraph{Selection oracle evaluation.} We use the selection oracle as described in Sec.~\ref{sec:errorcorrection} for the decision whether to accept or reject a correction. The purpose of this experiment is to investigate how many corrections are required to reach the best possible outcome. This is a direct comparison of the guided proofreading and focused proofreading classifiers but can only be performed if ground truth data is available. We perform this experiment on all datasets listed above.
 
-\vspace{-4mm}
+%\vspace{-4mm}
 
 \paragraph{Automatic method evaluation.} For this experiment, we accept all suggested corrections if the rankings are above a configured threshold $p_t=.95$ (Sec.~\ref{sec:errorcorrection}). We observed this value as stable in previous experiments with the guided proofreading classifiers (see supplementary material). We compare against the focused proofreading classifier and perform this experiment on all reported datasets.
 
 \paragraph{Forced choice user experiments.} We conducted a quantitative user study to evaluate the forced choice setting (Sec.~\ref{sec:errorcorrection}). In particular, we evaluated how participants perform while correcting an automatic segmentation using the guided proofreading and focused proofreading tools. We designed a single factor between-subjects experiment with the factor \textit{proofreading classifier}, and asked participants to proofread the AC4 subvolume in a fixed time frame of 30 minutes.
 To enable comparison against the interactive proofreading study by~Haehn~\etal~\cite{haehn_dojo_2014}, we use the exact same study conditions, dataset, and time limit. The experiment was performed on a machine with standard off-the-shelf hardware. All participants received monetary compensation.
 
-\vspace{-4mm}
+%\vspace{-4mm}
 
 \paragraph{Novice study design.} We recruited participants with no experience in electron microscopy data or proofreading through flyers, mailing lists, and personal interaction. Based on sample size calculation theory, we estimated the study needed ten users per proofreading tool including four potential dropouts~\cite{samplesize1,samplesize2}. All twenty participants completed the study ($N=20$, 10 female; 19-65 years old, $M$=30). 
 
 Each study session began with a five minute standardized explanation of the task. Then, the participants were asked to perform a 3 minute proofreading task on separate but representative data using focused proofreading. The participants were allowed to ask questions during this time. The classifier did not matter in this case since the user interface was the same. The experimenter then loaded the AC4 subvolume with initial pre-computed classifications by either guided proofreading or focused proofreading depending on assignment. After 30 minutes, the participants completed the raw NASA-TLX standard questions for task evaluation~\cite{NASATLX}.
 
-\vspace{-3mm}
+%\vspace{-3mm}
 
 \begin{figure*}[t]
 \centering
@@ -110,7 +110,7 @@ Each study session began with a five minute standardized explanation of the task
 
 \paragraph{Expert study design.} We recruited 4 domain experts to evaluate the performance of both guided and focused proofreading. We obtained study consent and randomly assigned 2 experts to proofread using each classifier. The experts performed the 3 minute test run on different data prior to proofreading for 30 minutes. After the task ended, the experts were asked to complete the raw NASA-TLX questionnaire.
 
-\vspace{-3mm}
+%\vspace{-3mm}
 
 \paragraph{Evaluation metric.} We measure the similarity between proofread segmentations and the manual `ground truth' labelings using \textit{variation of information} (VI). VI is a measure of the distance between two clusterings, closely related to mutual information (the lower, the better).% We treat VI as a continuous variable during analysis.
 
