@@ -11,7 +11,7 @@ Warning--can't use both volume and number fields in nesterov
 Warning--can't use both author and editor fields in focused_proofreading
 You've used 33 entries,
             2120 wiz_defined-function locations,
-            709 strings with 11541 characters,
+            709 strings with 11523 characters,
 and the built_in function-call counts, 13699 in all, are:
 = -- 1281
 > -- 846
